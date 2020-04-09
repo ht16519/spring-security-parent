@@ -53,14 +53,12 @@ public class User implements Serializable{
     /**
      * 
      */
-    @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     /**
      * 
      */
-    @Column(name = "nick_name")
-    private String nickName;
+    private String nickname;
 
     /**
      * 用户头像
@@ -83,52 +81,6 @@ public class User implements Serializable{
      * 性别（1，0：男：女）
      */
     private Integer sex;
-
-    /**
-     * 分数
-     */
-    private Integer source;
-
-    /**
-     * 
-     */
-    @Column(name = "active_email")
-    private Integer activeEmail;
-
-    /**
-     * 点赞数量
-     */
-    private Integer comments;
-
-    /**
-     * 粉丝数
-     */
-    private Integer fans;
-
-    /**
-     * 我收藏的文章数
-     */
-    private Integer favors;
-
-    /**
-     * 我关注的博主数量
-     */
-    private Integer follows;
-
-    /**
-     * 发文数量
-     */
-    private Integer posts;
-
-    /**
-     * 签名
-     */
-    private String signature;
-
-    /**
-     * 
-     */
-    private String salt;
 
 
 }

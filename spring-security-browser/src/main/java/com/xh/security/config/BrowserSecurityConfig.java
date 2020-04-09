@@ -1,6 +1,8 @@
 package com.xh.security.config;
 
 import com.xh.security.consts.URLConst;
+import com.xh.security.properties.SecurityProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
     public PasswordEncoder passwordEncoder(){
@@ -27,14 +32,16 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage(URLConst.SIMPLE_SIGNIN_PAGE_PATH)                        //自定义登录页面1.1
-                .loginProcessingUrl(URLConst.AUTHENTICATION_FORM_PATH)              //自定义处理登录的请求路径1.1
+                .loginPage(URLConst.REQUIRE_AUTHENTICATION_PATH)                    //自定义登录认证请求处理Controller路径1.2
+                .loginProcessingUrl("/authentication/form")              //自定义处理登录页面的请求路径1.1
                 .and()
                 .authorizeRequests()        //授权请求1.0
-                .antMatchers(URLConst.SIMPLE_SIGNIN_PAGE_PATH).permitAll()          //指定放行路径1.1
-                .anyRequest()               //拦截所有1.0
-                .authenticated()           //需要认证1.0
+                .antMatchers(securityProperties.getBrowser().getLoginPage(),    //放行跳转到登录页面的请求
+                        URLConst.REQUIRE_AUTHENTICATION_PATH)  //放行自定义登录认证请求处理Controller路径
+                .permitAll()          //指定放行路径1.2
+                .anyRequest()                                       //拦截所有1.0
+                .authenticated()                                    //需要认证1.0
                 .and()
-                .csrf().disable();          //关闭跨站伪造攻击的防护1.2
+                .csrf().disable();                                  //关闭跨站伪造攻击的防护1.2
     }
 }

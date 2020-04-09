@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByUserName(String username) {
-        return userMapper.selectOne(User.builder().userName(username).build());
+        return userMapper.selectOne(User.builder().username(username).build());
     }
 
 
