@@ -17,5 +17,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "xh.security")
 public class SecurityProperties {
 
+    /** PC端安全属性配置类*/
     private BrowserProperties browser;
 }

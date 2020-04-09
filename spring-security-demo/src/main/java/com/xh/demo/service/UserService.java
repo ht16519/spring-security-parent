@@ -42,4 +42,5 @@ public interface UserService {
     int deleteById(Integer id);
 
     User getByUserName(String username);
+
 }

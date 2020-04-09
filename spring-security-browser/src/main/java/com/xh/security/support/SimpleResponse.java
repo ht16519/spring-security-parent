@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SimpleResponse {
 
-    private Object content;
+    private Object msg;
 
-    public static SimpleResponse build(Object content) {
-        return new SimpleResponse(content);
+    public static SimpleResponse build(Object msg) {
+        return new SimpleResponse(msg);
     }
 
 }

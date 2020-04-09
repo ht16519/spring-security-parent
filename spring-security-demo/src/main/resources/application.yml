@@ -24,4 +24,5 @@ logging:
 xh:
   security:
     browser:
-      loginPage: /demo-signIn.html
+      loginPage: /demo-signIn.html  #配置默认跳转
+      loginType: REDIRECT           #配置登录结果处理方式
