@@ -1,0 +1,18 @@
+server:
+  port: 7001
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db_security?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+    username: root
+    password: 123456
+mybatis:
+  mapper-locations: classpath:mappers/*Mapper.xml
+  type-aliases-package: com.xh.demo.domain.po
+  configuration:
+    mapUnderscoreToCamelCase: true
+    callSettersOnNulls: true
+mapper:
+  mappers: com.xh.demo.dao.base.IBaseMapper
+  notEmpty: false
+  identity: MYSQL
