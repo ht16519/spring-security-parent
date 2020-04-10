@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
  * @Date 2020-04-09
  */
 @Slf4j
-@Component
-public class MyUserDetailsService implements UserDetailsService {
+@Component("customUserDetailsService")
+public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserService userService;

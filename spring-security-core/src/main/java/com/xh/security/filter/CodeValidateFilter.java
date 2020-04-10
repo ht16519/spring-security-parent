@@ -81,11 +81,14 @@ public class CodeValidateFilter extends OncePerRequestFilter {
     public CodeValidateFilter(AuthenticationFailureHandler authenticationFailureHandler, SecurityProperties securityProperties) {
         this.authenticationFailureHandler = authenticationFailureHandler;
         this.securityProperties = securityProperties;
-        String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(securityProperties.getCode().getImage().getUrls(), ",");
-        for (String url : configUrls) {
-            urls.add(url);
+        String configUrlsStr = securityProperties.getCode().getImage().getUrls();
+        if(StringUtils.isNotBlank(configUrlsStr)){
+            String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(configUrlsStr, ",");
+            for (String url : configUrls) {
+                this.urls.add(url);
+            }
         }
-        urls.add(URLConst.AUTHENTICATION_FORM_PATH);
+        this.urls.add(URLConst.AUTHENTICATION_FORM_PATH);
     }
 
 }

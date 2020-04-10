@@ -17,15 +17,19 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @Configuration
 public class BrowserBeanConfig {
 
+    /** 配置登录成功处理器*/
     @Bean("customAuthenticationSuccessHandler")
     @ConditionalOnMissingBean(name = "customAuthenticationSuccessHandler")
     public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
         return new CustomAuthenticationSuccessHandler();
     }
 
+    /** 配置登录失败处理器*/
     @Bean("customAuthenticationFailureHandler")
     @ConditionalOnMissingBean(name = "customAuthenticationFailureHandler")
     public SimpleUrlAuthenticationFailureHandler failureHandler() {
         return new CustomAuthenticationFailureHandler();
     }
+
+
 }
