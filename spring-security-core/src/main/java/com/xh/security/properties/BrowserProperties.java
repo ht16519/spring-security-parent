@@ -1,6 +1,5 @@
 package com.xh.security.properties;
 
-import com.xh.security.consts.URLConst;
 import com.xh.security.enums.LoginEnum;
 import lombok.Getter;
 import lombok.Setter;

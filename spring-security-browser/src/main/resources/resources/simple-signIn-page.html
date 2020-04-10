@@ -9,8 +9,14 @@
 <form method="post" action="/authentication/form">
     用户名：<input type="text" name="username" /> <br/>
     密码：<input type="password" name="password" /> <br/>
+    验证码：<input type="text" name="imageCode" /> <img src="/code/image.jpeg?width=100"  id="imageCode" alt="验证码" title="点击刷新" onclick="refreshCode()" /><br/>
     <button type="submit">登录</button>
 </form>
 
 </body>
+<script type="text/javascript">
+    function refreshCode(){
+        document.getElementById('imageCode').src='/code/image.jpeg?width=100';
+    }
+</script>
 </html>

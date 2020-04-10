@@ -23,6 +23,9 @@ public enum  MessageEnum implements CommomMessage {
     SYSTEM_SECURITY_CODE_ERROR(10021, "验证码已过期，请刷新再试"),
     INPUT_SECURITY_CODE_ERROR(10022, "验证码不正确"),
     PARAMETER_VERIFICATION_ERROR_ID(10023, "参数不合法，id不能为空"),
+    INVALID_USER_INFO(10024, "无效的用户会话，请重新登录"),
+
+
 
     //TODO 在这里追加定义更多返回信息
 

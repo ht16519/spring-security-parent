@@ -2,6 +2,7 @@ package com.xh.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xh.security.enums.LoginEnum;
+import com.xh.security.exception.ValidateCodeException;
 import com.xh.security.properties.SecurityProperties;
 import com.xh.security.support.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Component
-public class MyAuthenticationFaildHandler extends SimpleUrlAuthenticationFailureHandler {
+public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -49,10 +50,12 @@ public class MyAuthenticationFaildHandler extends SimpleUrlAuthenticationFailure
             errorMessage = "用户名或者密码不正确";
         } else if (e instanceof LockedException) {
             errorMessage = "该用户已被冻结，请联系管理员";
+        } else if (e instanceof ValidateCodeException) {
+            errorMessage = e.getMessage();
         } else {
             errorMessage = "登录失败";
         }
-        if(LoginEnum.JSON.equals(securityProperties.getBrowser().getLoginType())){
+        if (LoginEnum.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(SimpleResponse.build(errorMessage)));

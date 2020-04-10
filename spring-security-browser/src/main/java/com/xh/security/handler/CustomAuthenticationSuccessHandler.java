@@ -21,8 +21,7 @@ import java.io.IOException;
  * @Date 2020-04-09
  */
 @Slf4j
-@Component
-public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Autowired
     private ObjectMapper objectMapper;

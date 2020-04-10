@@ -16,4 +16,6 @@ public interface URLConst {
 
     /** 认证处理请求路径*/
     String REQUIRE_AUTHENTICATION_PATH = "/authentication/require";
+
+    String VALIDATE_IMAGE_CODE_PATH = "/code/image.jpeg";
 }

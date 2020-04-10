@@ -3,7 +3,6 @@ package com.xh.security.properties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * @Name BrowserProperties
@@ -13,10 +12,12 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
-@Component
 @ConfigurationProperties(prefix = "xh.security")
 public class SecurityProperties {
 
     /** PC端安全属性配置类*/
-    private BrowserProperties browser;
+    private BrowserProperties browser = new BrowserProperties();
+
+    /** 验证码配置类*/
+    private ValidateCodeProperties code = new ValidateCodeProperties();
 }
