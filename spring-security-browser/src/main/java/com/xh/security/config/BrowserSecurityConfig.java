@@ -1,9 +1,9 @@
 package com.xh.security.config;
 
-import com.xh.security.authentiation.processor.ValidateCodeProcessor;
-import com.xh.security.authentiation.mobile.config.SmsCodeAuthenticationSecurityConfig;
-import com.xh.security.consts.URLConst;
 import com.xh.security.authentiation.filter.ValidateCodeAuthenticationFilter;
+import com.xh.security.authentiation.mobile.config.SmsCodeAuthenticationSecurityConfig;
+import com.xh.security.authentiation.processor.ValidateCodeProcessor;
+import com.xh.security.consts.URLConst;
 import com.xh.security.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -88,8 +88,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()                                       //拦截所有1.0
                 .authenticated()                                    //需要认证1.0
                 .and()
-            .csrf().disable();                                  //关闭跨站伪造攻击的防护1.2
-//            .apply(smsCodeAuthenticationSecurityConfig);        //将短信验证码认证配置加入
+            .csrf().disable()                                  //关闭跨站伪造攻击的防护1.2
+            .apply(smsCodeAuthenticationSecurityConfig);        //将短信验证码认证配置加入
     }
 
     /**
@@ -99,8 +99,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         return new String[]{
                 securityProperties.getBrowser().getLoginPage(),    //放行跳转到登录页面的请求
                 URLConst.REQUIRE_AUTHENTICATION_PATH,               //放行自定义登录认证请求处理Controller路径
-                URLConst.VALIDATE_IMAGE_CODE_PATH,                   //放行图片验证码生成路径
-                URLConst.VALIDATE_SMS_CODE_PATH                     //放行短信验证码生成路径
+                URLConst.VALIDATE_IMAGE_CODE_PATH,                  //放行图片验证码生成路径
+                URLConst.VALIDATE_SMS_CODE_PATH                    //放行短信验证码生成路径
         };
     }
 

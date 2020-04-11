@@ -2,6 +2,7 @@ package com.xh.security.authentiation.filter;
 
 import com.xh.security.authentiation.processor.ValidateCodeProcessor;
 import com.xh.security.consts.KeyConst;
+import com.xh.security.consts.URLConst;
 import com.xh.security.exception.ValidateCodeException;
 import com.xh.security.properties.SecurityProperties;
 import org.apache.commons.lang3.StringUtils;
@@ -51,7 +52,7 @@ public class ValidateCodeAuthenticationFilter extends OncePerRequestFilter {
         if (!StringUtils.equalsIgnoreCase(request.getMethod(), "get")) {
             for (String url : urlsMap.keySet()) {
                 if (pathMatcher.match(url, request.getRequestURI())) {
-                    return validateCodeProcessor.get(url);
+                    return validateCodeProcessor.get(urlsMap.get(url));
                 }
             }
         }
@@ -69,9 +70,11 @@ public class ValidateCodeAuthenticationFilter extends OncePerRequestFilter {
      */
     private void initializtionUrlsMap(SecurityProperties securityProperties) {
         //1.获取需要校验图形验证码的路径
-        addUrlToMap(securityProperties.getCode().getImage().getUrls(), KeyConst.SMS_CODE_VALID_PROCESSOR_BEAN_NAME);
+        addUrlToMap(securityProperties.getCode().getImage().getUrls(), KeyConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME);
+        urlsMap.put(URLConst.AUTHENTICATION_FORM_PATH, KeyConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME);
         //2.获取需要校验手机验证码的路径
-        addUrlToMap(securityProperties.getCode().getSms().getUrls(), KeyConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME);
+        addUrlToMap(securityProperties.getCode().getSms().getUrls(), KeyConst.SMS_CODE_VALID_PROCESSOR_BEAN_NAME);
+        urlsMap.put(URLConst.AUTHENTICATION_MOBILE_PATH, KeyConst.SMS_CODE_VALID_PROCESSOR_BEAN_NAME);
     }
 
     /**

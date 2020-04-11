@@ -1,6 +1,6 @@
 package com.xh.security.authentiation.processor;
 
-import com.xh.security.authentiation.code.ImageCode;
+import com.xh.security.authentiation.code.ValidateCode;
 import com.xh.security.exception.ValidateCodeException;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -30,15 +30,15 @@ public abstract class AbstractValidateCodeProcessor implements ValidateCodeProce
         if (StringUtils.isBlank(inputCode)) {
             throw new ValidateCodeException("验证码不能为空");
         }
-        ImageCode sessionImageCode = (ImageCode) session.getAttribute(cacheCodeKey);
-        if (null == sessionImageCode || StringUtils.isBlank(sessionImageCode.getCode())) {
-            throw new ValidateCodeException("验证码不存在");
+        ValidateCode sessionCode = (ValidateCode) session.getAttribute(cacheCodeKey);
+        if (null == sessionCode || StringUtils.isBlank(sessionCode.getCode())) {
+            throw new ValidateCodeException("验证码不存在，请重新获取验证码");
         }
-        if (sessionImageCode.isExpire()) {
+        if (sessionCode.isExpire()) {
             session.removeAttribute(cacheCodeKey);
             throw new ValidateCodeException("验证码已失效");
         }
-        if (!StringUtils.equalsIgnoreCase(sessionImageCode.getCode(), inputCode)) {
+        if (!StringUtils.equalsIgnoreCase(sessionCode.getCode(), inputCode)) {
             throw new ValidateCodeException("验证码不正确");
         }
         session.removeAttribute(cacheCodeKey);

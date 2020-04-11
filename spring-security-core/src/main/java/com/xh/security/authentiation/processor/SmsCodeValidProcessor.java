@@ -14,7 +14,7 @@ public class SmsCodeValidProcessor extends AbstractValidateCodeProcessor {
 
     public SmsCodeValidProcessor() {
         super.setInputCodeKey("smsCode");
-        super.setCacheCodeKey(KeyConst.CACHE_IMAGE_CODE_KEY);
+        super.setCacheCodeKey(KeyConst.CACHE_MOBILE_CODE_KEY);
     }
 
 }

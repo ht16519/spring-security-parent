@@ -20,10 +20,6 @@ public class ImageCode extends ValidateCode {
 
     private BufferedImage image;
 
-    private String code;
-
-    private LocalDateTime expireTime;
-
     public ImageCode(BufferedImage image, String code, LocalDateTime plusSeconds) {
         super(code, plusSeconds);
         this.image = image;
@@ -33,8 +29,5 @@ public class ImageCode extends ValidateCode {
         return new ImageCode(image, code, LocalDateTime.now().plusSeconds(expireIn));
     }
 
-    public boolean isExpire(){
-        return LocalDateTime.now().isAfter(this.expireTime);
-    }
 
 }

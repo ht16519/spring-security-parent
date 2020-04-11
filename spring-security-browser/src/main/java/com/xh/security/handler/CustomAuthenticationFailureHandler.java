@@ -1,20 +1,16 @@
 package com.xh.security.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xh.security.enums.LoginEnum;
 import com.xh.security.exception.ValidateCodeException;
 import com.xh.security.properties.SecurityProperties;
 import com.xh.security.support.SimpleResponse;
+import com.xh.security.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +29,6 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    @Autowired
-    private ObjectMapper objectMapper;
     @Autowired
     private SecurityProperties securityProperties;
 
@@ -56,11 +50,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             errorMessage = "登录失败";
         }
         if (LoginEnum.JSON.equals(securityProperties.getBrowser().getLoginType())) {
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(SimpleResponse.build(errorMessage)));
-            response.getWriter().flush();
-            response.getWriter().close();
+            ResponseUtil.writer(SimpleResponse.build(errorMessage));
         } else {
             request.setAttribute("msg", errorMessage);      //设置登录失败错误信息
             super.setDefaultFailureUrl(securityProperties.getBrowser().getLoginPage());

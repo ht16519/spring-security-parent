@@ -33,7 +33,7 @@ public class BrowserSecurityController {
 
     /**
      * @Name requireAuthentication
-     * @Description 认证逻辑处理（当需要认证时跳转到这里）
+     * @Description 表单登录认证逻辑处理（当需要认证时跳转到这里）
      * @Author wen
      * @Date 2020/4/9
      */
