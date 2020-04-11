@@ -44,7 +44,7 @@ public class BrowserSecurityController {
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
         if (null != savedRequest) {
             String redirectUrl = savedRequest.getRedirectUrl();
-            log.info("引发认证跳转请求的路径:{}", redirectUrl);
+            log.info("【登录认证服务】引发认证跳转请求的路径:{}", redirectUrl);
             if (StringUtils.endsWithIgnoreCase(redirectUrl, ".html")) {
                 //判断请求以.html结尾，则跳转到指定登录页
                 new DefaultRedirectStrategy().sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());

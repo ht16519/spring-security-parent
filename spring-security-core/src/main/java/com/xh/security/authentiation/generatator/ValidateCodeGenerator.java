@@ -1,6 +1,6 @@
-package com.xh.security.validate.generatator;
+package com.xh.security.authentiation.generatator;
 
-import com.xh.security.validate.code.ImageCode;
+import com.xh.security.authentiation.code.ValidateCode;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Author wen
  * @Date 2020-04-10
  */
-public interface ImageCodeGenerator {
+public interface ValidateCodeGenerator {
     
     /**
     * @Name generate
@@ -20,6 +20,6 @@ public interface ImageCodeGenerator {
     * @param request
     * @return com.xh.security.validate.code.ImageCode 
     */
-    ImageCode generate(HttpServletRequest request);
+    ValidateCode generate(HttpServletRequest request);
     
 }

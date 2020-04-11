@@ -1,10 +1,10 @@
 /**
  *
  */
-package com.xh.security.validate.generatator;
+package com.xh.security.authentiation.generatator;
 
 import com.xh.security.properties.SecurityProperties;
-import com.xh.security.validate.code.ImageCode;
+import com.xh.security.authentiation.code.ImageCode;
 import lombok.Setter;
 import org.springframework.web.bind.ServletRequestUtils;
 
@@ -15,12 +15,12 @@ import java.util.Random;
 
 /**
  * @Name SimpleCodeGenerator
- * @Description 简单的验证码生成器
+ * @Description 简单的图形验证码生成器
  * @Author wen
  * @Date 2020/4/9
  */
 @Setter
-public class SimpleCodeGenerator implements ImageCodeGenerator {
+public class DefaultImageCodeGenerator implements ValidateCodeGenerator {
 
     private SecurityProperties securityProperties;
 
@@ -44,9 +44,12 @@ public class SimpleCodeGenerator implements ImageCodeGenerator {
             int yl = random.nextInt(12);
             g.drawLine(x, y, x + xl, y + yl);
         }
-
+        int len = securityProperties.getCode().getImage().getLength();
+        if(len < 4){
+            len = 4;
+        }
         String sRand = "";
-        for (int i = 0; i < securityProperties.getCode().getImage().getLength(); i++) {
+        for (int i = 0; i < len; i++) {
             String rand = String.valueOf(random.nextInt(10));
             sRand += rand;
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));

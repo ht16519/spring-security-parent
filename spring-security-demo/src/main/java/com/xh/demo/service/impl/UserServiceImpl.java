@@ -49,5 +49,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectOne(User.builder().username(username).build());
     }
 
+    @Override
+    public User getByMobile(String mobile) {
+        return userMapper.selectOne(User.builder().mobile(mobile).build());
+    }
+
 
 }

@@ -9,7 +9,18 @@
 <form method="post" action="/authentication/form">
     用户名：<input type="text" name="username" /> <br/>
     密码：<input type="password" name="password" /> <br/>
-    验证码：<input type="text" name="imageCode" /> <img src="/code/image.jpeg?width=100"  id="imageCode" alt="验证码" title="点击刷新" onclick="refreshCode()" /><br/>
+    验证码：<input type="text" name="imageCode" /> <img src="/code/image?width=100"  id="imageCode" alt="验证码" title="点击刷新" onclick="refreshCode()" /><br/>
+    记住我：<input type="checkbox" name="remember-me" value="true"/> <br/>
+    <button type="submit">登录</button>
+</form>
+<br/>
+<br/>
+<br/>
+
+<h2>短信登录认证页面</h2>
+<form method="post" action="/authentication/mobile">
+    手机号码：<input type="text" name="mobile" value="15730031212"/> <a href="/code/sms?mobile=15730031212">发送验证码</a><br/>
+    验证码：<input type="text" name="smsCode" /> <br/>
     记住我：<input type="checkbox" name="remember-me" value="true"/> <br/>
     <button type="submit">登录</button>
 </form>
@@ -17,7 +28,7 @@
 </body>
 <script type="text/javascript">
     function refreshCode(){
-        document.getElementById('imageCode').src='/code/image.jpeg?width=100';
+        document.getElementById('imageCode').src='/code/image?width=100';
     }
 </script>
 </html>

@@ -1,33 +1,30 @@
-package com.xh.security.validate.code;
+package com.xh.security.authentiation.code;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 /**
- * @Name ImageCode
- * @Description 图形验证码
+ * @Name SmsCode
+ * @Description 短信验证码
  * @Author wen
- * @Date 2020-04-09
+ * @Date 2020-04-10
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageCode {
-
-    private BufferedImage image;
+public class ValidateCode {
 
     private String code;
 
     private LocalDateTime expireTime;
 
-    public static ImageCode build(BufferedImage image, String code, int expireIn) {
-        return new ImageCode(image, code, LocalDateTime.now().plusSeconds(expireIn));
+    public static ValidateCode build(String code, int expireIn) {
+        return new ValidateCode(code, LocalDateTime.now().plusSeconds(expireIn));
     }
 
     public boolean isExpire(){

@@ -43,4 +43,6 @@ public interface UserService {
 
     User getByUserName(String username);
 
+    User getByMobile(String mobile);
+
 }

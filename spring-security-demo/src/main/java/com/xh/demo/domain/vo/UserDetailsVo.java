@@ -2,6 +2,7 @@ package com.xh.demo.domain.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class UserDetailsVo implements UserDetails {
+public class UserDetailsVo implements UserDetails, CredentialsContainer {
 
     private Integer id;
 
@@ -98,5 +99,10 @@ public class UserDetailsVo implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        password = null;
     }
 }

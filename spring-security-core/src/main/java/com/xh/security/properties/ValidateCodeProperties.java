@@ -13,6 +13,10 @@ import lombok.Setter;
 @Setter
 public class ValidateCodeProperties {
 
+    /** 图形验证码配置*/
     private ImageCodeProperties image = new ImageCodeProperties();
+
+    /** 短信验证码配置*/
+    private SmsCodeProperties sms = new SmsCodeProperties();
 
 }
