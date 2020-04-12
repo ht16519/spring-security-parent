@@ -25,6 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //TODO 验证用户输入账号格式的逻辑
         log.info("【登录认证服务】用户：{}表单登录操作", username);
         UserDetailsVo userDetailsVo = new UserDetailsVo();
         com.xh.demo.domain.po.User user = userService.getByUserName(username);

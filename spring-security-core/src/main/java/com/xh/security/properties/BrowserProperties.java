@@ -23,6 +23,4 @@ public class BrowserProperties {
     /** 记住我功能的超时时间（默认7天） */
     private int rememberMeSeconds = 60 * 60 * 24 * 7;
 
-
-
 }

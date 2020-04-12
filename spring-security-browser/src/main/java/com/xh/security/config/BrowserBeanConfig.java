@@ -1,5 +1,6 @@
 package com.xh.security.config;
 
+import com.xh.security.consts.KeyConst;
 import com.xh.security.handler.CustomAuthenticationFailureHandler;
 import com.xh.security.handler.CustomAuthenticationSuccessHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,15 +19,15 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 public class BrowserBeanConfig {
 
     /** 配置登录成功处理器*/
-    @Bean("customAuthenticationSuccessHandler")
-    @ConditionalOnMissingBean(name = "customAuthenticationSuccessHandler")
+    @Bean(KeyConst.CUSTOM_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+    @ConditionalOnMissingBean(name = KeyConst.CUSTOM_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
         return new CustomAuthenticationSuccessHandler();
     }
 
     /** 配置登录失败处理器*/
-    @Bean("customAuthenticationFailureHandler")
-    @ConditionalOnMissingBean(name = "customAuthenticationFailureHandler")
+    @Bean(KeyConst.CUSTOM_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+    @ConditionalOnMissingBean(name = KeyConst.CUSTOM_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     public SimpleUrlAuthenticationFailureHandler failureHandler() {
         return new CustomAuthenticationFailureHandler();
     }

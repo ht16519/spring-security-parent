@@ -1,9 +1,9 @@
 package com.xh.security.config;
 
+import com.xh.security.authentiation.config.SmsCodeAuthenticationSecurityConfig;
 import com.xh.security.authentiation.generatator.DefaultImageCodeGenerator;
 import com.xh.security.authentiation.generatator.DefaultSmsCodeGenerator;
 import com.xh.security.authentiation.generatator.ValidateCodeGenerator;
-import com.xh.security.authentiation.mobile.config.SmsCodeAuthenticationSecurityConfig;
 import com.xh.security.authentiation.sms.DefaultSmsCodeSender;
 import com.xh.security.authentiation.sms.SmsCodeSender;
 import com.xh.security.properties.SecurityProperties;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 
 /**
  * @Name BeanConfig
@@ -51,7 +50,6 @@ public class CoreBeanConfig {
     }
 
     /** 短信验证码认证的安全配置类*/
-    @Lazy
     @Bean
     public SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig() {
         return new SmsCodeAuthenticationSecurityConfig();

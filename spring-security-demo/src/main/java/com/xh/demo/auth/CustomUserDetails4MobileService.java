@@ -29,7 +29,7 @@ public class CustomUserDetails4MobileService implements UserDetails4MobileServic
         UserDetailsVo userDetailsVo = new UserDetailsVo();
         com.xh.demo.domain.po.User user = userService.getByMobile(mobile);
         if (null == user) {
-            throw new UsernameNotFoundException("用户不存在");
+            throw new UsernameNotFoundException("手机号码不存在");
         }
         BeanUtils.copyProperties(user, userDetailsVo);
         return userDetailsVo;

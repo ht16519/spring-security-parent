@@ -40,12 +40,12 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
         log.info("登录失败...");
         String errorMessage;
-        if (e instanceof BadCredentialsException || e instanceof UsernameNotFoundException) {
+        if (e instanceof ValidateCodeException || e instanceof UsernameNotFoundException) {
+            errorMessage = e.getMessage();
+        } else if (e instanceof BadCredentialsException) {
             errorMessage = "用户名或者密码不正确";
         } else if (e instanceof LockedException) {
             errorMessage = "该用户已被冻结，请联系管理员";
-        } else if (e instanceof ValidateCodeException) {
-            errorMessage = e.getMessage();
         } else {
             errorMessage = "登录失败";
         }

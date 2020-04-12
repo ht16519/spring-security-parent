@@ -20,6 +20,12 @@ public interface KeyConst {
     /** 图片验证码处理器 bean 名称*/
     String IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME = "imageCodeValidProcessor";
 
+    /** 自定义登陆失败处理器 bean 名称*/
+    String CUSTOM_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME = "customAuthenticationFailureHandler";
+
+    /** 自定义登陆成功处理器 bean 名称*/
+    String CUSTOM_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME = "customAuthenticationSuccessHandler";
+
 
 
 }

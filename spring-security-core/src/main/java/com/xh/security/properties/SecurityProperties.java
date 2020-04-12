@@ -20,4 +20,8 @@ public class SecurityProperties {
 
     /** 验证码配置类*/
     private ValidateCodeProperties code = new ValidateCodeProperties();
+
+    /** 配置放行的访问路径路径 , 号分隔*/
+    private String permitUrls;
+
 }

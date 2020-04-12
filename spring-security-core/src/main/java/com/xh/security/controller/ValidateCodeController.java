@@ -1,5 +1,6 @@
 package com.xh.security.controller;
 
+import com.xh.security.authentiation.mobile.MobileValidator;
 import com.xh.security.consts.KeyConst;
 import com.xh.security.consts.URLConst;
 import com.xh.security.support.SimpleResponse;
@@ -60,7 +61,7 @@ public class ValidateCodeController {
         if (StringUtils.isBlank(mobile)) {
             return ResponseEntity.badRequest().body(SimpleResponse.build("请输入手机号码"));
         }
-        if (!mobile.matches("^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\\d{8}$")) {
+        if (!MobileValidator.isMobile(mobile)) {
             return ResponseEntity.badRequest().body(SimpleResponse.build("手机号码不正确"));
         }
         smsCodeSender.send(mobile, validateCode.getCode());

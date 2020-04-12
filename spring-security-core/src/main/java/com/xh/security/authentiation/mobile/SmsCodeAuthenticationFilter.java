@@ -4,6 +4,7 @@ import com.xh.security.consts.URLConst;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.Assert;
@@ -41,10 +42,12 @@ public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessin
                     "Authentication method not supported: " + request.getMethod());
         }
         String mobile = obtainMobile(request);
-        if (mobile == null) {
-            mobile = "";
+        if (mobile == null || mobile.trim().length() < 11) {
+            throw new UsernameNotFoundException("请输入正确的手机号码");
         }
-        mobile = mobile.trim();
+        if(!MobileValidator.isMobile(mobile)){
+            throw new UsernameNotFoundException("手机号码格式不正确");
+        }
         SmsCodeAuthenticationToken authRequest = new SmsCodeAuthenticationToken(mobile);
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);
