@@ -1,9 +1,10 @@
 package com.xh.security.handler;
 
+import com.xh.security.authentiation.oauth2.support.enums.AuthResponseStatus;
+import com.xh.security.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.enums.LoginEnum;
 import com.xh.security.exception.ValidateCodeException;
 import com.xh.security.properties.SecurityProperties;
-import com.xh.security.support.SimpleResponse;
 import com.xh.security.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
      */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-        log.info("登录失败...");
         String errorMessage;
         if (e instanceof ValidateCodeException || e instanceof UsernameNotFoundException) {
             errorMessage = e.getMessage();
@@ -49,8 +49,10 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         } else {
             errorMessage = "登录失败";
         }
+        e.getStackTrace();
+        log.info("登录失败:{}", errorMessage);
         if (LoginEnum.JSON.equals(securityProperties.getBrowser().getLoginType())) {
-            ResponseUtil.writer(SimpleResponse.build(errorMessage));
+            ResponseUtil.writer(new AuthResponse(AuthResponseStatus.FAILURE.getCode(), errorMessage), response);
         } else {
             request.setAttribute("msg", errorMessage);      //设置登录失败错误信息
             super.setDefaultFailureUrl(securityProperties.getBrowser().getLoginPage());

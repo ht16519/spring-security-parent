@@ -1,5 +1,6 @@
 package com.xh.demo.commons.utils;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -24,6 +25,8 @@ public class JsonUtil {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         //如果是空对象的时候,不抛异常
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //仅序列化不为空的值
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
     /**

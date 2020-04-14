@@ -1,5 +1,6 @@
 package com.xh.demo.auth;
 
+import com.xh.demo.domain.po.User;
 import com.xh.demo.domain.vo.UserDetailsVo;
 import com.xh.demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         //TODO 验证用户输入账号格式的逻辑
         log.info("【登录认证服务】用户：{}表单登录操作", username);
         UserDetailsVo userDetailsVo = new UserDetailsVo();
-        com.xh.demo.domain.po.User user = userService.getByUserName(username);
+        User user = userService.getByUserName(username);
         if(null == user){
             throw new UsernameNotFoundException("用户不存在");
         }

@@ -1,7 +1,8 @@
 package com.xh.demo.service;
 
 import com.xh.demo.domain.po.User;
-import java.lang.*;
+import com.xh.demo.domain.vo.UserDetails4OAuth2Vo;
+import com.xh.security.authentiation.oauth2.support.model.AuthUser;
 
 public interface UserService {
 
@@ -44,5 +45,9 @@ public interface UserService {
     User getByUserName(String username);
 
     User getByMobile(String mobile);
+
+    UserDetails4OAuth2Vo getByProviderId(String providerId);
+
+    UserDetails4OAuth2Vo register(AuthUser user);
 
 }

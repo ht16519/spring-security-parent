@@ -1,8 +1,9 @@
 package com.xh.demo.auth;
 
+import com.xh.demo.domain.po.User;
 import com.xh.demo.domain.vo.UserDetailsVo;
 import com.xh.demo.service.UserService;
-import com.xh.security.authentiation.mobile.details.UserDetails4MobileService;
+import com.xh.security.authentiation.validate.mobile.details.UserDetails4MobileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CustomUserDetails4MobileService implements UserDetails4MobileServic
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
         log.info("【登录认证服务】用户：{}手机登录操作", mobile);
         UserDetailsVo userDetailsVo = new UserDetailsVo();
-        com.xh.demo.domain.po.User user = userService.getByMobile(mobile);
+        User user = userService.getByMobile(mobile);
         if (null == user) {
             throw new UsernameNotFoundException("手机号码不存在");
         }

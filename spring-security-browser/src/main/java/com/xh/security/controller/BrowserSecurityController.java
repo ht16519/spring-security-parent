@@ -1,8 +1,9 @@
 package com.xh.security.controller;
 
+import com.xh.security.authentiation.oauth2.support.enums.AuthResponseStatus;
+import com.xh.security.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.consts.URLConst;
 import com.xh.security.properties.SecurityProperties;
-import com.xh.security.support.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class BrowserSecurityController {
      */
     @GetMapping(URLConst.REQUIRE_AUTHENTICATION_PATH)
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-    public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public AuthResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获取引发登录认证跳转的请求
         SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
         if (null != savedRequest) {
@@ -50,6 +51,6 @@ public class BrowserSecurityController {
                 new DefaultRedirectStrategy().sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
             }
         }
-        return SimpleResponse.build("访问的服务需要身份认证，请引导用户到登陆页面");
+        return AuthResponse.build(AuthResponseStatus.UNAUTHORIZED);
     }
 }

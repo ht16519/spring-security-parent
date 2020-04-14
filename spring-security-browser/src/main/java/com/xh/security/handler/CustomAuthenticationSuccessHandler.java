@@ -1,8 +1,8 @@
 package com.xh.security.handler;
 
+import com.xh.security.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.enums.LoginEnum;
 import com.xh.security.properties.SecurityProperties;
-import com.xh.security.support.SimpleResponse;
 import com.xh.security.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("登录成功...");
         if(LoginEnum.JSON.equals(securityProperties.getBrowser().getLoginType())){
-            ResponseUtil.writer(SimpleResponse.build(authentication.getPrincipal()));
+            ResponseUtil.writer(AuthResponse.success(authentication.getPrincipal()), response);
         }else {
             super.onAuthenticationSuccess(request, response, authentication);   //页面跳转
         }

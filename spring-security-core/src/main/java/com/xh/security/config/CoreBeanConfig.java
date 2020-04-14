@@ -1,11 +1,12 @@
 package com.xh.security.config;
 
-import com.xh.security.authentiation.config.SmsCodeAuthenticationSecurityConfig;
-import com.xh.security.authentiation.generatator.DefaultImageCodeGenerator;
-import com.xh.security.authentiation.generatator.DefaultSmsCodeGenerator;
-import com.xh.security.authentiation.generatator.ValidateCodeGenerator;
-import com.xh.security.authentiation.sms.DefaultSmsCodeSender;
-import com.xh.security.authentiation.sms.SmsCodeSender;
+import com.xh.security.authentiation.oauth2.config.OAuth2AuthenticationSecurityConfig;
+import com.xh.security.authentiation.validate.config.SmsCodeAuthenticationSecurityConfig;
+import com.xh.security.authentiation.validate.generatator.DefaultImageCodeGenerator;
+import com.xh.security.authentiation.validate.generatator.DefaultSmsCodeGenerator;
+import com.xh.security.authentiation.validate.generatator.ValidateCodeGenerator;
+import com.xh.security.authentiation.validate.sms.DefaultSmsCodeSender;
+import com.xh.security.authentiation.validate.sms.SmsCodeSender;
 import com.xh.security.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -53,6 +54,12 @@ public class CoreBeanConfig {
     @Bean
     public SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig() {
         return new SmsCodeAuthenticationSecurityConfig();
+    }
+
+    /** OAuth2.0认证的安全配置类*/
+    @Bean
+    public OAuth2AuthenticationSecurityConfig oauth2AuthenticationSecurityConfig() {
+        return new OAuth2AuthenticationSecurityConfig();
     }
 
 }

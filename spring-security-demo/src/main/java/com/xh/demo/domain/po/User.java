@@ -82,5 +82,8 @@ public class User implements Serializable{
      */
     private Integer sex;
 
+    @Column(name = "open_id")
+    private String openId;
+
 
 }

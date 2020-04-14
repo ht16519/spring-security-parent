@@ -1,5 +1,6 @@
 package com.xh.security.properties;
 
+import com.xh.security.properties.oauth2.OAuth2Properties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,5 +24,8 @@ public class SecurityProperties {
 
     /** 配置放行的访问路径路径 , 号分隔*/
     private String permitUrls;
+
+    /** OAuth2登录认证配置*/
+    private OAuth2Properties oauth2 = new OAuth2Properties();
 
 }

@@ -1,7 +1,9 @@
 package com.xh.demo.domain.vo;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -17,6 +19,8 @@ import java.util.Date;
  */
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
 public class UserDetailsVo implements UserDetails, CredentialsContainer {
 
     private Integer id;

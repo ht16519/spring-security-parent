@@ -15,6 +15,7 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
         <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="open_id" property="openId" jdbcType="INTEGER" />
     </resultMap>
 
     <delete id="batchDelete">
@@ -26,5 +27,27 @@
             #{id}
         </foreach>
     </delete>
+
+
+    <select id="selectByProviderId" resultType="com.xh.demo.domain.vo.UserDetails4OAuth2Vo">
+        SELECT
+            t_user.id,
+            t_user.email,
+            t_user.last_login,
+            t_user.mobile,
+            t_user.`password`,
+            t_user.`status`,
+            t_user.username,
+            t_user.nickname,
+            t_user.avatar,
+            t_user.create_time,
+            t_user.update_time,
+            t_user.sex
+        FROM
+            t_user
+        INNER JOIN t_oauth2_user_info ON t_oauth2_user_info.user_id = t_user.id
+        WHERE
+            t_oauth2_user_info.provider_id = #{providerId}
+    </select>
 
 </mapper>

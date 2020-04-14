@@ -1,6 +1,5 @@
 package com.xh.security.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.CharEncoding;
 import org.springframework.http.HttpStatus;
@@ -21,8 +20,6 @@ import java.io.PrintWriter;
 @Slf4j
 public class ResponseUtil {
 
-    public static final ObjectMapper objectMapper = new ObjectMapper();
-
     public static void writer(Object result) {
         writer(result, ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getResponse());
@@ -37,7 +34,7 @@ public class ResponseUtil {
         response.setCharacterEncoding(CharEncoding.UTF_8);
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         try (PrintWriter writer = response.getWriter()) {
-            writer.write(objectMapper.writeValueAsString(result));
+            writer.write(JsonUtil.serialize(result));
             writer.flush();
         } catch (IOException ex) {
             log.error("Web Response IOException:{}", ex);

@@ -17,6 +17,9 @@ public interface URLConst {
     /** 处理手机登录的请求路径*/
     String AUTHENTICATION_MOBILE_PATH = "/authentication/mobile";
 
+    /** 处理手机登录的请求路径*/
+    String AUTHENTICATION_OAUTH2_PATH = "/oauth2/callback";
+
     /** 认证处理请求路径*/
     String REQUIRE_AUTHENTICATION_PATH = "/authentication/require";
 
