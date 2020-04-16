@@ -46,7 +46,7 @@ public class AbstractSessionStrategy {
         String sourceUrl = request.getRequestURI();
         String targetUrl;
         if (StringUtils.endsWithIgnoreCase(sourceUrl, ".html")) {
-            targetUrl = destinationUrl + ".html";
+            targetUrl = destinationUrl;
             logger.info("session失效,跳转到" + targetUrl);
             response.sendRedirect(targetUrl);
         } else {

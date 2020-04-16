@@ -1,5 +1,6 @@
 package com.xh.security.properties;
 
+import com.xh.security.consts.URLConst;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,5 +21,5 @@ public class BrowserSessionProperties {
     private boolean maxSessionsPreventsLogin;
 
     /** session失效定重向地址*/
-    private String sessionInvalidUrl = "/simple-signIn-page.html";
+    private String sessionInvalidUrl = URLConst.SIMPLE_SIGNIN_PAGE_PATH;
 }

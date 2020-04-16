@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletRequest;
  * @Author wen
  * @Date 2020/4/9
  */
-@Setter
 public class DefaultSmsCodeGenerator implements ValidateCodeGenerator {
 
     private SecurityProperties securityProperties;
+
+    public DefaultSmsCodeGenerator(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
+    }
 
     @Override
     public ValidateCode generate(HttpServletRequest request) {

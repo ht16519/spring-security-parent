@@ -44,10 +44,8 @@ public class ValidateCodeController {
     @GetMapping(URLConst.VALIDATE_IMAGE_CODE_PATH)
     public void imageCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ImageCode imageCode = (ImageCode) imageCodeGenerator.generate(request);
-        BufferedImage image = imageCode.getImage();
-        imageCode.setImage(null);
-        request.getSession().setAttribute(KeyConst.CACHE_IMAGE_CODE_KEY, imageCode);
-        ImageIO.write(image, "JPEG", response.getOutputStream());
+        request.getSession().setAttribute(KeyConst.CACHE_IMAGE_CODE_KEY, ValidateCode.build(imageCode.getCode(), imageCode.getExpireTime()));
+        ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
     }
 
     /**

@@ -1,7 +1,5 @@
 package com.xh.security.config;
 
-import com.xh.security.authentiation.validate.config.SmsCodeAuthenticationSecurityConfig;
-import com.xh.security.authentiation.validate.config.ValidateCodeSecurityConfig;
 import com.xh.security.consts.KeyConst;
 import com.xh.security.consts.URLConst;
 import com.xh.security.properties.SecurityProperties;
@@ -34,24 +32,10 @@ import java.util.Set;
 public class BrowserSecurityConfig extends AbstractAuthenticationConfig {
 
     @Autowired
-    private SecurityProperties securityProperties;
-
-    @Bean("customPasswordEncoder")
-    @ConditionalOnMissingBean(name = "customPasswordEncoder")
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Autowired
     private DataSource dataSource;
     @Autowired
-    @Qualifier("customUserDetailsService")
+    @Qualifier(KeyConst.CUSTOM_USER_DETAILS_SERVICE_BEAN_NAME)
     private UserDetailsService userDetailsService;
-
-    @Autowired
-    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
-    @Autowired
-    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -69,16 +53,12 @@ public class BrowserSecurityConfig extends AbstractAuthenticationConfig {
     @Qualifier(KeyConst.TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME)
     private InvalidSessionStrategy timeExpiredSessionStrategy;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //加载父类配置
         applyPasswordAuthenticationConfig(http);
-        http.apply(validateCodeSecurityConfig)                  //将验证码认证逻辑配置加入
-                .and()
-            .apply(smsCodeAuthenticationSecurityConfig)         //将手机短信登录校验逻辑配置加入
-                .and()
-            .rememberMe()                                                   //配置记住我功能
+        //浏览器安全配置
+        http.rememberMe()                                                   //配置记住我功能
                 .tokenRepository(persistentTokenRepository())               //配置处理记住我token的数据库操作
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())   //配置记住我超时时间
                 .userDetailsService(userDetailsService)             //配置记住我认证的userDetails
@@ -103,13 +83,14 @@ public class BrowserSecurityConfig extends AbstractAuthenticationConfig {
      */
     private String[] permitUrls() {
         Set<String> permitUrlSet = new HashSet<>();
-        String permitUrls = securityProperties.getPermitUrls();
+        String permitUrls = securityProperties.getBrowser().getPermitUrls();
         for (String url : new String[]{
                 securityProperties.getBrowser().getLoginPage(),    //放行跳转到登录页面的请求
                 URLConst.REQUIRE_AUTHENTICATION_PATH,               //放行自定义登录认证请求处理Controller路径
                 URLConst.VALIDATE_IMAGE_CODE_PATH,                  //放行图片验证码生成路径
                 URLConst.VALIDATE_SMS_CODE_PATH,                    //放行短信验证码生成路径
                 URLConst.HANDLE_SESSION_INVALID_URL,                //放行处理session失效地址
+                URLConst.LOGOUT_PATH,                               //放行登出默认路径
                 "/static/**",                                       //放行静态资源
                 "/oauth2/**",
         }) {

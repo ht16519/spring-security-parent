@@ -1,5 +1,6 @@
 package com.xh.security.properties;
 
+import com.xh.security.consts.URLConst;
 import com.xh.security.enums.LoginEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,10 @@ import lombok.Setter;
 public class BrowserProperties {
 
     /** 默认统一登录认证页面 */
-    private String loginPage = "/simple-signIn-page.html";
+    private String loginPage = URLConst.SIMPLE_SIGNIN_PAGE_PATH;
+
+    /** 默认登出成功定向页面 */
+    private String logoutPage = this.loginPage;
 
     /** 认证结果返回类型 */
     private LoginEnum loginType = LoginEnum.JSON;
@@ -25,5 +29,8 @@ public class BrowserProperties {
 
     /** 浏览器session相关配置*/
     private BrowserSessionProperties session = new BrowserSessionProperties();
+
+    /** 配置放行的访问路径路径 , 号分隔*/
+    private String permitUrls;
 
 }

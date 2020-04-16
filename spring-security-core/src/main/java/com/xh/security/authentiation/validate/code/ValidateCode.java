@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +18,9 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ValidateCode {
+public class ValidateCode implements Serializable {
+
+    private static final long serialVersionUID = 6160591069915127038L;
 
     private String code;
 
@@ -25,6 +28,10 @@ public class ValidateCode {
 
     public static ValidateCode build(String code, int expireIn) {
         return new ValidateCode(code, LocalDateTime.now().plusSeconds(expireIn));
+    }
+
+    public static ValidateCode build(String code, LocalDateTime plusSeconds) {
+        return new ValidateCode(code, plusSeconds);
     }
 
     public boolean isExpire(){

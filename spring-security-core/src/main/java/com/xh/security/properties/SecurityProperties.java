@@ -1,5 +1,6 @@
 package com.xh.security.properties;
 
+import com.xh.security.consts.URLConst;
 import com.xh.security.properties.oauth2.OAuth2Properties;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,9 +23,9 @@ public class SecurityProperties {
     /** 验证码配置类*/
     private ValidateCodeProperties code = new ValidateCodeProperties();
 
-    /** 配置放行的访问路径路径 , 号分隔*/
-    private String permitUrls;
-
     /** OAuth2登录认证配置*/
     private OAuth2Properties oauth2 = new OAuth2Properties();
+
+    /**登出路径*/
+    private String logoutUrl = URLConst.LOGOUT_PATH;
 }

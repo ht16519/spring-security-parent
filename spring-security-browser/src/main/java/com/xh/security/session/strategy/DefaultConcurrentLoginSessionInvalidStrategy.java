@@ -1,12 +1,6 @@
-/**
- * 
- */
 package com.xh.security.session.strategy;
-
 import java.io.IOException;
-
 import javax.servlet.ServletException;
-
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 

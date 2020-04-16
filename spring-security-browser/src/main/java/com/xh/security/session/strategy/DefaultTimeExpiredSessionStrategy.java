@@ -1,7 +1,4 @@
-/**
- * 
- */
-package com.xh.security.handler.strategy;
+package com.xh.security.session.strategy;
 
 import java.io.IOException;
 
@@ -9,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.xh.security.session.strategy.AbstractSessionStrategy;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 
 /**

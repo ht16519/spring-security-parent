@@ -5,7 +5,6 @@ import com.xh.security.enums.LoginEnum;
 import com.xh.security.properties.SecurityProperties;
 import com.xh.security.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
@@ -21,10 +20,14 @@ import java.io.IOException;
  * @Date 2020-04-09
  */
 @Slf4j
-public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class DefaultAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    @Autowired
     private SecurityProperties securityProperties;
+
+    public DefaultAuthenticationSuccessHandler(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
+    }
+
     /**
     * @Name onAuthenticationSuccess
     * @Description 该方法登录成功会被调用

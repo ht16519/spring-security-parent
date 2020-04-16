@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,15 +53,4 @@ public class BrowserSecurityController {
         return AuthResponse.build(AuthResponseStatus.UNAUTHORIZED);
     }
 
-    /**
-    * @Name sessionInvalid
-    * @Description session超时失效处理地址
-    * @Author wen
-    * @Date 2020/4/16
-    */
-    @GetMapping(URLConst.HANDLE_SESSION_INVALID_URL)
-    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-    public AuthResponse sessionInvalid(){
-        return AuthResponse.failure(AuthResponseStatus.UNAUTHORIZED, "session已失效，请重新登录");
-    }
 }

@@ -3,9 +3,8 @@
  */
 package com.xh.security.authentiation.validate.generatator;
 
-import com.xh.security.properties.SecurityProperties;
 import com.xh.security.authentiation.validate.code.ImageCode;
-import lombok.Setter;
+import com.xh.security.properties.SecurityProperties;
 import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +18,13 @@ import java.util.Random;
  * @Author wen
  * @Date 2020/4/9
  */
-@Setter
 public class DefaultImageCodeGenerator implements ValidateCodeGenerator {
 
     private SecurityProperties securityProperties;
+
+    public DefaultImageCodeGenerator(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
+    }
 
     @Override
     public ImageCode generate(HttpServletRequest request) {

@@ -31,4 +31,7 @@ public interface URLConst {
 
     /** session超时失效处理地址*/
     String HANDLE_SESSION_INVALID_URL = "/session/invalid";
+
+    /** session超时失效处理地址*/
+    String LOGOUT_PATH = "/oauth/logout";
 }
