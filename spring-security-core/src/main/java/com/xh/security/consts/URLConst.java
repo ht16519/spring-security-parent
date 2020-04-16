@@ -28,4 +28,7 @@ public interface URLConst {
 
     /** 手机验证码请求路径*/
     String VALIDATE_SMS_CODE_PATH = "/code/sms";
+
+    /** session超时失效处理地址*/
+    String HANDLE_SESSION_INVALID_URL = "/session/invalid";
 }

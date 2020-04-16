@@ -55,14 +55,20 @@ public class AuthResponse<T> implements Serializable {
         return build(AuthResponseStatus.FAILURE);
     }
 
+    public static AuthResponse failure(String msg) {
+        return new AuthResponse(AuthResponseStatus.FAILURE.getCode(), msg);
+    }
+
+    public static AuthResponse failure(AuthResponseStatus status, String msg) {
+        return new AuthResponse(status.getCode(), msg);
+    }
+
     public static <T> AuthResponse success(T data) {
         return build(AuthResponseStatus.SUCCESS, data);
     }
 
-
     /**
      * 是否请求成功
-     *
      * @return true or false
      */
     public boolean ok() {

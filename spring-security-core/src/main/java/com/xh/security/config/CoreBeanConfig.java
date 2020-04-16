@@ -7,11 +7,14 @@ import com.xh.security.authentiation.validate.generatator.DefaultSmsCodeGenerato
 import com.xh.security.authentiation.validate.generatator.ValidateCodeGenerator;
 import com.xh.security.authentiation.validate.sms.DefaultSmsCodeSender;
 import com.xh.security.authentiation.validate.sms.SmsCodeSender;
+import com.xh.security.consts.KeyConst;
 import com.xh.security.properties.SecurityProperties;
+import com.xh.security.session.strategy.DefaultConcurrentLoginSessionInvalidStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 
 /**
  * @Name BeanConfig
@@ -60,6 +63,13 @@ public class CoreBeanConfig {
     @Bean
     public OAuth2AuthenticationSecurityConfig oauth2AuthenticationSecurityConfig() {
         return new OAuth2AuthenticationSecurityConfig();
+    }
+
+    /** 配置默认并发登录时session失效处理策略*/
+    @Bean(KeyConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
+    @ConditionalOnMissingBean(name = KeyConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
+    public SessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
+        return new DefaultConcurrentLoginSessionInvalidStrategy(securityProperties.getBrowser().getSession().getSessionInvalidUrl());
     }
 
 }

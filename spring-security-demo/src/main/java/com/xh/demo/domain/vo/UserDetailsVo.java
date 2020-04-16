@@ -109,4 +109,19 @@ public class UserDetailsVo implements UserDetails, CredentialsContainer {
     public void eraseCredentials() {
         password = null;
     }
+
+    @Override
+    public String toString() {
+        return this.username;
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.toString().equals(obj.toString());
+    }
 }

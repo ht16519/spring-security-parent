@@ -26,6 +26,12 @@ public interface KeyConst {
     /** 自定义登陆成功处理器 bean 名称*/
     String CUSTOM_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME = "customAuthenticationSuccessHandler";
 
+    /** 并发登录时session失效处理 bean 名称*/
+    String CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME = "concurrentLoginSessionInvalidStrategy";
+
+    /** session超时失效处理 bean 名称*/
+    String TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME = "timeExpiredSessionStrategy";
+
 
 
 }

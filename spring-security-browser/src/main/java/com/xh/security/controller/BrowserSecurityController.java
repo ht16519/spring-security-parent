@@ -48,9 +48,21 @@ public class BrowserSecurityController {
             log.info("【登录认证服务】引发认证跳转请求的路径:{}", redirectUrl);
             if (StringUtils.endsWithIgnoreCase(redirectUrl, ".html")) {
                 //判断请求以.html结尾，则跳转到指定登录页
-                new DefaultRedirectStrategy().sendRedirect(request, response, securityProperties.getBrowser().getLoginPage());
+                response.sendRedirect(securityProperties.getBrowser().getLoginPage());
             }
         }
         return AuthResponse.build(AuthResponseStatus.UNAUTHORIZED);
+    }
+
+    /**
+    * @Name sessionInvalid
+    * @Description session超时失效处理地址
+    * @Author wen
+    * @Date 2020/4/16
+    */
+    @GetMapping(URLConst.HANDLE_SESSION_INVALID_URL)
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    public AuthResponse sessionInvalid(){
+        return AuthResponse.failure(AuthResponseStatus.UNAUTHORIZED, "session已失效，请重新登录");
     }
 }
