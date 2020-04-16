@@ -1,6 +1,6 @@
 package com.xh.security.authentiation.validate.config;
 
-import com.xh.security.authentiation.oauth2.OAuth2AuthenticationFilter;
+import com.xh.security.authentiation.oauth2.SocialAuthenticationFilter;
 import com.xh.security.authentiation.validate.mobile.SmsCodeAuthenticationFilter;
 import com.xh.security.authentiation.validate.mobile.SmsCodeAuthenticationProvider;
 import com.xh.security.authentiation.validate.mobile.details.UserDetails4MobileService;
@@ -43,6 +43,6 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
         SmsCodeAuthenticationProvider provider = new SmsCodeAuthenticationProvider();
         provider.setUserDetails4MobileService(userDetails4MobileService);
         http.authenticationProvider(provider)
-                .addFilterAfter(filter, OAuth2AuthenticationFilter.class);
+                .addFilterAfter(filter, SocialAuthenticationFilter.class);
     }
 }

@@ -1,8 +1,8 @@
 package com.xh.security.authentiation.oauth2.config;
 
-import com.xh.security.authentiation.oauth2.OAuth2AuthenticationFilter;
-import com.xh.security.authentiation.oauth2.OAuth2AuthenticationProvider;
-import com.xh.security.authentiation.oauth2.details.UserDetails4OAuth2Service;
+import com.xh.security.authentiation.oauth2.SocialAuthenticationFilter;
+import com.xh.security.authentiation.oauth2.SocialAuthenticationProvider;
+import com.xh.security.authentiation.oauth2.details.SocialUserDetailsService;
 import com.xh.security.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.consts.KeyConst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,21 +32,21 @@ public class OAuth2AuthenticationSecurityConfig extends SecurityConfigurerAdapte
     @Qualifier(KeyConst.CUSTOM_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     private AuthenticationFailureHandler failureHandler;
     @Autowired
-    private UserDetails4OAuth2Service userDetails4OAuth2Service;
+    private SocialUserDetailsService userDetails4OAuth2Service;
     @Autowired
     private Map<String, AuthRequest> authRequestMap;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         //配置OAuth2登录认证过滤器
-        OAuth2AuthenticationFilter filter = new OAuth2AuthenticationFilter();
+        SocialAuthenticationFilter filter = new SocialAuthenticationFilter();
         filter.setAuthRequestMap(authRequestMap);
         filter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);
 
         //配置处理OAuth2AuthenticationFilter的provider
-        OAuth2AuthenticationProvider provider = new OAuth2AuthenticationProvider();
+        SocialAuthenticationProvider provider = new SocialAuthenticationProvider();
         provider.setUserDetails4OAuth2Service(userDetails4OAuth2Service);
         http.authenticationProvider(provider)
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);

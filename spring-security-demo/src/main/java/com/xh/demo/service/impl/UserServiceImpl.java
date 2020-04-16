@@ -6,7 +6,7 @@ import com.xh.demo.dao.mapper.Oauth2UserInfoMapper;
 import com.xh.demo.dao.mapper.UserMapper;
 import com.xh.demo.domain.po.Oauth2UserInfo;
 import com.xh.demo.domain.po.User;
-import com.xh.demo.domain.vo.UserDetails4OAuth2Vo;
+import com.xh.demo.domain.vo.SocialUserDetailsVo;
 import com.xh.demo.service.UserService;
 import com.xh.security.authentiation.oauth2.support.model.AuthUser;
 import lombok.extern.slf4j.Slf4j;
@@ -65,13 +65,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails4OAuth2Vo getByProviderId(String providerId) {
+    public SocialUserDetailsVo getByProviderId(String providerId) {
         return userMapper.selectByProviderId(providerId);
     }
 
     @Override
     @Transactional
-    public UserDetails4OAuth2Vo register(AuthUser authUser) {
+    public SocialUserDetailsVo register(AuthUser authUser) {
         //1.静默注册新用户
         User user = User.builder()
                 .avatar(authUser.getAvatar())
@@ -82,17 +82,17 @@ public class UserServiceImpl implements UserService {
                 .status(10)
                 .build();
         int res = userMapper.insertSelective(user);
-        UserDetails4OAuth2Vo userDetails4OAuth2Vo = null;
+        SocialUserDetailsVo userDetails4OAuth2Vo = null;
         if (res > 0) {
             //2.关联第三方信息表
             oauth2UserInfoMapper.insertSelective(Oauth2UserInfo.builder()
                     .createTime(new Date())
-                    .provider(authUser.getSource())
+                    .source(authUser.getSource())
                     .userId(Long.valueOf(user.getId()))
                     .providerId(authUser.getUuid())
                     .build());
             //3.返回用户信息
-            userDetails4OAuth2Vo = new UserDetails4OAuth2Vo();
+            userDetails4OAuth2Vo = new SocialUserDetailsVo();
             BeanUtils.copyProperties(user, userDetails4OAuth2Vo);
         }
         return userDetails4OAuth2Vo;

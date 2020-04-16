@@ -1,7 +1,7 @@
 package com.xh.security.authentiation.oauth2.details;
 
 import com.xh.security.authentiation.oauth2.support.model.AuthUser;
-import com.xh.security.authentiation.oauth2.support.model.UserDetails4OAuth2;
+import com.xh.security.authentiation.oauth2.support.model.SocialUserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
@@ -10,10 +10,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * @Author wen
  * @Date 2020-04-10
  */
-public interface UserDetails4OAuth2Service {
+public interface SocialUserDetailsService {
 
     /** 通过提供商唯一凭证查询用户*/
-    UserDetails4OAuth2 loadUserByProviderId(String providerId) throws UsernameNotFoundException;
+    SocialUserDetails loadUserByProviderId(String providerId) throws UsernameNotFoundException;
 
     /**
     * @Name silenceRegister
@@ -23,5 +23,5 @@ public interface UserDetails4OAuth2Service {
     * @param authUser 提供从第三方获取到的用户信息
     * @return UserDetails 返回注册成功后的用户信息
     */
-    UserDetails4OAuth2 silenceRegister(AuthUser authUser);
+    SocialUserDetails silenceRegister(AuthUser authUser);
 }

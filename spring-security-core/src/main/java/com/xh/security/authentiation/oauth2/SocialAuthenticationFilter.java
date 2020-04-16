@@ -11,12 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetailsSource;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -25,7 +22,7 @@ import java.util.Map;
  * @Author wen
  * @Date 2020-04-10
  */
-public class OAuth2AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class SocialAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private boolean postOnly = true;
 
@@ -36,7 +33,7 @@ public class OAuth2AuthenticationFilter extends AbstractAuthenticationProcessing
     // ~ Constructors
     // ===================================================================================================
 
-    public OAuth2AuthenticationFilter() {
+    public SocialAuthenticationFilter() {
         super(new AntPathRequestMatcher(URLConst.AUTHENTICATION_OAUTH2_PATH, "GET"));
     }
 
@@ -56,7 +53,7 @@ public class OAuth2AuthenticationFilter extends AbstractAuthenticationProcessing
 
         AuthChecker.checkCode(authRequest.getSource(), authCallback);
 
-        OAuth2AuthenticationToken token = new OAuth2AuthenticationToken(authRequest.getAuthUser(authCallback));
+        SocialAuthenticationToken token = new SocialAuthenticationToken(authRequest.getAuthUser(authCallback));
         // Allow subclasses to set the "details" property
         setDetails(request, token);
 
@@ -72,7 +69,7 @@ public class OAuth2AuthenticationFilter extends AbstractAuthenticationProcessing
      * set
      */
     protected void setDetails(HttpServletRequest request,
-                              OAuth2AuthenticationToken authRequest) {
+                              SocialAuthenticationToken authRequest) {
         request.getSession();
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }

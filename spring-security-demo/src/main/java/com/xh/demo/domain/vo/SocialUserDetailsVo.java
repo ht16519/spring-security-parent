@@ -1,6 +1,6 @@
 package com.xh.demo.domain.vo;
 
-import com.xh.security.authentiation.oauth2.support.model.UserDetails4OAuth2;
+import com.xh.security.authentiation.oauth2.support.model.SocialUserDetails;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @NoArgsConstructor
-public class UserDetails4OAuth2Vo extends UserDetailsVo implements UserDetails4OAuth2<Integer>{
+public class SocialUserDetailsVo extends UserDetailsVo implements SocialUserDetails<Integer> {
 
     @Override
     public Integer getUserId() {

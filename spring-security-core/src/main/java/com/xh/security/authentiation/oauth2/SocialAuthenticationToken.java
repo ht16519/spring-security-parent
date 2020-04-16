@@ -12,7 +12,7 @@ import java.util.Collection;
  * @Author wen
  * @Date 2020-04-10
  */
-public class OAuth2AuthenticationToken extends AbstractAuthenticationToken {
+public class SocialAuthenticationToken extends AbstractAuthenticationToken {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
@@ -29,7 +29,7 @@ public class OAuth2AuthenticationToken extends AbstractAuthenticationToken {
      * <code>UsernamePasswordAuthenticationToken</code>, as the {@link #isAuthenticated()}
      * will return <code>false</code>.
      */
-    public OAuth2AuthenticationToken(Object openId) {
+    public SocialAuthenticationToken(Object openId) {
         super(null);
         this.principal = openId;
         setAuthenticated(false);
@@ -44,7 +44,7 @@ public class OAuth2AuthenticationToken extends AbstractAuthenticationToken {
      * @param principal
      * @param authorities
      */
-    public OAuth2AuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
+    public SocialAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         super.setAuthenticated(true); // must use super, as we override
