@@ -31,13 +31,13 @@ public class AbstractAuthenticationConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     @Qualifier(KeyConst.CUSTOM_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
-    private AuthenticationSuccessHandler successHandler;
+    protected AuthenticationSuccessHandler successHandler;
     @Autowired
     @Qualifier(KeyConst.CUSTOM_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
-    private AuthenticationFailureHandler failureHandler;
+    protected AuthenticationFailureHandler failureHandler;
     @Autowired
     @Qualifier(KeyConst.CUSTOM_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
-    private LogoutSuccessHandler logoutSuccessHandler;
+    protected LogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
@@ -51,17 +51,7 @@ public class AbstractAuthenticationConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .apply(validateCodeSecurityConfig)                  //将验证码认证逻辑配置加入
                 .and()
-            .apply(smsCodeAuthenticationSecurityConfig)         //将手机短信登录校验逻辑配置加入
-                .and()
-            .formLogin()
-                .loginPage(URLConst.REQUIRE_AUTHENTICATION_PATH)                //自定义登录认证请求处理Controller路径1.2
-                .loginProcessingUrl(URLConst.AUTHENTICATION_FORM_PATH)              //自定义处理登录页面的请求路径1.1
-                .successHandler(successHandler)                             //使用自定义登录成功处理器
-                .failureHandler(failureHandler)                             //使用自定义登录失败处理器
-                .and()
-            .logout()
-                .logoutUrl(securityProperties.getLogoutUrl())
-                .logoutSuccessHandler(logoutSuccessHandler);
+            .apply(smsCodeAuthenticationSecurityConfig);         //将手机短信登录校验逻辑配置加入
     }
 
 }

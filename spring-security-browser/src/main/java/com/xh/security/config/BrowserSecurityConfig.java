@@ -58,7 +58,18 @@ public class BrowserSecurityConfig extends AbstractAuthenticationConfig {
         //加载父类配置
         applyPasswordAuthenticationConfig(http);
         //浏览器安全配置
-        http.rememberMe()                                                   //配置记住我功能
+        http.formLogin()
+                .loginPage(URLConst.REQUIRE_AUTHENTICATION_PATH)                //自定义登录认证请求处理Controller路径1.2
+                .loginProcessingUrl(URLConst.AUTHENTICATION_FORM_PATH)              //自定义处理登录页面的请求路径1.1
+                .successHandler(successHandler)                             //使用自定义登录成功处理器
+                .failureHandler(failureHandler)                             //使用自定义登录失败处理器
+                .and()
+            .logout()
+                .logoutUrl(securityProperties.getLogoutUrl())               //用户登出请求地址
+                .logoutSuccessHandler(logoutSuccessHandler)                 //登出成功处理器
+                .deleteCookies("JSESSIONID")                               //删除cookies
+                .and()
+            .rememberMe()                                                   //配置记住我功能
                 .tokenRepository(persistentTokenRepository())               //配置处理记住我token的数据库操作
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())   //配置记住我超时时间
                 .userDetailsService(userDetailsService)             //配置记住我认证的userDetails
