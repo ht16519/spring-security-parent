@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xh.demo.dao.mapper.Oauth2UserInfoMapper" >
+
+    <resultMap id="BaseResultMap" type="com.xh.demo.domain.po.Oauth2UserInfo" >
+        <id column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="source" property="source" jdbcType="VARCHAR" />
+        <result column="provider_id" property="providerId" jdbcType="VARCHAR" />
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="INTEGER" />
+    </resultMap>
+
+    <delete id="batchDelete">
+        DELETE FROM
+            t_oauth2_user_info
+        WHERE
+            state IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
