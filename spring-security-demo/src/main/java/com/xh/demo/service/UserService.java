@@ -1,8 +1,8 @@
 package com.xh.demo.service;
 
 import com.xh.demo.domain.po.User;
-import com.xh.demo.domain.vo.SocialUserDetailsVo;
-import com.xh.security.authentiation.oauth2.support.model.AuthUser;
+import com.xh.demo.domain.auth.SocialUserDetailsVo;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 
 public interface UserService {
 

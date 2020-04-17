@@ -1,9 +1,9 @@
 package com.xh.demo.auth;
 
 import com.xh.demo.domain.po.User;
-import com.xh.demo.domain.vo.UserDetailsVo;
+import com.xh.demo.domain.auth.UserDetailsVo;
 import com.xh.demo.service.UserService;
-import com.xh.security.authentiation.validate.mobile.details.UserDetails4MobileService;
+import com.xh.security.core.authentiation.validate.mobile.details.UserDetails4MobileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

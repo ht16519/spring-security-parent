@@ -45,9 +45,15 @@
             </exclusions>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>com.xh</groupId>-->
+            <!--<artifactId>spring-security-browser</artifactId>-->
+            <!--<version>${xh.security.version}</version>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>com.xh</groupId>
-            <artifactId>spring-security-browser</artifactId>
+            <artifactId>spring-security-app</artifactId>
             <version>${xh.security.version}</version>
         </dependency>
 

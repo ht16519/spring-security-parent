@@ -1,0 +1,124 @@
+package com.xh.security.core.authentiation.oauth2.support.request;
+
+import com.alibaba.fastjson.JSONObject;
+import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
+import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
+import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
+import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
+import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthToken;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
+import com.xh.security.core.authentiation.oauth2.support.utils.UrlBuilder;
+import com.xkcoding.http.HttpUtil;
+import org.apache.commons.lang3.StringUtils;
+
+/**
+ * 百度账号登录
+ */
+public class AuthBaiduRequest extends AuthDefaultRequest {
+
+    public AuthBaiduRequest(AuthConfig config) {
+        super(config, AuthDefaultSource.BAIDU);
+    }
+
+    public AuthBaiduRequest(AuthConfig config, AuthStateCache authStateCache) {
+        super(config, AuthDefaultSource.BAIDU, authStateCache);
+    }
+
+    @Override
+    protected AuthToken getAccessToken(AuthCallback authCallback) {
+        String response = doPostAuthorizationCode(authCallback.getCode());
+        return getAuthToken(response);
+    }
+
+    @Override
+    protected AuthUser getUserInfo(AuthToken authToken) {
+        String userInfo = doGetUserInfo(authToken);
+        JSONObject object = JSONObject.parseObject(userInfo);
+        this.checkResponse(object);
+        return AuthUser.builder()
+            .uuid(object.getString("userid"))
+            .username(object.getString("username"))
+            .nickname(object.getString("username"))
+            .avatar(getAvatar(object))
+            .remark(object.getString("userdetail"))
+            .gender(AuthUserGender.getRealGender(object.getString("sex")))
+            .token(authToken)
+            .source(source.toString())
+            .build();
+    }
+
+    private String getAvatar(JSONObject object) {
+        String protrait = object.getString("portrait");
+        return StringUtils.isEmpty(protrait) ? null : String.format("http://himg.bdimg.com/sys/portrait/item/%s.jpg", protrait);
+    }
+
+    @Override
+    public AuthResponse revoke(AuthToken authToken) {
+        String response = doGetRevoke(authToken);
+        JSONObject object = JSONObject.parseObject(response);
+        this.checkResponse(object);
+        // 返回1表示取消授权成功，否则失败
+        AuthResponseStatus status = object.getIntValue("result") == 1 ? AuthResponseStatus.SUCCESS : AuthResponseStatus.FAILURE;
+        return AuthResponse.builder().code(status.getCode()).msg(status.getMsg()).build();
+    }
+
+    @Override
+    public AuthResponse refresh(AuthToken authToken) {
+        String refreshUrl = UrlBuilder.fromBaseUrl(this.source.refresh())
+            .queryParam("grant_type", "refresh_token")
+            .queryParam("refresh_token", authToken.getRefreshToken())
+            .queryParam("client_id", this.config.getClientId())
+            .queryParam("client_secret", this.config.getClientSecret())
+            .build();
+        String response = HttpUtil.get(refreshUrl);
+        return AuthResponse.builder()
+            .code(AuthResponseStatus.SUCCESS.getCode())
+            .data(this.getAuthToken(response))
+            .build();
+    }
+
+    /**
+     * 返回带{@code state}参数的授权url，授权回调时会带上这个{@code state}
+     *
+     * @param state state 验证授权流程的参数，可以防止csrf
+     * @return 返回授权地址
+     * @since 1.9.3
+     */
+    @Override
+    public String authorize(String state) {
+        return UrlBuilder.fromBaseUrl(source.authorize())
+            .queryParam("response_type", "code")
+            .queryParam("client_id", config.getClientId())
+            .queryParam("redirect_uri", config.getRedirectUri())
+            .queryParam("display", "popup")
+            .queryParam("state", getRealState(state))
+            .build();
+    }
+
+    /**
+     * 检查响应内容是否正确
+     *
+     * @param object 请求响应内容
+     */
+    private void checkResponse(JSONObject object) {
+        if (object.containsKey("error") || object.containsKey("error_code")) {
+            String msg = object.containsKey("error_description") ? object.getString("error_description") : object.getString("error_msg");
+            throw new AuthException(msg);
+        }
+    }
+
+    private AuthToken getAuthToken(String response) {
+        JSONObject accessTokenObject = JSONObject.parseObject(response);
+        this.checkResponse(accessTokenObject);
+        return AuthToken.builder()
+            .accessToken(accessTokenObject.getString("access_token"))
+            .refreshToken(accessTokenObject.getString("refresh_token"))
+            .scope(accessTokenObject.getString("scope"))
+            .expireIn(accessTokenObject.getIntValue("expires_in"))
+            .build();
+    }
+}

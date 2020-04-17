@@ -1,0 +1,6 @@
+security:
+  oauth2:
+    client:
+      clientId: ht16519
+      clientSecret: ht17520
+      registeredRedirectUri: http://example.com

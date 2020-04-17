@@ -24,6 +24,8 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   session:
     store-type: none
+  profiles:
+    active: app
 mybatis:
   mapper-locations: classpath:mappers/*Mapper.xml
   type-aliases-package: com.xh.demo.domain.po
@@ -37,11 +39,3 @@ mapper:
 logging:
   level:
     com.xh.demo.dao.mapper: debug
-#配置OAuth2.0登录认证信息
-xh:
-  security:
-    oauth2:
-      siteDomain: http://ih27ua.natappfree.cc
-      gitee:
-        clientId: 4b8901f6a1942bc4da2f5e439b6412158eff55719f60808f9d7065ee44a103e4
-        clientSecret: f56c7e6666d52b30f8e816bbe09a37df5b47485f0d9a7a851aa5fd9df44b41f0

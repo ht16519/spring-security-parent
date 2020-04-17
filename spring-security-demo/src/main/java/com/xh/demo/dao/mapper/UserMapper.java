@@ -2,7 +2,7 @@ package com.xh.demo.dao.mapper;
 
 import com.xh.demo.dao.base.IBaseMapper;
 import com.xh.demo.domain.po.User;
-import com.xh.demo.domain.vo.SocialUserDetailsVo;
+import com.xh.demo.domain.auth.SocialUserDetailsVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

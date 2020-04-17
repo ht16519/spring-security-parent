@@ -1,9 +1,9 @@
 package com.xh.demo.auth;
 
 import com.xh.demo.service.UserService;
-import com.xh.security.authentiation.oauth2.details.SocialUserDetailsService;
-import com.xh.security.authentiation.oauth2.support.model.AuthUser;
-import com.xh.security.authentiation.oauth2.support.model.SocialUserDetails;
+import com.xh.security.core.authentiation.oauth2.details.SocialUserDetailsService;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
+import com.xh.security.core.authentiation.oauth2.support.model.SocialUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -2,7 +2,7 @@ package com.xh.demo.commons.utils;
 
 import com.xh.demo.commons.enums.MessageEnum;
 import com.xh.demo.commons.exception.BusinessException;
-import com.xh.demo.domain.vo.UserDetailsVo;
+import com.xh.demo.domain.auth.UserDetailsVo;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
