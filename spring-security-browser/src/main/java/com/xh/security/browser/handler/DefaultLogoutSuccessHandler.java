@@ -31,7 +31,7 @@ public class DefaultLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("登出成功...");
-        ResponseUtil.writer(AuthResponse.build(AuthResponseStatus.SUCCESS, "登出成功"), response);
+        ResponseUtil.write(AuthResponse.build(AuthResponseStatus.SUCCESS, "登出成功"), response);
     }
 
 }

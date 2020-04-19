@@ -54,7 +54,7 @@ public class AbstractSessionStrategy {
             if (isConcurrency()) {
                 message = message + "，用户已在其他设备登录（若非本人操作，请及时修改密码）";
             }
-            ResponseUtil.writer(AuthResponse.failure(AuthResponseStatus.UNAUTHORIZED, message), response);
+            ResponseUtil.write(AuthResponse.failure(AuthResponseStatus.UNAUTHORIZED, message), response);
         }
 
     }

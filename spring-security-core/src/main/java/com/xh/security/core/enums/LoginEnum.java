@@ -2,7 +2,7 @@ package com.xh.security.core.enums;
 
 /**
  * @Name LoginEnum
- * @Description
+ * @Description 登录成功操作凡是
  * @Author wen
  * @Date 2020-04-09
  */

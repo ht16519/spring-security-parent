@@ -15,19 +15,17 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 public class ImageCode extends ValidateCode {
 
     private BufferedImage image;
 
-    public ImageCode(BufferedImage image, String code, LocalDateTime plusSeconds) {
-        super(code, plusSeconds);
+    public ImageCode(BufferedImage image, String code, long expireTime) {
+        super(code, expireTime);
         this.image = image;
     }
 
-    public static ImageCode build(BufferedImage image, String code, int expireIn) {
-        return new ImageCode(image, code, LocalDateTime.now().plusSeconds(expireIn));
+    public static ImageCode build(BufferedImage image, String code, long expireTime){
+        return new ImageCode(image, code, expireTime);
     }
-
 
 }

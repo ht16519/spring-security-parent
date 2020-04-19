@@ -8,7 +8,7 @@ import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatu
 import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
-import com.xh.security.core.consts.CommonUtil;
+import com.xh.security.core.consts.CommonConst;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -128,7 +128,7 @@ public class AuthChecker {
     public static AuthRequest checkStateAndGetAuthRequest(Map<String, AuthRequest> authRequestMap, HttpServletRequest request) {
         String state = request.getParameter("state");
         String[] split;
-        if (null == state || (split = state.split(CommonUtil.COLON)).length != 2) {
+        if (null == state || (split = state.split(CommonConst.COLON)).length != 2) {
             throw new UsernameNotFoundException("非法请求");
         }
         AuthRequest authRequest = authRequestMap.get(split[0]);

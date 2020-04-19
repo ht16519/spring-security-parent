@@ -39,7 +39,7 @@ public class DefaultAuthenticationFailureHandler extends SimpleUrlAuthentication
         e.getStackTrace();
         log.info("登录失败:{}", errorMessage);
         if (LoginEnum.JSON.equals(securityProperties.getBrowser().getLoginType())) {
-            ResponseUtil.writer(new AuthResponse(AuthResponseStatus.FAILURE.getCode(), errorMessage), response);
+            ResponseUtil.write(new AuthResponse(AuthResponseStatus.FAILURE.getCode(), errorMessage), response);
         } else {
             request.setAttribute("msg", errorMessage);      //设置登录失败错误信息
             super.setDefaultFailureUrl(securityProperties.getBrowser().getLoginPage());

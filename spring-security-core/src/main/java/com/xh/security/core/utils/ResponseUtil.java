@@ -20,16 +20,16 @@ import java.io.PrintWriter;
 @Slf4j
 public class ResponseUtil {
 
-    public static void writer(Object result) {
-        writer(result, ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+    public static void write(Object result) {
+        write(result, ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                 .getResponse());
     }
 
-    public static void writer(Object result, HttpServletResponse response) {
-        writer(result, response, HttpStatus.OK.value());
+    public static void write(Object result, HttpServletResponse response) {
+        write(result, response, HttpStatus.OK.value());
     }
 
-    public static void writer(Object result, HttpServletResponse response, int httpStatus) {
+    public static void write(Object result, HttpServletResponse response, int httpStatus) {
         response.setStatus(httpStatus);
         response.setCharacterEncoding(CharEncoding.UTF_8);
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
@@ -37,7 +37,7 @@ public class ResponseUtil {
             writer.write(JsonUtil.serialize(result));
             writer.flush();
         } catch (IOException ex) {
-            log.error("Web Response IOException:{}", ex);
+            log.error("【Response响应服务】Web Response IOException:{}", ex);
         }
     }
 

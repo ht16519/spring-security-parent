@@ -1,6 +1,6 @@
 package com.xh.security.core.authentiation.oauth2.support.utils;
 
-import com.xh.security.core.consts.CommonUtil;
+import com.xh.security.core.consts.CommonConst;
 
 /**
  * AuthState工具类，默认只提供一个创建随机uuid的方法
@@ -14,6 +14,6 @@ public class AuthStateUtils {
      * @return 随机的state字符串
      */
     public static String createState(String type) {
-        return type + CommonUtil.COLON + UuidUtils.getUUID();
+        return type + CommonConst.COLON + UuidUtils.getUUID();
     }
 }

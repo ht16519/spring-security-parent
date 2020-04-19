@@ -14,7 +14,9 @@ public interface AuthCache {
      * @param key   缓存KEY
      * @param value 缓存内容
      */
-    void set(String key, String value);
+    default void set(String key, String value) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * 设置缓存，指定过期时间
@@ -23,7 +25,9 @@ public interface AuthCache {
      * @param value   缓存内容
      * @param timeout 指定缓存过期时间（毫秒）
      */
-    void set(String key, String value, long timeout);
+    default void set(String key, String value, long timeout) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * 获取缓存
@@ -31,7 +35,9 @@ public interface AuthCache {
      * @param key 缓存KEY
      * @return 缓存内容
      */
-    String get(String key);
+    default String get(String key) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * 是否存在key，如果对应key的value值已过期，也返回false
@@ -39,15 +45,23 @@ public interface AuthCache {
      * @param key 缓存KEY
      * @return true：存在key，并且value没过期；false：key不存在或者已过期
      */
-    boolean containsKey(String key);
+    default boolean containsKey(String key) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * 清理过期的缓存
      */
     default void pruneCache() {
+        throw new UnsupportedOperationException();
     }
 
-    /** 移除*/
+    /**
+     * 移除
+     */
     void remove(String key);
 
+    default <T> T get(String key, Class<T> clazz) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -3,7 +3,7 @@ package com.xh.demo.auth;
 import com.xh.demo.domain.po.User;
 import com.xh.demo.domain.auth.UserDetailsVo;
 import com.xh.demo.service.UserService;
-import com.xh.security.core.consts.KeyConst;
+import com.xh.security.core.consts.BeanNameConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @Date 2020-04-09
  */
 @Slf4j
-@Component(KeyConst.CUSTOM_USER_DETAILS_SERVICE_BEAN_NAME)
+@Component(BeanNameConst.CUSTOM_USER_DETAILS_SERVICE_BEAN_NAME)
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired

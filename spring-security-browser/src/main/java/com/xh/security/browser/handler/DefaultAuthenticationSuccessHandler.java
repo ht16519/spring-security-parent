@@ -36,7 +36,7 @@ public class DefaultAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("登录成功...");
         if(LoginEnum.JSON.equals(securityProperties.getBrowser().getLoginType())){
-            ResponseUtil.writer(AuthResponse.success(authentication.getPrincipal()), response);
+            ResponseUtil.write(AuthResponse.success(authentication.getPrincipal()), response);
         }else {
             super.onAuthenticationSuccess(request, response, authentication);   //页面跳转
         }

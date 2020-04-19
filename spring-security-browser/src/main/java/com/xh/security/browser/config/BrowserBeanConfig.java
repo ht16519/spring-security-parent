@@ -5,7 +5,10 @@ import com.xh.security.browser.handler.DefaultAuthenticationSuccessHandler;
 import com.xh.security.browser.handler.DefaultLogoutSuccessHandler;
 import com.xh.security.browser.session.strategy.DefaultConcurrentLoginSessionInvalidStrategy;
 import com.xh.security.browser.session.strategy.DefaultTimeExpiredSessionStrategy;
-import com.xh.security.core.consts.KeyConst;
+import com.xh.security.core.authentiation.oauth2.support.cache.AuthCache;
+import com.xh.security.core.authentiation.oauth2.support.cache.AuthDefaultCache;
+import com.xh.security.core.authentiation.oauth2.support.cache.AuthRedisCache;
+import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -29,39 +32,50 @@ public class BrowserBeanConfig {
     @Autowired
     private SecurityProperties securityProperties;
 
-    /** 配置默认session超时失效处理策略*/
-    @Bean(KeyConst.TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME)
-    @ConditionalOnMissingBean(name = KeyConst.TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME)
-    public InvalidSessionStrategy invalidSessionStrategy(){
+    /**
+     * 配置默认session超时失效处理策略
+     */
+    @Bean(BeanNameConst.TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME)
+    @ConditionalOnMissingBean(name = BeanNameConst.TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME)
+    public InvalidSessionStrategy invalidSessionStrategy() {
         return new DefaultTimeExpiredSessionStrategy(securityProperties.getBrowser().getSession().getSessionInvalidUrl());
     }
 
-    /** 配置默认并发登录时session失效处理策略*/
-    @Bean(KeyConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
-    @ConditionalOnMissingBean(name = KeyConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
-    public SessionInformationExpiredStrategy sessionInformationExpiredStrategy(){
+    /**
+     * 配置默认并发登录时session失效处理策略
+     */
+    @Bean(BeanNameConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
+    @ConditionalOnMissingBean(name = BeanNameConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
+    public SessionInformationExpiredStrategy sessionInformationExpiredStrategy() {
         return new DefaultConcurrentLoginSessionInvalidStrategy(securityProperties.getBrowser().getSession().getSessionInvalidUrl());
     }
 
-    /** 配置登录成功处理器*/
-    @Bean(KeyConst.BORWSER_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
-    @ConditionalOnMissingBean(name = KeyConst.BORWSER_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+    /**
+     * 配置登录成功处理器
+     */
+    @Bean(BeanNameConst.BORWSER_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+    @ConditionalOnMissingBean(name = BeanNameConst.BORWSER_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
         return new DefaultAuthenticationSuccessHandler(securityProperties);
     }
 
-    /** 配置登录失败处理器*/
-    @Bean(KeyConst.BROWSER_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
-    @ConditionalOnMissingBean(name = KeyConst.BROWSER_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+    /**
+     * 配置登录失败处理器
+     */
+    @Bean(BeanNameConst.BROWSER_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+    @ConditionalOnMissingBean(name = BeanNameConst.BROWSER_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     public SimpleUrlAuthenticationFailureHandler failureHandler() {
         return new DefaultAuthenticationFailureHandler(securityProperties);
     }
 
-    /** 配置登录失败处理器*/
-    @Bean(KeyConst.BROWSER_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
-    @ConditionalOnMissingBean(name = KeyConst.BROWSER_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
+    /**
+     * 配置登出成功处理器
+     */
+    @Bean(BeanNameConst.BROWSER_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
+    @ConditionalOnMissingBean(name = BeanNameConst.BROWSER_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new DefaultLogoutSuccessHandler(securityProperties);
     }
+
 
 }

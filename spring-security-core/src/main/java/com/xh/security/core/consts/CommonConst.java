@@ -6,7 +6,7 @@ package com.xh.security.core.consts;
  * @Author wen
  * @Date 2020-04-13
  */
-public interface CommonUtil {
+public interface CommonConst {
 
     String COLON = ":";
 

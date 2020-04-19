@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.validate.filter;
 
 import com.xh.security.core.authentiation.validate.processor.ValidateCodeProcessor;
-import com.xh.security.core.consts.KeyConst;
+import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.consts.URLConst;
 import com.xh.security.core.exception.ValidateCodeException;
 import com.xh.security.core.properties.SecurityProperties;
@@ -39,7 +39,7 @@ public class ValidateCodeAuthenticationFilter extends OncePerRequestFilter {
         ValidateCodeProcessor validateCodeProcessor = validateCodeProcessor(request);
         if (null != validateCodeProcessor) {
             try {
-                validateCodeProcessor.validate(request);
+                validateCodeProcessor.validate(request, response);
             } catch (ValidateCodeException e) {
                 authenticationFailureHandler.onAuthenticationFailure(request, response, e);
                 return;
@@ -70,11 +70,11 @@ public class ValidateCodeAuthenticationFilter extends OncePerRequestFilter {
      */
     private void initializtionUrlsMap(SecurityProperties securityProperties) {
         //1.获取需要校验图形验证码的路径
-        addUrlToMap(securityProperties.getCode().getImage().getUrls(), KeyConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME);
-        urlsMap.put(URLConst.AUTHENTICATION_FORM_PATH, KeyConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME);
+        addUrlToMap(securityProperties.getCode().getImage().getUrls(), BeanNameConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME);
+        urlsMap.put(URLConst.AUTHENTICATION_FORM_PATH, BeanNameConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME);
         //2.获取需要校验手机验证码的路径
-        addUrlToMap(securityProperties.getCode().getSms().getUrls(), KeyConst.SMS_CODE_VALID_PROCESSOR_BEAN_NAME);
-        urlsMap.put(URLConst.AUTHENTICATION_MOBILE_PATH, KeyConst.SMS_CODE_VALID_PROCESSOR_BEAN_NAME);
+        addUrlToMap(securityProperties.getCode().getSms().getUrls(), BeanNameConst.SMS_CODE_VALID_PROCESSOR_BEAN_NAME);
+        urlsMap.put(URLConst.AUTHENTICATION_MOBILE_PATH, BeanNameConst.SMS_CODE_VALID_PROCESSOR_BEAN_NAME);
     }
 
     /**

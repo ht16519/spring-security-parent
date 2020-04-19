@@ -38,7 +38,7 @@ public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
         String errorMessage = ExceptionMessage.convert(e);
         e.getStackTrace();
         log.info("登录失败:{}", errorMessage);
-        ResponseUtil.writer(new AuthResponse(AuthResponseStatus.FAILURE.getCode(), errorMessage), response);
+        ResponseUtil.write(new AuthResponse(AuthResponseStatus.FAILURE.getCode(), errorMessage), response);
     }
 
 

@@ -4,7 +4,8 @@ import com.xh.security.core.authentiation.oauth2.SocialAuthenticationFilter;
 import com.xh.security.core.authentiation.oauth2.SocialAuthenticationProvider;
 import com.xh.security.core.authentiation.oauth2.details.SocialUserDetailsService;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
-import com.xh.security.core.consts.KeyConst;
+import com.xh.security.core.authentiation.validate.mobile.SmsCodeAuthenticationFilter;
+import com.xh.security.core.consts.BeanNameConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,12 +26,10 @@ import java.util.Map;
  */
 public class OAuth2AuthenticationSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    @Autowired
-    @Qualifier(KeyConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     private AuthenticationSuccessHandler successHandler;
-    @Autowired
-    @Qualifier(KeyConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+
     private AuthenticationFailureHandler failureHandler;
+
     @Autowired
     private SocialUserDetailsService userDetails4OAuth2Service;
     @Autowired
@@ -50,5 +49,10 @@ public class OAuth2AuthenticationSecurityConfig extends SecurityConfigurerAdapte
         provider.setUserDetails4OAuth2Service(userDetails4OAuth2Service);
         http.authenticationProvider(provider)
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    public OAuth2AuthenticationSecurityConfig(AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+        this.successHandler = successHandler;
+        this.failureHandler = failureHandler;
     }
 }

@@ -1,7 +1,7 @@
 package com.xh.security.browser.config;
 
 import com.xh.security.core.config.AbstractAuthenticationConfig;
-import com.xh.security.core.consts.KeyConst;
+import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.consts.URLConst;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * @Name BrowserSecurityConfig
- * @Description
+ * @Description 浏览器安全配置
  * @Author wen
  * @Date 2020-04-09
  */
@@ -31,7 +31,7 @@ public class BrowserSecurityConfig extends AbstractAuthenticationConfig {
     @Autowired
     private DataSource dataSource;
     @Autowired
-    @Qualifier(KeyConst.CUSTOM_USER_DETAILS_SERVICE_BEAN_NAME)
+    @Qualifier(BeanNameConst.CUSTOM_USER_DETAILS_SERVICE_BEAN_NAME)
     private UserDetailsService userDetailsService;
 
     @Bean
@@ -43,11 +43,11 @@ public class BrowserSecurityConfig extends AbstractAuthenticationConfig {
     }
 
     @Autowired
-    @Qualifier(KeyConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
+    @Qualifier(BeanNameConst.CONCURRENT_LOGIN_SESSION_INVALID_STRATEGY_BEAN_NAME)
     private SessionInformationExpiredStrategy concurrentLoginExpiredSessionStrategy;
 
     @Autowired
-    @Qualifier(KeyConst.TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME)
+    @Qualifier(BeanNameConst.TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME)
     private InvalidSessionStrategy timeExpiredSessionStrategy;
 
     @Override
@@ -64,7 +64,7 @@ public class BrowserSecurityConfig extends AbstractAuthenticationConfig {
             .logout()
                 .logoutUrl(securityProperties.getLogoutUrl())               //用户登出请求地址
                 .logoutSuccessHandler(logoutSuccessHandler)                 //登出成功处理器
-                .deleteCookies("JSESSIONID")                               //删除cookies
+                .deleteCookies("JSESSIONID")                                //删除cookies
                 .and()
             .rememberMe()                                                   //配置记住我功能
                 .tokenRepository(persistentTokenRepository())               //配置处理记住我token的数据库操作

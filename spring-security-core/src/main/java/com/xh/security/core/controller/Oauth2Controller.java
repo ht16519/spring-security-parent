@@ -46,7 +46,7 @@ public class Oauth2Controller {
             //重定向到授权页面
             response.sendRedirect(authorizeUrl);
         }
-        ResponseUtil.writer(authorizeUrl, response);
+        ResponseUtil.write(authorizeUrl, response);
     }
 
 }

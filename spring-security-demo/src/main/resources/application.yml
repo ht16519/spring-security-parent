@@ -23,7 +23,7 @@ spring:
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   session:
-    store-type: none
+    storeType: none
   profiles:
     active: app
 mybatis:

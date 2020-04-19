@@ -1,6 +1,6 @@
 package com.xh.security.core.authentiation.validate.processor;
 
-import com.xh.security.core.consts.KeyConst;
+import com.xh.security.core.consts.BeanNameConst;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
  * @Author wen
  * @Date 2020-04-10
  */
-@Component(KeyConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME)
+@Component(BeanNameConst.IMAGE_CODE_VALID_PROCESSOR_BEAN_NAME)
 public class ImageCodeValidProcessor extends AbstractValidateCodeProcessor {
 
     public ImageCodeValidProcessor() {
         super.setInputCodeKey("imageCode");
-        super.setCacheCodeKey(KeyConst.CACHE_IMAGE_CODE_KEY);
+        super.setCacheCodeKey(BeanNameConst.CACHE_IMAGE_CODE_KEY);
     }
 
 }

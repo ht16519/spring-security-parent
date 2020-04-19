@@ -27,7 +27,7 @@ public enum AuthCacheScheduler {
 
     private void create() {
         this.shutdown();
-        this.scheduler = new ScheduledThreadPoolExecutor(10, r -> new Thread(r, String.format("JustAuth-Task-%s", cacheTaskNumber.getAndIncrement())));
+        this.scheduler = new ScheduledThreadPoolExecutor(3, r -> new Thread(r, String.format("【OAuth2.0缓存清理服务】-Task-%s", cacheTaskNumber.getAndIncrement())));
     }
 
     private void shutdown() {

@@ -1,18 +1,16 @@
 package com.xh.security.core.authentiation.validate.config;
 
-import com.xh.security.core.authentiation.oauth2.SocialAuthenticationFilter;
 import com.xh.security.core.authentiation.validate.mobile.SmsCodeAuthenticationFilter;
 import com.xh.security.core.authentiation.validate.mobile.SmsCodeAuthenticationProvider;
 import com.xh.security.core.authentiation.validate.mobile.details.UserDetails4MobileService;
-import com.xh.security.core.consts.KeyConst;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @Name SmsCodeAuthenticationSecurityConfig
@@ -22,12 +20,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  */
 public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    @Autowired
-    @Qualifier(KeyConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     private AuthenticationSuccessHandler successHandler;
-    @Autowired
-    @Qualifier(KeyConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+
     private AuthenticationFailureHandler failureHandler;
+
     @Autowired
     private UserDetails4MobileService userDetails4MobileService;
 
@@ -43,6 +39,11 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
         SmsCodeAuthenticationProvider provider = new SmsCodeAuthenticationProvider();
         provider.setUserDetails4MobileService(userDetails4MobileService);
         http.authenticationProvider(provider)
-                .addFilterAfter(filter, SocialAuthenticationFilter.class);
+                .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    public SmsCodeAuthenticationSecurityConfig(AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+        this.successHandler = successHandler;
+        this.failureHandler = failureHandler;
     }
 }

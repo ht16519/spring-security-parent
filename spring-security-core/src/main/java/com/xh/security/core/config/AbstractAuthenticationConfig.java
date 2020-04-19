@@ -3,7 +3,7 @@ package com.xh.security.core.config;
 import com.xh.security.core.authentiation.oauth2.config.OAuth2AuthenticationSecurityConfig;
 import com.xh.security.core.authentiation.validate.config.SmsCodeAuthenticationSecurityConfig;
 import com.xh.security.core.authentiation.validate.config.ValidateCodeSecurityConfig;
-import com.xh.security.core.consts.KeyConst;
+import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,13 +25,13 @@ public class AbstractAuthenticationConfig extends WebSecurityConfigurerAdapter {
     protected SecurityProperties securityProperties;
 
     @Autowired
-    @Qualifier(KeyConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+    @Qualifier(BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     protected AuthenticationSuccessHandler successHandler;
     @Autowired
-    @Qualifier(KeyConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+    @Qualifier(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     protected AuthenticationFailureHandler failureHandler;
     @Autowired
-    @Qualifier(KeyConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
+    @Qualifier(BeanNameConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
     protected LogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired

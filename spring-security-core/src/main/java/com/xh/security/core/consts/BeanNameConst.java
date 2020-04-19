@@ -6,13 +6,13 @@ package com.xh.security.core.consts;
  * @Author wen
  * @Date 2020-04-09
  */
-public interface KeyConst {
+public interface BeanNameConst {
 
-    /** session中图形验证码key*/
-    String CACHE_IMAGE_CODE_KEY = "validate:code:cache_image_key";
+    /** 缓存中的图形验证码key*/
+    String CACHE_IMAGE_CODE_KEY = "image_code:";
 
-    /** session中手机验证码key*/
-    String CACHE_MOBILE_CODE_KEY = "validate:code:cache_mobile_key";
+    /** 缓存中的手机验证码key*/
+    String CACHE_MOBILE_CODE_KEY = "mobile_code:";
 
     /** 手机短信验证码生成器 bean 名称*/
     String SMS_CODE_GENERATOR_BEAN_NAME = "smsCodeGenerator";

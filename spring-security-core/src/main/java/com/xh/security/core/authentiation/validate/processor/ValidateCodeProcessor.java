@@ -3,6 +3,7 @@ package com.xh.security.core.authentiation.validate.processor;
 import com.xh.security.core.exception.ValidateCodeException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Name ValidateCodeProcessorHolder
@@ -12,6 +13,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ValidateCodeProcessor {
 
-    void validate(HttpServletRequest request) throws ValidateCodeException;
+    void validate(HttpServletRequest request, HttpServletResponse response) throws ValidateCodeException;
 
 }

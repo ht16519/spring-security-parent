@@ -1,5 +1,6 @@
 package com.xh.security.core.authentiation.oauth2.support.cache;
 
+import com.xh.security.core.utils.JsonUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -62,7 +63,6 @@ public class AuthDefaultCache implements AuthCache {
 
     /**
      * 获取缓存
-     *
      * @param key 缓存KEY
      * @return 缓存内容
      */
@@ -75,6 +75,20 @@ public class AuthDefaultCache implements AuthCache {
                 return null;
             }
             return cacheState.getState();
+        } finally {
+            readLock.unlock();
+        }
+    }
+
+    @Override
+    public <T> T get(String key, Class<T> clazz) {
+        readLock.lock();
+        try {
+            CacheState cacheState = stateCache.get(key);
+            if (null == cacheState || cacheState.isExpired()) {
+                return null;
+            }
+            return JsonUtil.parse(cacheState.getState(), clazz);
         } finally {
             readLock.unlock();
         }
