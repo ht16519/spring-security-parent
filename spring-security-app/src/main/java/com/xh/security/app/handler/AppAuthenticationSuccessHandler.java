@@ -48,7 +48,7 @@ public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
         //1.读取请求头中Authorization信息
         String header = request.getHeader("Authorization");
         if (header == null || !header.toLowerCase().startsWith("basic ")) {
-            throw new UnapprovedClientAuthenticationException("Authorization请求头信息不合法");
+            ResponseUtil.write(AuthResponse.failure("Authorization请求头信息不合法"), response);
         }
         //2.获取clientId 和 clientSecret
         String[] tokens = extractAndDecodeHeader(header);
@@ -58,9 +58,9 @@ public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
         //3.校验clientId 和 clientSecret
         ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
         if (clientDetails == null) {
-            throw new UnapprovedClientAuthenticationException("clientId对应信息不存在" + clientId);
+            ResponseUtil.write(AuthResponse.failure("clientId对应信息不存在" + clientId), response);
         } else if (!StringUtils.equals(clientDetails.getClientSecret(), clientSecret)) {
-            throw new UnapprovedClientAuthenticationException("clientSecret信息不匹配" + clientId);
+            ResponseUtil.write(AuthResponse.failure("clientSecret信息不匹配" + clientId), response);
         }
         //4.构建TokenRequest
         TokenRequest tokenRequest = new TokenRequest(Collections.emptyMap(), clientId, clientDetails.getScope(), "custom");

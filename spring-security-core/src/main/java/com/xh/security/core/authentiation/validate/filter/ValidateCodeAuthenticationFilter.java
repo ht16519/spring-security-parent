@@ -3,7 +3,7 @@ package com.xh.security.core.authentiation.validate.filter;
 import com.xh.security.core.authentiation.validate.processor.ValidateCodeProcessor;
 import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.consts.URLConst;
-import com.xh.security.core.exception.ValidateCodeException;
+import com.xh.security.core.exception.AuthenticationBusinessException;
 import com.xh.security.core.properties.SecurityProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -40,7 +40,7 @@ public class ValidateCodeAuthenticationFilter extends OncePerRequestFilter {
         if (null != validateCodeProcessor) {
             try {
                 validateCodeProcessor.validate(request, response);
-            } catch (ValidateCodeException e) {
+            } catch (AuthenticationBusinessException e) {
                 authenticationFailureHandler.onAuthenticationFailure(request, response, e);
                 return;
             }

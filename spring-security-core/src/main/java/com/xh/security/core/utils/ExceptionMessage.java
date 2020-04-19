@@ -1,6 +1,6 @@
 package com.xh.security.core.utils;
 
-import com.xh.security.core.exception.ValidateCodeException;
+import com.xh.security.core.exception.AuthenticationBusinessException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +15,7 @@ public class ExceptionMessage {
 
     public static String convert(Exception e) {
         String errorMessage;
-        if (e instanceof ValidateCodeException || e instanceof UsernameNotFoundException) {
+        if (e instanceof AuthenticationBusinessException || e instanceof UsernameNotFoundException) {
             errorMessage = e.getMessage();
         } else if (e instanceof BadCredentialsException) {
             errorMessage = "用户名或者密码不正确";

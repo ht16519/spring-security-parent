@@ -2,8 +2,6 @@ package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthSource;
-import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
-import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthToken;
@@ -15,19 +13,19 @@ import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 public interface AuthRequest {
 
     /**
-    * @Name getAuthUser
-    * @Description 获取第三方用户信息
-    * @Author wen
-    * @Date 2020/4/13
-    */
+     * @Name getAuthUser
+     * @Description 获取第三方用户信息
+     * @Author wen
+     * @Date 2020/4/13
+     */
     AuthUser getAuthUser(AuthCallback authCallback);
 
     /**
-    * @Name getOpenId
-    * @Description 获取第三方应用的openId
-    * @Author wen
-    * @Date 2020/4/13
-    */
+     * @Name getOpenId
+     * @Description 获取第三方应用的openId
+     * @Author wen
+     * @Date 2020/4/13
+     */
     String getOpenId(AuthCallback authCallback);
 
     /**
@@ -37,7 +35,7 @@ public interface AuthRequest {
      * @return 返回授权地址
      */
     default String authorize(String state) {
-        throw new AuthException(AuthResponseStatus.NOT_IMPLEMENTED);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -47,7 +45,7 @@ public interface AuthRequest {
      * @return 返回登录成功后的用户信息
      */
     default AuthResponse login(AuthCallback authCallback) {
-        throw new AuthException(AuthResponseStatus.NOT_IMPLEMENTED);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -57,7 +55,7 @@ public interface AuthRequest {
      * @return AuthResponse
      */
     default AuthResponse revoke(AuthToken authToken) {
-        throw new AuthException(AuthResponseStatus.NOT_IMPLEMENTED);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -67,11 +65,20 @@ public interface AuthRequest {
      * @return AuthResponse
      */
     default AuthResponse refresh(AuthToken authToken) {
-        throw new AuthException(AuthResponseStatus.NOT_IMPLEMENTED);
+        throw new UnsupportedOperationException();
     }
 
     AuthSource getSource();
 
     AuthStateCache getAuthStateCache();
 
+    /**
+     * 通过providerId获取第三方用户信息
+     *
+     * @param providerId
+     */
+    default AuthUser getAuthUserByProviderId(String providerId){
+        //TODO 在子类实现该方法...
+        throw new UnsupportedOperationException();
+    }
 }

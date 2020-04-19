@@ -1,6 +1,6 @@
 package com.xh.security.core.authentiation.validate.processor;
 
-import com.xh.security.core.exception.ValidateCodeException;
+import com.xh.security.core.exception.AuthenticationBusinessException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ValidateCodeProcessor {
 
-    void validate(HttpServletRequest request, HttpServletResponse response) throws ValidateCodeException;
+    void validate(HttpServletRequest request, HttpServletResponse response) throws AuthenticationBusinessException;
 
 }

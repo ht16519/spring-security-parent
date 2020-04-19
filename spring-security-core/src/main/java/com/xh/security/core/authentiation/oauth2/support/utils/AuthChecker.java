@@ -9,8 +9,8 @@ import com.xh.security.core.authentiation.oauth2.support.exception.AuthException
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.consts.CommonConst;
+import com.xh.security.core.exception.AuthenticationBusinessException;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -86,7 +86,7 @@ public class AuthChecker {
             code = callback.getAuthorization_code();
         }
         if (StringUtils.isEmpty(code)) {
-            throw new AuthException(AuthResponseStatus.ILLEGAL_CODE, source);
+            throw new AuthenticationBusinessException("授权码不存在");
         }
     }
 
@@ -98,7 +98,7 @@ public class AuthChecker {
             code = request.getParameter("authorization_code");
         }
         if (StringUtils.isBlank(code)) {
-            throw new UsernameNotFoundException("授权码不存在");
+            throw new AuthException("授权码不存在");
         }
     }
 
@@ -129,14 +129,15 @@ public class AuthChecker {
         String state = request.getParameter("state");
         String[] split;
         if (null == state || (split = state.split(CommonConst.COLON)).length != 2) {
-            throw new UsernameNotFoundException("非法请求");
+            throw new AuthenticationBusinessException("非法请求");
         }
         AuthRequest authRequest = authRequestMap.get(split[0]);
-        AuthStateCache authStateCache = authRequest.getAuthStateCache();
-        if (!authStateCache.containsKey(state)) {
-            throw new UsernameNotFoundException("非法请求");
-        }
-        authStateCache.remove(state);
+//        AuthStateCache authStateCache = authRequest.getAuthStateCache();
+//        if (!authStateCache.containsKey(state)) {
+//            throw new AuthenticationBusinessException("非法请求");
+//        }
+//        authStateCache.remove(state);
         return authRequest;
     }
+
 }

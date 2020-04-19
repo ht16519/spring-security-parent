@@ -1,18 +1,21 @@
 package com.xh.security.core.authentiation.oauth2;
 
+import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.authentiation.oauth2.support.utils.AuthChecker;
 import com.xh.security.core.authentiation.oauth2.support.utils.ConvertUtil;
 import com.xh.security.core.consts.URLConst;
+import com.xh.security.core.exception.AuthenticationBusinessException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetailsSource;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -43,24 +46,29 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
-        if (postOnly && !request.getMethod().equals("GET")) {
-            throw new AuthenticationServiceException(
-                    "Authentication method not supported: " + request.getMethod());
-        }
-
-        AuthRequest authRequest = AuthChecker.checkStateAndGetAuthRequest(authRequestMap, request);
-
-        AuthCallback authCallback = ConvertUtil.toAuthCallback(request);
-
-        AuthChecker.checkCode(authRequest.getSource(), authCallback);
-
-        AuthUser authUser = authRequest.getAuthUser(authCallback);
-
-        SocialAuthenticationToken token = new SocialAuthenticationToken(authUser, authUser.getSource());
-        // Allow subclasses to set the "details" property
-        setDetails(request, token);
-
-        return this.getAuthenticationManager().authenticate(token);
+            AuthRequest authRequest = AuthChecker.checkStateAndGetAuthRequest(authRequestMap, request);
+            AuthUser authUser;
+            String source;
+            //一.get请求为第三方认证携带code授权码的回调请求
+            if (request.getMethod().equals("GET")) {
+                AuthCallback authCallback = ConvertUtil.toAuthCallback(request);
+                AuthChecker.checkCode(authRequest.getSource(), authCallback);
+                authUser = authRequest.getAuthUser(authCallback);
+                source = authUser.getSource();
+            } else {
+                //二.post请求为内部app携带providerId和source的授权请求
+                String providerId = request.getParameter("providerId");
+                source = request.getParameter("source");
+                if (StringUtils.isEmpty(providerId) || StringUtils.isEmpty(source)) {
+                    throw new AuthenticationBusinessException("参数不合法");
+                }
+                authUser = authRequest.getAuthUserByProviderId(providerId);
+                source = source.toUpperCase();
+            }
+            SocialAuthenticationToken token = new SocialAuthenticationToken(authUser, source);
+            // Allow subclasses to set the "details" property
+            setDetails(request, token);
+            return this.getAuthenticationManager().authenticate(token);
     }
 
     /**

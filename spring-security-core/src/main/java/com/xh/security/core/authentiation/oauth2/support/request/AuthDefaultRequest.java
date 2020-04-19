@@ -267,4 +267,5 @@ public abstract class AuthDefaultRequest implements AuthRequest {
     public AuthStateCache getAuthStateCache() {
         return authStateCache;
     }
+
 }

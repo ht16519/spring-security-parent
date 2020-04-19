@@ -43,6 +43,10 @@ public class AuthResponse<T> implements Serializable {
         this.msg = msg;
     }
 
+    public AuthResponse(String msg) {
+        this.msg = msg;
+    }
+
     public static <T> AuthResponse build(AuthResponseStatus status, T data) {
         return new AuthResponse<>(status.getCode(), status.getMsg(), data);
     }

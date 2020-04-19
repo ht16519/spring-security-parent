@@ -1,5 +1,6 @@
 package com.xh.security.core.utils;
 
+import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
 import com.xh.security.core.exception.ValidateCodeException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,7 @@ public class ValidateCodeUtil {
         }
         Cookie cookie = CookieUtil.get(cookieName, request);
         if (cookie == null) {
-            throw new ValidateCodeException("验证码不存在，请重新获取验证码");
+            throw new AuthException("验证码不存在，请重新获取验证码");
         }
         return key + cookie.getValue();
     }
