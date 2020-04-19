@@ -53,7 +53,8 @@ public class BrowserBeanConfig {
     /**
      * 配置登录成功处理器
      */
-    @Bean(BeanNameConst.BORWSER_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+    @Bean
+//    @Bean(BeanNameConst.BORWSER_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     @ConditionalOnMissingBean(name = BeanNameConst.BORWSER_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
         return new DefaultAuthenticationSuccessHandler(securityProperties);
@@ -62,7 +63,8 @@ public class BrowserBeanConfig {
     /**
      * 配置登录失败处理器
      */
-    @Bean(BeanNameConst.BROWSER_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+    @Bean
+//    @Bean(BeanNameConst.BROWSER_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     @ConditionalOnMissingBean(name = BeanNameConst.BROWSER_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     public SimpleUrlAuthenticationFailureHandler failureHandler() {
         return new DefaultAuthenticationFailureHandler(securityProperties);
@@ -71,7 +73,8 @@ public class BrowserBeanConfig {
     /**
      * 配置登出成功处理器
      */
-    @Bean(BeanNameConst.BROWSER_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
+    @Bean
+//    @Bean(BeanNameConst.BROWSER_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
     @ConditionalOnMissingBean(name = BeanNameConst.BROWSER_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new DefaultLogoutSuccessHandler(securityProperties);

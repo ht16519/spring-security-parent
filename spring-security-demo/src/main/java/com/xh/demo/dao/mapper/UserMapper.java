@@ -14,5 +14,5 @@ public interface UserMapper extends IBaseMapper<User> {
      */
     int batchDelete(List<Integer> ids);
 
-    SocialUserDetailsVo selectByProviderId(@Param("providerId") String providerId);
+    SocialUserDetailsVo selectByProviderId(@Param("providerId") String providerId, @Param("source") String source);
 }

@@ -25,7 +25,7 @@ spring:
   session:
     storeType: none
   profiles:
-    active: app
+    active: browser
 mybatis:
   mapper-locations: classpath:mappers/*Mapper.xml
   type-aliases-package: com.xh.demo.domain.po

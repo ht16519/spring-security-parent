@@ -45,17 +45,17 @@
             </exclusions>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.xh</groupId>-->
-            <!--<artifactId>spring-security-browser</artifactId>-->
-            <!--<version>${xh.security.version}</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>com.xh</groupId>
-            <artifactId>spring-security-app</artifactId>
+            <artifactId>spring-security-browser</artifactId>
             <version>${xh.security.version}</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.xh</groupId>-->
+            <!--<artifactId>spring-security-app</artifactId>-->
+            <!--<version>${xh.security.version}</version>-->
+        <!--</dependency>-->
 
         <!-- 通用Mapper启动器 -->
         <dependency>

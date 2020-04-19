@@ -65,8 +65,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SocialUserDetailsVo getByProviderId(String providerId) {
-        return userMapper.selectByProviderId(providerId);
+    public SocialUserDetailsVo getByProviderId(String providerId, String source) {
+        return userMapper.selectByProviderId(providerId, source);
     }
 
     @Override

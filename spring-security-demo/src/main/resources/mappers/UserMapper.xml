@@ -31,23 +31,24 @@
 
     <select id="selectByProviderId" resultType="com.xh.demo.domain.auth.SocialUserDetailsVo">
         SELECT
-            t_user.id,
-            t_user.email,
-            t_user.last_login,
-            t_user.mobile,
-            t_user.`password`,
-            t_user.`status`,
-            t_user.username,
-            t_user.nickname,
-            t_user.avatar,
-            t_user.create_time,
-            t_user.update_time,
-            t_user.sex
+            u.id,
+            u.email,
+            u.last_login,
+            u.mobile,
+            u.`password`,
+            u.`status`,
+            u.username,
+            u.nickname,
+            u.avatar,
+            u.create_time,
+            u.update_time,
+            u.sex
         FROM
-            t_user
-        INNER JOIN t_oauth2_user_info ON t_oauth2_user_info.user_id = t_user.id
+            t_user u
+        INNER JOIN t_oauth2_user_info ouf ON ouf.user_id = u.id
         WHERE
-            t_oauth2_user_info.provider_id = #{providerId}
+            ouf.provider_id = #{providerId}
+        AND ouf.source = #{source}
     </select>
 
 </mapper>

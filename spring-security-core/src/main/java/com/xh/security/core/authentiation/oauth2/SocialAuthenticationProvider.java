@@ -4,6 +4,7 @@ import com.xh.security.core.authentiation.oauth2.details.SocialUserDetailsServic
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 import com.xh.security.core.authentiation.oauth2.support.model.SocialUserDetails;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -25,8 +26,12 @@ public class SocialAuthenticationProvider implements AuthenticationProvider {
         SocialAuthenticationToken oauth2AuthenticationToken = (SocialAuthenticationToken) authentication;
         AuthUser authUser = (AuthUser) oauth2AuthenticationToken.getPrincipal();
         SocialUserDetails userDetails;
+        String source = authUser.getSource();
+        if(StringUtils.isEmpty(source)){
+            throw new UsernameNotFoundException("第三方来源不能为空");
+        }
         try {
-            userDetails = userDetails4OAuth2Service.loadUserByProviderId(authUser.getUuid());
+            userDetails = userDetails4OAuth2Service.loadUserByProviderId(authUser.getUuid(), source);
         }catch (RuntimeException e){
             throw new UsernameNotFoundException("无法获取用户信息");
         }
@@ -40,7 +45,7 @@ public class SocialAuthenticationProvider implements AuthenticationProvider {
         if (null == userDetails || null == userDetails.getUserId()) {
             throw new UsernameNotFoundException("无法获取用户信息");
         }
-        SocialAuthenticationToken authenticationToken = new SocialAuthenticationToken(userDetails, userDetails.getAuthorities());
+        SocialAuthenticationToken authenticationToken = new SocialAuthenticationToken(userDetails, source, userDetails.getAuthorities());
         authenticationToken.setDetails(oauth2AuthenticationToken.getDetails());
         return authenticationToken;
     }

@@ -1,6 +1,7 @@
 package com.xh.security.core.authentiation.oauth2;
 
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.authentiation.oauth2.support.utils.AuthChecker;
 import com.xh.security.core.authentiation.oauth2.support.utils.ConvertUtil;
@@ -53,7 +54,9 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 
         AuthChecker.checkCode(authRequest.getSource(), authCallback);
 
-        SocialAuthenticationToken token = new SocialAuthenticationToken(authRequest.getAuthUser(authCallback));
+        AuthUser authUser = authRequest.getAuthUser(authCallback);
+
+        SocialAuthenticationToken token = new SocialAuthenticationToken(authUser, authUser.getSource());
         // Allow subclasses to set the "details" property
         setDetails(request, token);
 

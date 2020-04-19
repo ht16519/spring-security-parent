@@ -21,6 +21,8 @@ public class SocialAuthenticationToken extends AbstractAuthenticationToken {
 
     private final Object principal;
 
+    private final String source;
+
     // ~ Constructors
     // ===================================================================================================
 
@@ -29,9 +31,10 @@ public class SocialAuthenticationToken extends AbstractAuthenticationToken {
      * <code>UsernamePasswordAuthenticationToken</code>, as the {@link #isAuthenticated()}
      * will return <code>false</code>.
      */
-    public SocialAuthenticationToken(Object openId) {
+    public SocialAuthenticationToken(Object principal, String source) {
         super(null);
-        this.principal = openId;
+        this.principal = principal;
+        this.source = source;
         setAuthenticated(false);
     }
 
@@ -44,9 +47,10 @@ public class SocialAuthenticationToken extends AbstractAuthenticationToken {
      * @param principal
      * @param authorities
      */
-    public SocialAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
+    public SocialAuthenticationToken(Object principal, String source, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
+        this.source = source;
         super.setAuthenticated(true); // must use super, as we override
     }
 
@@ -58,6 +62,10 @@ public class SocialAuthenticationToken extends AbstractAuthenticationToken {
 
     public Object getPrincipal() {
         return this.principal;
+    }
+
+    public String getSource() {
+        return source;
     }
 
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {

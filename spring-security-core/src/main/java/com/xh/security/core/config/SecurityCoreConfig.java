@@ -40,10 +40,10 @@ public class SecurityCoreConfig {
     private SecurityProperties securityProperties;
 
     @Autowired
-    @Qualifier(BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+//    @Qualifier(BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     private AuthenticationSuccessHandler successHandler;
     @Autowired
-    @Qualifier(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+//    @Qualifier(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     private AuthenticationFailureHandler failureHandler;
 
 

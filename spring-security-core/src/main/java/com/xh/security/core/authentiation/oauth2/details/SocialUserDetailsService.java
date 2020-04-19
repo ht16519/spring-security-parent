@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public interface SocialUserDetailsService {
 
     /** 通过提供商唯一凭证查询用户*/
-    SocialUserDetails loadUserByProviderId(String providerId) throws UsernameNotFoundException;
+    SocialUserDetails loadUserByProviderId(String providerId, String source) throws UsernameNotFoundException;
 
     /**
     * @Name silenceRegister

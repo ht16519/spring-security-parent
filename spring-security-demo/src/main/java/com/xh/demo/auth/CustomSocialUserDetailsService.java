@@ -23,9 +23,9 @@ public class CustomSocialUserDetailsService implements SocialUserDetailsService 
     private UserService userService;
 
     @Override
-    public SocialUserDetails loadUserByProviderId(String providerId) {
+    public SocialUserDetails loadUserByProviderId(String providerId, String source) {
         log.info("【登录认证服务】第三方授权登录操作:{}", providerId);
-        return userService.getByProviderId(providerId);
+        return userService.getByProviderId(providerId, source);
     }
 
     @Override

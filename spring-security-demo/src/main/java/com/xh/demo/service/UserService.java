@@ -46,7 +46,7 @@ public interface UserService {
 
     User getByMobile(String mobile);
 
-    SocialUserDetailsVo getByProviderId(String providerId);
+    SocialUserDetailsVo getByProviderId(String providerId, String source);
 
     SocialUserDetailsVo register(AuthUser user);
 

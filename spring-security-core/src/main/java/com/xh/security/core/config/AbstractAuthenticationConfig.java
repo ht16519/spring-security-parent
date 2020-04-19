@@ -25,13 +25,13 @@ public class AbstractAuthenticationConfig extends WebSecurityConfigurerAdapter {
     protected SecurityProperties securityProperties;
 
     @Autowired
-    @Qualifier(BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+//    @Qualifier(BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     protected AuthenticationSuccessHandler successHandler;
     @Autowired
-    @Qualifier(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+//    @Qualifier(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     protected AuthenticationFailureHandler failureHandler;
     @Autowired
-    @Qualifier(BeanNameConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
+//    @Qualifier(BeanNameConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
     protected LogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired

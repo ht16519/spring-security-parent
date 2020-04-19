@@ -36,23 +36,6 @@ public class Oauth2UserInfo implements Serializable{
     private String providerId;
 
     /**
-     * 昵称
-     */
-    @Column(name = "nick_name")
-    private String nickName;
-
-    /**
-     * 第三方账号
-     */
-    @Column(name = "user_name")
-    private String userName;
-
-    /**
-     * 头像
-     */
-    private String avatar;
-
-    /**
      * 创建时间
      */
     @Column(name = "create_time")
