@@ -33,6 +33,7 @@
         <com.alibaba.fastjson.version>1.2.62</com.alibaba.fastjson.version>
         <simple-http.version>1.0.1</simple-http.version>
         <apache.httpclient.version>4.5.12</apache.httpclient.version>
+        <apache.httpclient.version>4.5.12</apache.httpclient.version>
     </properties>
 
     <dependencyManagement>
@@ -52,6 +53,37 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${com.alibaba.fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xkcoding.http</groupId>
+                <artifactId>simple-http</artifactId>
+                <version>${simple-http.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${apache.httpclient.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xh</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${xh.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.xh</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${xh.security.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

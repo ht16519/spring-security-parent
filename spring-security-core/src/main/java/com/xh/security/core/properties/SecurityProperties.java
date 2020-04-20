@@ -23,8 +23,11 @@ public class SecurityProperties {
     /** 验证码配置类*/
     private ValidateCodeProperties code = new ValidateCodeProperties();
 
-    /** OAuth2登录认证配置*/
+    /** 第三方OAuth2登录认证配置*/
     private OAuth2Properties oauth2 = new OAuth2Properties();
+
+    /** 系统内部OAuth2.0支持配置*/
+    private OAuth2SupportProperties oauth2Support = new OAuth2SupportProperties();
 
     /**登出路径*/
     private String logoutUrl = URLConst.LOGOUT_PATH;

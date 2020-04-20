@@ -3,6 +3,7 @@ package com.xh.security.core.controller;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.authentiation.oauth2.support.utils.AuthStateUtils;
 import com.xh.security.core.enums.LoginEnum;
+import com.xh.security.core.exception.AuthenticationBusinessException;
 import com.xh.security.core.properties.SecurityProperties;
 import com.xh.security.core.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class Oauth2Controller {
     public void authorizeUrl(@PathVariable("type") String type, HttpServletResponse response) throws IOException {
         AuthRequest authRequest = this.authRequestMap.get(type);
         if(null == authRequest){
-            throw new IllegalArgumentException("无效的授权请求");
+            throw new AuthenticationBusinessException("无效的授权请求");
         }
         String authorizeUrl = authRequest.authorize(AuthStateUtils.createState(type));
         if (LoginEnum.REDIRECT.equals(securityProperties.getOauth2().getLoginType())) {
@@ -48,5 +49,7 @@ public class Oauth2Controller {
         }
         ResponseUtil.write(authorizeUrl, response);
     }
+
+
 
 }

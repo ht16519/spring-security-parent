@@ -56,6 +56,9 @@ public interface BeanNameConst {
     /** session超时失效处理 bean 名称*/
     String TIME_EXPIRED_SESSION_STRATEGY_BEAN_NAME = "timeExpiredSessionStrategy";
 
+    /** JWD的token增强器 bean 名称*/
+    String JWT_TOKEN_ENHANCER_BEAN_NAME = "jwtTokenEnhancer";
+
 
 
 }

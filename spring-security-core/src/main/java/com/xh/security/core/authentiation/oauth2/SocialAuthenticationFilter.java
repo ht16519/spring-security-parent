@@ -46,38 +46,38 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
-            AuthRequest authRequest = AuthChecker.checkStateAndGetAuthRequest(authRequestMap, request);
-            AuthUser authUser;
-            String source;
-            //一.get请求为第三方认证携带code授权码的回调请求
-            if (request.getMethod().equals("GET")) {
-                AuthCallback authCallback = ConvertUtil.toAuthCallback(request);
-                AuthChecker.checkCode(authRequest.getSource(), authCallback);
-                authUser = authRequest.getAuthUser(authCallback);
-                source = authUser.getSource();
-            } else {
-                //二.post请求为内部app携带providerId和source的授权请求
-                String providerId = request.getParameter("providerId");
-                source = request.getParameter("source");
-                if (StringUtils.isEmpty(providerId) || StringUtils.isEmpty(source)) {
-                    throw new AuthenticationBusinessException("参数不合法");
-                }
-                authUser = authRequest.getAuthUserByProviderId(providerId);
-                source = source.toUpperCase();
+        AuthRequest authRequest = AuthChecker.checkStateAndGetAuthRequest(authRequestMap, request);
+        AuthUser authUser;
+        String source;
+        //一.get请求为第三方认证携带code授权码的回调请求
+        if (request.getMethod().equals("GET")) {
+            AuthCallback authCallback = ConvertUtil.toAuthCallback(request);
+            AuthChecker.checkCode(authRequest.getSource(), authCallback);
+            authUser = authRequest.getAuthUser(authCallback);
+            source = authUser.getSource();
+        } else {
+            //二.post请求为内部app携带providerId和source的授权请求
+            String providerId = request.getParameter("providerId");
+            source = request.getParameter("source");
+            if (StringUtils.isEmpty(providerId) || StringUtils.isEmpty(source)) {
+                throw new AuthenticationBusinessException("参数不合法");
             }
-            SocialAuthenticationToken token = new SocialAuthenticationToken(authUser, source);
-            // Allow subclasses to set the "details" property
-            setDetails(request, token);
-            return this.getAuthenticationManager().authenticate(token);
+            authUser = authRequest.getAuthUserByProviderId(providerId);
+            source = source.toUpperCase();
+        }
+        SocialAuthenticationToken token = new SocialAuthenticationToken(authUser, source);
+        // Allow subclasses to set the "details" property
+        setDetails(request, token);
+        return this.getAuthenticationManager().authenticate(token);
     }
 
     /**
      * Provided so that subclasses may configure what is put into the authentication
      * request's details property.
      *
-     * @param request that an authentication request is being created for
+     * @param request     that an authentication request is being created for
      * @param authRequest the authentication request object that should have its details
-     * set
+     *                    set
      */
     protected void setDetails(HttpServletRequest request,
                               SocialAuthenticationToken authRequest) {

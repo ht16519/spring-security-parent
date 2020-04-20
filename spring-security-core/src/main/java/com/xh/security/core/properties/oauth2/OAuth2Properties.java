@@ -6,7 +6,7 @@ import lombok.Setter;
 
 /**
  * @Name OAuth2Properties
- * @Description
+ * @Description 第三方OAuth2登录认证配置
  * @Author wen
  * @Date 2020-04-12
  */

@@ -14,7 +14,6 @@ import com.xh.security.core.authentiation.validate.sms.SmsCodeSender;
 import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -47,41 +46,53 @@ public class SecurityCoreConfig {
     private AuthenticationFailureHandler failureHandler;
 
 
-    /** 自定义密码加密器*/
+    /**
+     * 自定义密码加密器
+     */
     @Bean(BeanNameConst.CUSTOM_PASSWORD_ENCODER_BEAN_NAME)
     @ConditionalOnMissingBean(name = BeanNameConst.CUSTOM_PASSWORD_ENCODER_BEAN_NAME)
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /** 简单图形验证码生成器*/
+    /**
+     * 简单图形验证码生成器
+     */
     @Bean(BeanNameConst.IMAGE_CODE_GENERATOR_BEAN_NAME)
     @ConditionalOnMissingBean(name = BeanNameConst.IMAGE_CODE_GENERATOR_BEAN_NAME)
     public ValidateCodeGenerator imageCodeGenerator() {
         return new DefaultImageCodeGenerator(securityProperties);
     }
 
-    /** 简单短信验证码生成器*/
+    /**
+     * 简单短信验证码生成器
+     */
     @Bean(BeanNameConst.SMS_CODE_GENERATOR_BEAN_NAME)
     @ConditionalOnMissingBean(name = BeanNameConst.SMS_CODE_GENERATOR_BEAN_NAME)
     public ValidateCodeGenerator smsCodeGenerator() {
         return new DefaultSmsCodeGenerator(securityProperties);
     }
 
-    /** 短信验证码发送器*/
+    /**
+     * 短信验证码发送器
+     */
     @Bean
     @ConditionalOnMissingBean(SmsCodeSender.class)
     public SmsCodeSender smsCodeSender() {
         return new DefaultSmsCodeSender();
     }
 
-    /** 短信验证码认证的安全配置类*/
+    /**
+     * 短信验证码认证的安全配置类
+     */
     @Bean
     public SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig() {
         return new SmsCodeAuthenticationSecurityConfig(successHandler, failureHandler);
     }
 
-    /** OAuth2.0认证的安全配置类*/
+    /**
+     * OAuth2.0认证的安全配置类
+     */
     @Bean
     @ConditionalOnExpression("'${xh.security.oauth2.siteDomain}'.matches('^(http|https)://.*')")
     public OAuth2AuthenticationSecurityConfig oauth2AuthenticationSecurityConfig() {
@@ -110,7 +121,7 @@ public class SecurityCoreConfig {
      * 短信验证码认证的安全配置类
      */
     @Bean
-    public ValidateCodeSecurityConfig validateCodeSecurityConfig(){
+    public ValidateCodeSecurityConfig validateCodeSecurityConfig() {
         return new ValidateCodeSecurityConfig(failureHandler);
     }
 

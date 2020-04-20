@@ -12,10 +12,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
+
         <dependency>
             <groupId>com.xh</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>${xh.security.version}</version>
         </dependency>
+
     </dependencies>
 </project>

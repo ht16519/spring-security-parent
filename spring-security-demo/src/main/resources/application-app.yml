@@ -1,14 +1,19 @@
-security:
-  oauth2:
-    client:
-      clientId: ht16519
-      clientSecret: ht17520
-      registeredRedirectUri: http://example.com
 #配置OAuth2.0登录认证信息
 xh:
   security:
+    oauth2Support:
+      clients[0]:
+        clientId: ht16519
+        clientSecret: ht17620
+        scopes[0]: all
+        scopes[1]: read
+        scopes[2]: write
+        grantTypes[0]: password
+        grantTypes[1]: refresh_token
+        grantTypes[2]: code
+        redirectUris[0]: http://example.com
     oauth2:
-      siteDomain: http://7en724.natappfree.cc
+      siteDomain: http://6mqepx.natappfree.cc
       gitee:
         clientId: 4b8901f6a1942bc4da2f5e439b6412158eff55719f60808f9d7065ee44a103e4
         clientSecret: f56c7e6666d52b30f8e816bbe09a37df5b47485f0d9a7a851aa5fd9df44b41f0
