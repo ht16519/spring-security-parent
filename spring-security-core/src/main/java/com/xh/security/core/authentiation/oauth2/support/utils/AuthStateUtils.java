@@ -1,6 +1,10 @@
 package com.xh.security.core.authentiation.oauth2.support.utils;
 
 import com.xh.security.core.consts.CommonConst;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.Serializable;
 
 /**
  * AuthState工具类，默认只提供一个创建随机uuid的方法
@@ -16,4 +20,10 @@ public class AuthStateUtils {
     public static String createState(String type) {
         return type + CommonConst.COLON + UuidUtils.getUUID();
     }
+
+    /** 生成对应授权平台类型的随机state*/
+    public static String createState(String type, Integer id) {
+        return type + CommonConst.COLON + RandomStringUtils.randomAlphanumeric(16) + CommonConst.COLON  + id;
+    }
+
 }
