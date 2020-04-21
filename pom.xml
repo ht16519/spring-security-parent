@@ -21,6 +21,7 @@
         <module>spring-security-browser</module>
         <module>spring-security-app</module>
         <module>spring-security-demo</module>
+        <module>spring-security-sso</module>
     </modules>
 
     <name>spring-security-parent</name>
@@ -32,7 +33,6 @@
         <xh.security.version>1.0-SNAPSHOT</xh.security.version>
         <com.alibaba.fastjson.version>1.2.62</com.alibaba.fastjson.version>
         <simple-http.version>1.0.1</simple-http.version>
-        <apache.httpclient.version>4.5.12</apache.httpclient.version>
         <apache.httpclient.version>4.5.12</apache.httpclient.version>
     </properties>
 

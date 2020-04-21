@@ -2,9 +2,6 @@ package com.xh.security.core.authentiation.oauth2.support.utils;
 
 import com.xh.security.core.consts.CommonConst;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serializable;
 
 /**
  * AuthState工具类，默认只提供一个创建随机uuid的方法

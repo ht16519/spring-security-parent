@@ -1,0 +1,15 @@
+server:
+  port: 9001
+  servlet:
+    context-path: /client01
+#OAuth2.0配置
+security:
+  oauth2:
+    client:
+      clientId: ht16519
+      clientSecret: ht16519
+      user-authorization-uri: http://127.0.0.1:9999/server/oauth/authorize
+      access-token-uri: http://127.0.0.1:9999/server/oauth/token
+    resource:
+      jwt:
+        key-uri: http://127.0.0.1:9999/server/oauth/token_key
