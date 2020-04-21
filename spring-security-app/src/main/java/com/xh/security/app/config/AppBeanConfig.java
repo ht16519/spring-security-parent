@@ -28,8 +28,9 @@ public class AppBeanConfig {
     /**
      * 配置登录成功处理器
      */
-    @Bean(BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
-    @ConditionalOnMissingBean(name = BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+    @Bean
+//    @Bean(BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
+//    @ConditionalOnMissingBean(name = BeanNameConst.APP_AUTHENTICATION_SUCCESS_HANDLER_BEAN_NAME)
     public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
         return new AppAuthenticationSuccessHandler();
     }
@@ -37,8 +38,9 @@ public class AppBeanConfig {
     /**
      * 配置登录失败处理器
      */
-    @Bean(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
-    @ConditionalOnMissingBean(name = BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+    @Bean
+//    @Bean(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
+//    @ConditionalOnMissingBean(name = BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     public SimpleUrlAuthenticationFailureHandler failureHandler() {
         return new AppAuthenticationFailureHandler(securityProperties);
     }
@@ -46,8 +48,9 @@ public class AppBeanConfig {
     /**
      * 配置登录失败处理器
      */
-    @Bean(BeanNameConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
-    @ConditionalOnMissingBean(name = BeanNameConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
+    @Bean
+//    @Bean(BeanNameConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
+//    @ConditionalOnMissingBean(name = BeanNameConst.APP_LOGOUT_SUCCESS_HANDLER_BEAN_NAME)
     public LogoutSuccessHandler logoutSuccessHandler() {
         return new AppLogoutSuccessHandler(securityProperties);
     }

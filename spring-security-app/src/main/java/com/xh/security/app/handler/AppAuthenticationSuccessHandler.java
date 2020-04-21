@@ -44,7 +44,6 @@ public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
      */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("登录成功...");
         //1.读取请求头中Authorization信息
         String header = request.getHeader("Authorization");
         if (header == null || !header.toLowerCase().startsWith("basic ")) {
@@ -68,6 +67,7 @@ public class AppAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
         OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
         //5.创建令牌并返回
         OAuth2AccessToken accessToken = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+        log.info("登录成功...");
         ResponseUtil.write(accessToken, response);
     }
 

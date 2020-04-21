@@ -7,6 +7,8 @@ import com.xh.demo.commons.enums.MessageEnum;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.xh.demo.commons.exception.BusinessException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,6 +23,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExResult> handleBusinessException(BusinessException ex, HttpServletRequest request) {
         log.error("【业务处理异常】：错误码={}，错误信息={}", ex.getCode(), ex.getMsg());
         return ResponseEntity.ok().body(ExResult.build(ex));
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ExResult> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
+        log.error("【系统处理异常】：错误信息={}", ex.getMessage());
+        return ResponseEntity.ok().body(ExResult.build(MessageEnum.REQUEST_URL_NOT_SUPPORTED));
     }
 
     @ExceptionHandler(Exception.class)

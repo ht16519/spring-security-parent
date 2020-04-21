@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Configuration
 @EnableAuthorizationServer
-public class CustomAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AppAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private TokenStore tokenStore;

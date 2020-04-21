@@ -19,6 +19,7 @@ public enum  MessageEnum implements CommomMessage {
     UNKNOWN_ERROR(10001, "未知错误"),
     CONTENT_TYPE_NOT_SUPPORTED(10002, "不支持内容类型"),
     REQUEST_METHOD_NOT_SUPPORTED(10003, "不支持的请求类型"),
+    REQUEST_URL_NOT_SUPPORTED(10003, "不支持的请求地址"),
     PARAMETER_VERIFICATION_ERROR(10020, "参数不合法"),
     SYSTEM_SECURITY_CODE_ERROR(10021, "验证码已过期，请刷新再试"),
     INPUT_SECURITY_CODE_ERROR(10022, "验证码不正确"),

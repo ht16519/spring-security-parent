@@ -72,7 +72,7 @@ public class UserDetailsVo implements UserDetails, CredentialsContainer {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_MEMBER,ROLE_USER");
     }
 
     @Override

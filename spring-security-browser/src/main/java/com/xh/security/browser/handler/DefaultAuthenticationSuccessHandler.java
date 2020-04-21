@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Name XhAuthenticationSuccessHandler
+ * @Name DefaultAuthenticationSuccessHandler
  * @Description 登录认证成功处理类
  * @Author wen
  * @Date 2020-04-09

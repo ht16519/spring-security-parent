@@ -30,7 +30,4 @@ public class BrowserProperties {
     /** 浏览器session相关配置*/
     private BrowserSessionProperties session = new BrowserSessionProperties();
 
-    /** 配置放行的访问路径路径 , 号分隔*/
-    private String permitUrls;
-
 }

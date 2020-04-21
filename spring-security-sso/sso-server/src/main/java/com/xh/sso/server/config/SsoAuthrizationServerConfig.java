@@ -2,12 +2,10 @@ package com.xh.sso.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
@@ -23,7 +21,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  */
 @Configuration
 @EnableAuthorizationServer
-public class SsoAuthrizationServerConfig extends WebSecurityConfigurerAdapter implements AuthorizationServerConfigurer {
+public class SsoAuthrizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -56,17 +54,6 @@ public class SsoAuthrizationServerConfig extends WebSecurityConfigurerAdapter im
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());//TODO 暂时不加密
 //        security.allowFormAuthenticationForClients()
 //                .checkTokenAccess("permitAll()")
-    }
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.formLogin()              //登出成功处理器
-                .and()
-            .authorizeRequests()                                //授权请求1.0
-                .anyRequest()                                       //拦截所有1.0
-                .authenticated()                                    //需要认证1.0
-                .and()
-            .csrf().disable();                                  //关闭跨站伪造攻击的防护1.2
     }
 
     /**

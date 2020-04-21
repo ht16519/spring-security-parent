@@ -49,8 +49,9 @@ public class SecurityCoreConfig {
     /**
      * 自定义密码加密器
      */
-    @Bean(BeanNameConst.CUSTOM_PASSWORD_ENCODER_BEAN_NAME)
-    @ConditionalOnMissingBean(name = BeanNameConst.CUSTOM_PASSWORD_ENCODER_BEAN_NAME)
+    @Bean
+//    @Bean(BeanNameConst.CUSTOM_PASSWORD_ENCODER_BEAN_NAME)
+//    @ConditionalOnMissingBean(name = BeanNameConst.CUSTOM_PASSWORD_ENCODER_BEAN_NAME)
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

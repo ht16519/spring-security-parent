@@ -1,3 +1,6 @@
+spring:
+  session:
+    storeType: none
 #配置OAuth2.0登录认证信息
 xh:
   security:
