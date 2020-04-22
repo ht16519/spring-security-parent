@@ -39,8 +39,12 @@ public interface SocialUserDetailsService {
         throw new UnsupportedOperationException();
     }
 
-    /** 第三方应用绑定操作*/
-    default void binding(String userId, String uuid, String source){
+    /** 第三方应用绑定操作
+     * @param userId 用户唯一凭证
+     * @param providerId 第三方唯一凭证
+     * @param source 第三方来源
+     */
+    default void binding(String userId, String providerId, String source){
         throw new UnsupportedOperationException();
     }
 }

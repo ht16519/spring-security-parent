@@ -27,13 +27,13 @@ public class CustomSocialUserDetailsService implements SocialUserDetailsService 
 
     @Override
     public AuthUserDetails loadUserByProviderId(String providerId, String source) {
-        log.info("【登录认证服务】第三方授权登录操作:{}", providerId);
+        log.info("【OAuth2.0第三方应用登录认证服务】第三方授权登录操作:{}", providerId);
         return userService.getByProviderId(providerId, source);
     }
 
     @Override
     public AuthUserDetails silenceRegister(AuthUser authUser) throws UsernameNotFoundException {
-        log.info("【用户注册服务】静默注册第三方用户信息:{}", authUser);
+        log.info("【OAuth2.0第三方应用用户注册服务】静默注册第三方用户信息:{}", authUser);
         return userService.register(authUser);
     }
 
@@ -44,6 +44,8 @@ public class CustomSocialUserDetailsService implements SocialUserDetailsService 
 
     @Override
     public void binding(String userId, String providerId, String source) {
+        log.info("【OAuth2.0第三方应用绑定服务】第三方用户账号，userId：{}，providerId：{}，source：{}",
+                userId, providerId, source);
         oauth2UserInfoService.binding(userId, providerId, source);
     }
 }
