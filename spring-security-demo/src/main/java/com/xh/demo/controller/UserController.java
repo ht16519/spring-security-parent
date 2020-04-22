@@ -10,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,10 +51,10 @@ public class UserController {
     }
 
     @GetMapping("me")
-    public ApiResult<String> me(@AuthenticationPrincipal String username) throws Exception {
+    public ApiResult<Authentication> me(@AuthenticationPrincipal String username, Authentication authentication) throws Exception {
         log.info("@AuthenticationPrincipal 注解获取的 username:{}", username);
         log.info("Authentication 中获取的 username:{}", UserDetailsUtil.getUsername());
-        return ApiResult.success();
+        return ApiResult.success(authentication);
     }
 
     /**

@@ -6,6 +6,7 @@ import com.xh.security.core.authentiation.oauth2.support.config.AuthSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
 import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthStateRequest;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.consts.CommonConst;
 import com.xh.security.core.exception.AuthenticationBusinessException;
@@ -109,8 +110,8 @@ public class AuthChecker {
      * 1. {@code state}已使用，被正常清除
      * 2. {@code state}为前端伪造，本身就不存在
      *
-     * @param state          {@code state}一定不为空
-     * @param source         {@code source}当前授权平台
+     * @param state     {@code state}一定不为空
+     * @param source    {@code source}当前授权平台
      * @param authCache {@code authStateCache} state缓存实现
      */
     public static void checkState(String state, AuthSource source, AuthCache authCache) {
@@ -125,19 +126,28 @@ public class AuthChecker {
      * @Author wen
      * @Date 2020/4/13
      */
-    public static AuthRequest checkStateAndGetAuthRequest(Map<String, AuthRequest> authRequestMap, HttpServletRequest request) {
+    public static AuthStateRequest checkStateAndGetAuthRequest(Map<String, AuthRequest> authRequestMap, HttpServletRequest request) {
         String state = request.getParameter("state");
-        String[] split;
-        if (null == state || (split = state.split(CommonConst.COLON)).length != 2) {
+        if (StringUtils.isEmpty(state)) {
             throw new AuthenticationBusinessException("非法请求");
         }
+        String[] split = state.split(CommonConst.COLON);
         AuthRequest authRequest = authRequestMap.get(split[0]);
+        if (null == authRequest) {
+            throw new AuthenticationBusinessException("非法请求");
+        }
         AuthCache authStateCache = authRequest.getAuthStateCache();
         if (!authStateCache.containsKey(state)) {
             throw new AuthenticationBusinessException("非法请求");
         }
         authStateCache.remove(state);
-        return authRequest;
+        AuthStateRequest authStateRequest = new AuthStateRequest();
+        //如果length == 3 为账号绑定第三方应用
+        if (split.length == 3) {
+            authStateRequest.setUserId(split[2]);
+        }
+        authStateRequest.setAuthRequest(authRequest);
+        return authStateRequest;
     }
 
 }

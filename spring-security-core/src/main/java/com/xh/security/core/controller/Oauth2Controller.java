@@ -1,7 +1,6 @@
 package com.xh.security.core.controller;
 
 import com.xh.security.core.authentiation.oauth2.support.details.SocialUserDetailsService;
-import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.authentiation.oauth2.support.utils.AuthStateUtils;
 import com.xh.security.core.enums.LoginEnum;
@@ -12,6 +11,7 @@ import com.xh.security.core.utils.UserDetailsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,8 +52,8 @@ public class Oauth2Controller {
      *  param source 第三方服务源（如：gitee qq weixin）
      */
     @GetMapping("/{source}/binding")
-    public void bindingAuthorizeUrl(@PathVariable("source") String source, HttpServletResponse response) throws IOException {
-        Object userId = UserDetailsUtil.getUserDetailsVo().getUserId();
+    public void bindingAuthorizeUrl(@PathVariable("source") String source, HttpServletResponse response, Authentication authentication) throws IOException {
+        String userId = UserDetailsUtil.getUserId(authentication);
         if(socialUserDetailsService.loadUserBySource(userId, source.toUpperCase())){
             throw new AuthenticationBusinessException("该用户已绑定此第三方应用");
         }

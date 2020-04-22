@@ -35,7 +35,12 @@ public interface SocialUserDetailsService {
      * @param userId 用户唯一凭证（默认为用户id）
      * @param source 第三方应该来源
      */
-    default boolean loadUserBySource(Object userId, String source){
+    default boolean loadUserBySource(String userId, String source){
+        throw new UnsupportedOperationException();
+    }
+
+    /** 第三方应用绑定操作*/
+    default void binding(String userId, String uuid, String source){
         throw new UnsupportedOperationException();
     }
 }

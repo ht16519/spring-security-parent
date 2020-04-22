@@ -38,7 +38,12 @@ public class CustomSocialUserDetailsService implements SocialUserDetailsService 
     }
 
     @Override
-    public boolean loadUserBySource(Object userId, String source) {
-        return oauth2UserInfoService.existBySourceAndUserId(source);
+    public boolean loadUserBySource(String userId, String source) {
+        return oauth2UserInfoService.existBySourceAndUserId(userId, source);
+    }
+
+    @Override
+    public void binding(String userId, String providerId, String source) {
+        oauth2UserInfoService.binding(userId, providerId, source);
     }
 }

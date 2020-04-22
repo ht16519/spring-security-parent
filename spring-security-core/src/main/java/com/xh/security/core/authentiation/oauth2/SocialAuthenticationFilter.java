@@ -1,13 +1,16 @@
 package com.xh.security.core.authentiation.oauth2;
 
-import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
+import com.xh.security.core.authentiation.oauth2.support.details.SocialUserDetailsService;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthSimpleResult;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthStateRequest;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.authentiation.oauth2.support.utils.AuthChecker;
 import com.xh.security.core.authentiation.oauth2.support.utils.ConvertUtil;
 import com.xh.security.core.consts.URLConst;
 import com.xh.security.core.exception.AuthenticationBusinessException;
+import com.xh.security.core.utils.ResponseUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.core.Authentication;
@@ -34,6 +37,8 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 
     private Map<String, AuthRequest> authRequestMap;
 
+    private SocialUserDetailsService socialUserDetailsService;
+
     // ~ Constructors
     // ===================================================================================================
 
@@ -46,7 +51,8 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
-        AuthRequest authRequest = AuthChecker.checkStateAndGetAuthRequest(authRequestMap, request);
+        AuthStateRequest authStateRequest = AuthChecker.checkStateAndGetAuthRequest(authRequestMap, request);
+        AuthRequest authRequest = authStateRequest.getAuthRequest();
         AuthUser authUser;
         String source;
         //一.get请求为第三方认证携带code授权码的回调请求
@@ -55,6 +61,12 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
             AuthChecker.checkCode(authRequest.getSource(), authCallback);
             authUser = authRequest.getAuthUser(authCallback);
             source = authUser.getSource();
+            //第三方应用绑定操作
+            String userId = authStateRequest.getUserId();
+            if (StringUtils.isNotEmpty(userId)) {
+                socialUserDetailsService.binding(userId, authUser.getUuid(), source);
+                ResponseUtil.write(AuthSimpleResult.build("第三方应用绑定成功"), response);
+            }
         } else {
             //二.post请求为内部app携带providerId和source的授权请求
             String providerId = request.getParameter("providerId");
@@ -100,5 +112,9 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 
     public void setAuthRequestMap(Map<String, AuthRequest> authRequestMap) {
         this.authRequestMap = authRequestMap;
+    }
+
+    public void setSocialUserDetailsService(SocialUserDetailsService socialUserDetailsService) {
+        this.socialUserDetailsService = socialUserDetailsService;
     }
 }

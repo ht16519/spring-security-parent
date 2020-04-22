@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class UserDetailsUtil {
 
-    public static String getUsername(){
+    public static String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails) {
@@ -23,13 +23,19 @@ public class UserDetailsUtil {
         throw new AuthenticationBusinessException("请登录后再尝试此操作");
     }
 
-    public static AuthUserDetails getUserDetailsVo(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public static AuthUserDetails getUserDetailsVo(Authentication authentication) {
+        if (null == authentication) {
+            throw new AuthenticationBusinessException("请登录后再尝试此操作");
+        }
         Object principal = authentication.getPrincipal();
         if (principal instanceof AuthUserDetails) {
             return ((AuthUserDetails) principal);
         }
         throw new AuthenticationBusinessException("请登录后再尝试此操作");
+    }
+
+    public static String getUserId(Authentication authentication) {
+        return getUserDetailsVo(authentication).getUserId().toString();
     }
 
 }

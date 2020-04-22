@@ -37,6 +37,7 @@ public class OAuth2AuthenticationSecurityConfig extends SecurityConfigurerAdapte
         //配置OAuth2登录认证过滤器
         SocialAuthenticationFilter filter = new SocialAuthenticationFilter();
         filter.setAuthRequestMap(authRequestMap);
+        filter.setSocialUserDetailsService(userDetails4OAuth2Service);
         filter.setAuthenticationManager(http.getSharedObject(AuthenticationManager.class));
         filter.setAuthenticationSuccessHandler(successHandler);
         filter.setAuthenticationFailureHandler(failureHandler);

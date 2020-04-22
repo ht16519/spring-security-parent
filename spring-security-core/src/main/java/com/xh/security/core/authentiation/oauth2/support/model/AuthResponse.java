@@ -71,6 +71,10 @@ public class AuthResponse<T> implements Serializable {
         return build(AuthResponseStatus.SUCCESS, data);
     }
 
+    public static <T> AuthResponse success() {
+        return build(AuthResponseStatus.SUCCESS, null);
+    }
+
     /**
      * 是否请求成功
      * @return true or false
