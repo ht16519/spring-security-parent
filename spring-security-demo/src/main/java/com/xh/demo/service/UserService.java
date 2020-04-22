@@ -1,7 +1,7 @@
 package com.xh.demo.service;
 
+import com.xh.demo.domain.auth.UserDetailsVo;
 import com.xh.demo.domain.po.User;
-import com.xh.demo.domain.auth.SocialUserDetailsVo;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 
 public interface UserService {
@@ -46,8 +46,8 @@ public interface UserService {
 
     User getByMobile(String mobile);
 
-    SocialUserDetailsVo getByProviderId(String providerId, String source);
+    UserDetailsVo getByProviderId(String providerId, String source);
 
-    SocialUserDetailsVo register(AuthUser user);
+    UserDetailsVo register(AuthUser user);
 
 }

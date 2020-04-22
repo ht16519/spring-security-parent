@@ -1,11 +1,14 @@
 package com.xh.security.core.controller;
 
+import com.xh.security.core.authentiation.oauth2.support.details.SocialUserDetailsService;
+import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.authentiation.oauth2.support.utils.AuthStateUtils;
 import com.xh.security.core.enums.LoginEnum;
 import com.xh.security.core.exception.AuthenticationBusinessException;
 import com.xh.security.core.properties.SecurityProperties;
 import com.xh.security.core.utils.ResponseUtil;
+import com.xh.security.core.utils.UserDetailsUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -17,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @Name Oauth2Controller
@@ -35,6 +37,8 @@ public class Oauth2Controller {
     private SecurityProperties securityProperties;
     @Autowired(required = false)
     private Map<String, AuthRequest> authRequestMap;
+    @Autowired
+    private SocialUserDetailsService socialUserDetailsService;
 
     /** OAuth2.0 第三方登录授权地址
      * param source 第三方服务源（如：gitee qq weixin）
@@ -46,13 +50,15 @@ public class Oauth2Controller {
 
     /** OAuth2.0 已有帐号绑定授权地址
      *  param source 第三方服务源（如：gitee qq weixin）
-     *  param id 需要绑定的用户唯一凭证
      */
-    @GetMapping("/{source}/binding/{id}")
-    public void authorizeUrl(@PathVariable("source") String source, @PathVariable("id") Integer id, HttpServletResponse response) throws IOException {
-        this.getAuthorizeUrl(source, response, AuthStateUtils.createState(source, id));
+    @GetMapping("/{source}/binding")
+    public void bindingAuthorizeUrl(@PathVariable("source") String source, HttpServletResponse response) throws IOException {
+        Object userId = UserDetailsUtil.getUserDetailsVo().getUserId();
+        if(socialUserDetailsService.loadUserBySource(userId, source.toUpperCase())){
+            throw new AuthenticationBusinessException("该用户已绑定此第三方应用");
+        }
+        this.getAuthorizeUrl(source, response, AuthStateUtils.createState(source, userId));
     }
-
 
     private void getAuthorizeUrl(String source, HttpServletResponse response, String state) throws IOException {
         AuthRequest authRequest = this.authRequestMap.get(source);

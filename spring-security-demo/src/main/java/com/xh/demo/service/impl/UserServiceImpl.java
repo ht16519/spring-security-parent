@@ -4,9 +4,9 @@ import com.xh.demo.commons.enums.MessageEnum;
 import com.xh.demo.commons.exception.BusinessException;
 import com.xh.demo.dao.mapper.Oauth2UserInfoMapper;
 import com.xh.demo.dao.mapper.UserMapper;
+import com.xh.demo.domain.auth.UserDetailsVo;
 import com.xh.demo.domain.po.Oauth2UserInfo;
 import com.xh.demo.domain.po.User;
-import com.xh.demo.domain.auth.SocialUserDetailsVo;
 import com.xh.demo.service.UserService;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 import lombok.extern.slf4j.Slf4j;
@@ -65,13 +65,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SocialUserDetailsVo getByProviderId(String providerId, String source) {
+    public UserDetailsVo getByProviderId(String providerId, String source) {
         return userMapper.selectByProviderId(providerId, source);
     }
 
     @Override
     @Transactional
-    public SocialUserDetailsVo register(AuthUser authUser) {
+    public UserDetailsVo register(AuthUser authUser) {
         //1.静默注册新用户
         User user = User.builder()
                 .avatar(authUser.getAvatar())
@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
                 .status(10)
                 .build();
         int res = userMapper.insertSelective(user);
-        SocialUserDetailsVo userDetails4OAuth2Vo = null;
+        UserDetailsVo userDetailsVo = null;
         if (res > 0) {
             //2.关联第三方信息表
             oauth2UserInfoMapper.insertSelective(Oauth2UserInfo.builder()
@@ -92,10 +92,10 @@ public class UserServiceImpl implements UserService {
                     .providerId(authUser.getUuid())
                     .build());
             //3.返回用户信息
-            userDetails4OAuth2Vo = new SocialUserDetailsVo();
-            BeanUtils.copyProperties(user, userDetails4OAuth2Vo);
+            userDetailsVo = new UserDetailsVo();
+            BeanUtils.copyProperties(user, userDetailsVo);
         }
-        return userDetails4OAuth2Vo;
+        return userDetailsVo;
     }
 
 

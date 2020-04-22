@@ -19,8 +19,8 @@ public class AuthStateUtils {
     }
 
     /** 生成对应授权平台类型的随机state*/
-    public static String createState(String type, Integer id) {
-        return type + CommonConst.COLON + RandomStringUtils.randomAlphanumeric(16) + CommonConst.COLON  + id;
+    public static String createState(String type, Object id) {
+        return type + CommonConst.COLON + RandomStringUtils.randomAlphanumeric(16) + CommonConst.COLON  + id.toString();
     }
 
 }

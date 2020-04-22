@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.details;
 
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
-import com.xh.security.core.authentiation.oauth2.support.model.SocialUserDetails;
+import com.xh.security.core.authentiation.oauth2.support.model.details.AuthUserDetails;
 
 /**
  * @Name UserDetails4MobileService
@@ -13,8 +13,10 @@ public interface SocialUserDetailsService {
 
     /**
      * 通过提供商唯一凭证查询用户
+     * @param providerId 第三方提供的唯一凭证
+     * @param source 第三方应该来源
      */
-    default SocialUserDetails loadUserByProviderId(String providerId, String source) {
+    default AuthUserDetails loadUserByProviderId(String providerId, String source) {
         throw new UnsupportedOperationException();
     }
 
@@ -24,8 +26,16 @@ public interface SocialUserDetailsService {
      * @Name silenceRegister
      * @Description 静默注册方法
      */
-    default SocialUserDetails silenceRegister(AuthUser authUser) {
+    default AuthUserDetails silenceRegister(AuthUser authUser) {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * 判断数据库中用户是否已绑定指定来源的第三方数据
+     * @param userId 用户唯一凭证（默认为用户id）
+     * @param source 第三方应该来源
+     */
+    default boolean loadUserBySource(Object userId, String source){
+        throw new UnsupportedOperationException();
+    }
 }

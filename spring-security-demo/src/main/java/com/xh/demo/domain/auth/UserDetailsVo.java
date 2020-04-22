@@ -1,5 +1,6 @@
 package com.xh.demo.domain.auth;
 
+import com.xh.security.core.authentiation.oauth2.support.model.details.AuthUserDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +22,7 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
-public class UserDetailsVo implements UserDetails, CredentialsContainer {
+public class UserDetailsVo implements AuthUserDetails<Integer> {
 
     private Integer id;
 
@@ -124,4 +125,10 @@ public class UserDetailsVo implements UserDetails, CredentialsContainer {
     public boolean equals(Object obj) {
         return this.toString().equals(obj.toString());
     }
+
+    @Override
+    public Integer getUserId() {
+        return this.getId();
+    }
+
 }

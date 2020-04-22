@@ -2,7 +2,7 @@ package com.xh.security.core.authentiation.oauth2;
 
 import com.xh.security.core.authentiation.oauth2.support.details.SocialUserDetailsService;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
-import com.xh.security.core.authentiation.oauth2.support.model.SocialUserDetails;
+import com.xh.security.core.authentiation.oauth2.support.model.details.AuthUserDetails;
 import com.xh.security.core.exception.AuthenticationBusinessException;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ public class SocialAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SocialAuthenticationToken oauth2AuthenticationToken = (SocialAuthenticationToken) authentication;
         AuthUser authUser = (AuthUser) oauth2AuthenticationToken.getPrincipal();
-        SocialUserDetails userDetails;
+        AuthUserDetails userDetails;
         String source = authUser.getSource();
         if(StringUtils.isEmpty(source)){
             throw new AuthenticationBusinessException("第三方来源不能为空");

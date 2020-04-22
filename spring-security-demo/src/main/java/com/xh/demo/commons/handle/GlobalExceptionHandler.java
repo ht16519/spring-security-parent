@@ -1,5 +1,7 @@
 package com.xh.demo.commons.handle;
 
+import com.xh.security.core.authentiation.oauth2.support.model.AuthSimpleResult;
+import com.xh.security.core.exception.AuthenticationBusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import com.xh.demo.domain.vo.ExResult;
@@ -27,8 +29,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ExResult> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
-        log.error("【系统处理异常】：错误信息={}", ex.getMessage());
+        log.error("【业务处理异常】：错误信息={}", ex.getMessage());
         return ResponseEntity.ok().body(ExResult.build(MessageEnum.REQUEST_URL_NOT_SUPPORTED));
+    }
+
+    @ExceptionHandler(AuthenticationBusinessException.class)
+    public ResponseEntity<AuthSimpleResult> handleBusinessException(AuthenticationBusinessException ex, HttpServletRequest request) {
+        String message = ex.getMessage();
+        log.error("【业务处理异常】：错误信息={}", message);
+        return ResponseEntity.badRequest().body(AuthSimpleResult.build(message));
     }
 
     @ExceptionHandler(Exception.class)

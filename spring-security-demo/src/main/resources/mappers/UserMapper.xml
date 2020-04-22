@@ -29,7 +29,7 @@
     </delete>
 
 
-    <select id="selectByProviderId" resultType="com.xh.demo.domain.auth.SocialUserDetailsVo">
+    <select id="selectByProviderId" resultType="com.xh.demo.domain.auth.UserDetailsVo">
         SELECT
             u.id,
             u.email,

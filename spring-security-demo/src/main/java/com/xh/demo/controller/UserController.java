@@ -1,12 +1,13 @@
 package com.xh.demo.controller;
 
+import com.xh.demo.domain.po.User;
 import com.xh.demo.domain.vo.ApiResult;
+import com.xh.demo.service.UserService;
 import com.xh.security.core.properties.SecurityProperties;
+import com.xh.security.core.utils.UserDetailsUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
-import com.xh.demo.domain.po.User;
-import com.xh.demo.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,8 +35,8 @@ public class UserController {
         return ApiResult.success(userService.getById(id));
     }
 
-    @GetMapping("me")
-    public ApiResult<String> get(@AuthenticationPrincipal String username, HttpServletRequest request) throws Exception {
+    @GetMapping("jwt")
+    public ApiResult<String> jwt(@AuthenticationPrincipal String username, HttpServletRequest request) throws Exception {
         String header = request.getHeader("Authorization");
         String token = StringUtils.substringAfter(header, "bearer ");
 
@@ -46,6 +47,13 @@ public class UserController {
         String avatar = (String) claims.get("avatar");
         Integer sex = (Integer) claims.get("sex");
         return ApiResult.success(username);
+    }
+
+    @GetMapping("me")
+    public ApiResult<String> me(@AuthenticationPrincipal String username) throws Exception {
+        log.info("@AuthenticationPrincipal 注解获取的 username:{}", username);
+        log.info("Authentication 中获取的 username:{}", UserDetailsUtil.getUsername());
+        return ApiResult.success();
     }
 
     /**
