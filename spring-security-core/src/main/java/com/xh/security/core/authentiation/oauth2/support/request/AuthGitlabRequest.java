@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
@@ -16,12 +16,8 @@ import com.xh.security.core.authentiation.oauth2.support.utils.UrlBuilder;
  */
 public class AuthGitlabRequest extends AuthDefaultRequest {
 
-    public AuthGitlabRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.GITLAB);
-    }
-
-    public AuthGitlabRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.GITLAB, authStateCache);
+    public AuthGitlabRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.GITLAB, authCache);
     }
 
     @Override

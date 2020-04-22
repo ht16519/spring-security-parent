@@ -2,12 +2,9 @@ package com.xh.security.core.authentiation.oauth2.config;
 
 import com.xh.security.core.authentiation.oauth2.SocialAuthenticationFilter;
 import com.xh.security.core.authentiation.oauth2.SocialAuthenticationProvider;
-import com.xh.security.core.authentiation.oauth2.details.SocialUserDetailsService;
+import com.xh.security.core.authentiation.oauth2.support.details.SocialUserDetailsService;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
-import com.xh.security.core.authentiation.validate.mobile.SmsCodeAuthenticationFilter;
-import com.xh.security.core.consts.BeanNameConst;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

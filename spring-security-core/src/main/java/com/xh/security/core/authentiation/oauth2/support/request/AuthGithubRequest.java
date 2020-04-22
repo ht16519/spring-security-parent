@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
@@ -21,12 +21,8 @@ import java.util.Map;
  */
 public class AuthGithubRequest extends AuthDefaultRequest {
 
-    public AuthGithubRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.GITHUB);
-    }
-
-    public AuthGithubRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.GITHUB, authStateCache);
+    public AuthGithubRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.GITHUB, authCache);
     }
 
     @Override

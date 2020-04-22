@@ -1,7 +1,6 @@
 package com.xh.security.core.authentiation.oauth2;
 
-import com.xh.security.core.authentiation.oauth2.details.SocialUserDetailsService;
-import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
+import com.xh.security.core.authentiation.oauth2.support.details.SocialUserDetailsService;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 import com.xh.security.core.authentiation.oauth2.support.model.SocialUserDetails;
 import com.xh.security.core.exception.AuthenticationBusinessException;
@@ -10,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * @Name SmsCodeAuthenticationProvider

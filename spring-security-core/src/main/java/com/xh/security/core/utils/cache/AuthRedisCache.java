@@ -1,6 +1,5 @@
-package com.xh.security.core.authentiation.oauth2.support.cache;
+package com.xh.security.core.utils.cache;
 
-import com.xh.security.core.properties.SecurityProperties;
 import com.xh.security.core.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,18 +11,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class AuthRedisCache implements AuthCache {
 
-    private long timeout = AuthCacheConfig.timeout;
-
     private StringRedisTemplate stringRedisTemplate;
 
     public AuthRedisCache(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
-    }
-
-    public AuthRedisCache(StringRedisTemplate stringRedisTemplate, SecurityProperties securityProperties) {
-        this.stringRedisTemplate = stringRedisTemplate;
-        timeout = Math.max(securityProperties.getCode().getImage().getExpireIn(),
-                securityProperties.getCode().getSms().getExpireIn()) * 1000;
     }
 
     /**
@@ -34,7 +25,7 @@ public class AuthRedisCache implements AuthCache {
      */
     @Override
     public void set(String key, String value) {
-        set(key, value, timeout);
+        set(key, value, AuthCacheConfig.timeout);
     }
 
     /**

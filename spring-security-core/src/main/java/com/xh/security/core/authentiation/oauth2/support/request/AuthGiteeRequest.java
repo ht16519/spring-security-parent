@@ -2,7 +2,7 @@ package com.xh.security.core.authentiation.oauth2.support.request;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
@@ -16,12 +16,8 @@ import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
  */
 public class AuthGiteeRequest extends AuthDefaultRequest {
 
-    public AuthGiteeRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.GITEE);
-    }
-
-    public AuthGiteeRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.GITEE, authStateCache);
+    public AuthGiteeRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.GITEE, authCache);
     }
 
     @Override

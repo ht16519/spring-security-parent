@@ -1,9 +1,7 @@
-package com.xh.security.core.authentiation.oauth2.details;
+package com.xh.security.core.authentiation.oauth2.support.details;
 
 import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 import com.xh.security.core.authentiation.oauth2.support.model.SocialUserDetails;
-import com.xh.security.core.exception.AuthenticationBusinessException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * @Name UserDetails4MobileService

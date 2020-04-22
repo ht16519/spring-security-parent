@@ -1,4 +1,4 @@
-package com.xh.security.core.authentiation.oauth2.support.cache;
+package com.xh.security.core.utils.cache;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -6,10 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 缓存调度器
- *
- * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
- * @since 1.9.3
+ * 缓存清除调度器
  */
 public enum AuthCacheScheduler {
 
@@ -27,7 +24,9 @@ public enum AuthCacheScheduler {
 
     private void create() {
         this.shutdown();
-        this.scheduler = new ScheduledThreadPoolExecutor(3, r -> new Thread(r, String.format("【OAuth2.0缓存清理服务】-Task-%s", cacheTaskNumber.getAndIncrement())));
+        this.scheduler = new ScheduledThreadPoolExecutor(3, r ->
+                new Thread(r, String.format("【OAuth2.0缓存清理服务】-Task-%s",
+                        cacheTaskNumber.getAndIncrement())));
     }
 
     private void shutdown() {

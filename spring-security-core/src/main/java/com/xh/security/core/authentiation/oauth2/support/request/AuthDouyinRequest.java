@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -20,12 +20,8 @@ import com.xkcoding.http.HttpUtil;
  */
 public class AuthDouyinRequest extends AuthDefaultRequest {
 
-    public AuthDouyinRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.DOUYIN);
-    }
-
-    public AuthDouyinRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.DOUYIN, authStateCache);
+    public AuthDouyinRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.DOUYIN, authCache);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -19,12 +19,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AuthKujialeRequest extends AuthDefaultRequest {
 
-    public AuthKujialeRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.KUJIALE);
-    }
-
-    public AuthKujialeRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.KUJIALE, authStateCache);
+    public AuthKujialeRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.KUJIALE, authCache);
     }
 
     /**

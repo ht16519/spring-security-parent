@@ -1,6 +1,5 @@
 package com.xh.security.core.authentiation.oauth2.support.utils;
 
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthSource;
@@ -10,6 +9,7 @@ import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
 import com.xh.security.core.consts.CommonConst;
 import com.xh.security.core.exception.AuthenticationBusinessException;
+import com.xh.security.core.utils.cache.AuthCache;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,10 +111,10 @@ public class AuthChecker {
      *
      * @param state          {@code state}一定不为空
      * @param source         {@code source}当前授权平台
-     * @param authStateCache {@code authStateCache} state缓存实现
+     * @param authCache {@code authStateCache} state缓存实现
      */
-    public static void checkState(String state, AuthSource source, AuthStateCache authStateCache) {
-        if (StringUtils.isEmpty(state) || !authStateCache.containsKey(state)) {
+    public static void checkState(String state, AuthSource source, AuthCache authCache) {
+        if (StringUtils.isEmpty(state) || !authCache.containsKey(state)) {
             throw new AuthException(AuthResponseStatus.ILLEGAL_STATUS, source);
         }
     }
@@ -132,11 +132,11 @@ public class AuthChecker {
             throw new AuthenticationBusinessException("非法请求");
         }
         AuthRequest authRequest = authRequestMap.get(split[0]);
-//        AuthStateCache authStateCache = authRequest.getAuthStateCache();
-//        if (!authStateCache.containsKey(state)) {
-//            throw new AuthenticationBusinessException("非法请求");
-//        }
-//        authStateCache.remove(state);
+        AuthCache authStateCache = authRequest.getAuthStateCache();
+        if (!authStateCache.containsKey(state)) {
+            throw new AuthenticationBusinessException("非法请求");
+        }
+        authStateCache.remove(state);
         return authRequest;
     }
 

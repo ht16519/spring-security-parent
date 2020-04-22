@@ -2,17 +2,14 @@ package com.xh.security.app.handler;
 
 import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.core.consts.CommonConst;
-import com.xh.security.core.properties.SecurityProperties;
 import com.xh.security.core.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.CharEncoding;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;

@@ -1,4 +1,4 @@
-package com.xh.security.core.authentiation.oauth2.support.cache;
+package com.xh.security.core.utils.cache;
 
 import com.xh.security.core.utils.JsonUtil;
 import lombok.Getter;
@@ -13,9 +13,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 默认的缓存实现
- *
- * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
- * @since 1.9.3
  */
 public class AuthDefaultCache implements AuthCache {
 
@@ -29,7 +26,7 @@ public class AuthDefaultCache implements AuthCache {
 
     public AuthDefaultCache() {
         if (AuthCacheConfig.schedulePrune) {
-            this.schedulePrune(AuthCacheConfig.timeout);
+            this.schedulePrune(AuthCacheConfig.clearTime);
         }
     }
 
@@ -74,7 +71,7 @@ public class AuthDefaultCache implements AuthCache {
             if (null == cacheState || cacheState.isExpired()) {
                 return null;
             }
-            return cacheState.getState();
+            return cacheState.getValue();
         } finally {
             readLock.unlock();
         }
@@ -88,7 +85,7 @@ public class AuthDefaultCache implements AuthCache {
             if (null == cacheState || cacheState.isExpired()) {
                 return null;
             }
-            return JsonUtil.parse(cacheState.getState(), clazz);
+            return JsonUtil.parse(cacheState.getValue(), clazz);
         } finally {
             readLock.unlock();
         }
@@ -143,11 +140,11 @@ public class AuthDefaultCache implements AuthCache {
     @Getter
     @Setter
     private class CacheState implements Serializable {
-        private String state;
+        private String value;
         private long expire;
 
-        CacheState(String state, long expire) {
-            this.state = state;
+        CacheState(String value, long expire) {
+            this.value = value;
             // 实际过期时间等于当前时间加上有效期
             this.expire = System.currentTimeMillis() + expire;
         }

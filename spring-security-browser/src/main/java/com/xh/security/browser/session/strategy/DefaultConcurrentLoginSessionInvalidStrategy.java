@@ -1,8 +1,10 @@
 package com.xh.security.browser.session.strategy;
-import java.io.IOException;
-import javax.servlet.ServletException;
+
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
 
 /**
  * 默认并发登录时session失效处理策略

@@ -1,12 +1,11 @@
 package com.xh.security.browser.session.strategy;
 
-import java.io.IOException;
+import org.springframework.security.web.session.InvalidSessionStrategy;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.web.session.InvalidSessionStrategy;
+import java.io.IOException;
 
 /**
  * 默认session超时失效处理策略

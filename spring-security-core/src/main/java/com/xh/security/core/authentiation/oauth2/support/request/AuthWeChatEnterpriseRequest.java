@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -19,12 +19,9 @@ import com.xkcoding.http.HttpUtil;
  * </p>
  */
 public class AuthWeChatEnterpriseRequest extends AuthDefaultRequest {
-    public AuthWeChatEnterpriseRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.WECHAT_ENTERPRISE);
-    }
 
-    public AuthWeChatEnterpriseRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.WECHAT_ENTERPRISE, authStateCache);
+    public AuthWeChatEnterpriseRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.WECHAT_ENTERPRISE, authCache);
     }
 
     /**

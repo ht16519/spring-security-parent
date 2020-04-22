@@ -1,6 +1,6 @@
 package com.xh.security.core.authentiation.validate.processor;
 
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.validate.code.ValidateCode;
 import com.xh.security.core.exception.AuthenticationBusinessException;
 import com.xh.security.core.utils.ValidateCodeUtil;

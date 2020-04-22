@@ -3,8 +3,8 @@
  */
 package com.xh.security.core.authentiation.validate.generatator;
 
-import com.xh.security.core.properties.SecurityProperties;
 import com.xh.security.core.authentiation.validate.code.ValidateCode;
+import com.xh.security.core.properties.SecurityProperties;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.servlet.http.HttpServletRequest;

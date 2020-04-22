@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
@@ -16,12 +16,8 @@ import com.xh.security.core.authentiation.oauth2.support.model.AuthUser;
 @Deprecated
 public class AuthCsdnRequest extends AuthDefaultRequest {
 
-    public AuthCsdnRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.CSDN);
-    }
-
-    public AuthCsdnRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.CSDN, authStateCache);
+    public AuthCsdnRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.CSDN, authCache);
     }
 
     @Override

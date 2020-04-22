@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -26,12 +26,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AuthWeiboRequest extends AuthDefaultRequest {
 
-    public AuthWeiboRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.WEIBO);
-    }
-
-    public AuthWeiboRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.WEIBO, authStateCache);
+    public AuthWeiboRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.WEIBO, authCache);
     }
 
     @Override

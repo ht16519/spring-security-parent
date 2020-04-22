@@ -1,6 +1,5 @@
 package com.xh.security.browser.config;
 
-import com.xh.security.core.authorize.AuthorizeConfigManager;
 import com.xh.security.core.config.AbstractAuthenticationConfig;
 import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.consts.URLConst;

@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
@@ -17,12 +17,8 @@ import com.xh.security.core.authentiation.oauth2.support.utils.UrlBuilder;
  */
 public class AuthTaobaoRequest extends AuthDefaultRequest {
 
-    public AuthTaobaoRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.TAOBAO);
-    }
-
-    public AuthTaobaoRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.TAOBAO, authStateCache);
+    public AuthTaobaoRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.TAOBAO, authCache);
     }
 
     @Override

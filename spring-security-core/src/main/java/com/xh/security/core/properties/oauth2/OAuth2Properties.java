@@ -26,4 +26,5 @@ public class OAuth2Properties {
     /** gitee登录认证相关配置*/
     private GiteeProperties gitee = new GiteeProperties();
 
+
 }

@@ -1,5 +1,6 @@
 package com.xh.security.core.authentiation.oauth2.config;
 
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthGiteeRequest;
 import com.xh.security.core.authentiation.oauth2.support.request.AuthRequest;
@@ -20,6 +21,8 @@ import org.springframework.context.annotation.Configuration;
 public class OAuth2Config {
 
     @Autowired
+    private AuthCache authCache;
+    @Autowired
     private SecurityProperties securityProperties;
 
     @Bean("gitee")
@@ -29,7 +32,8 @@ public class OAuth2Config {
                 .clientId(securityProperties.getOauth2().getGitee().getClientId())
                 .clientSecret(securityProperties.getOauth2().getGitee().getClientSecret())
                 .redirectUri(securityProperties.getOauth2().getSiteDomain() + "/oauth2/callback")
-                .build());
+                .build(), authCache);
     }
+
 
 }

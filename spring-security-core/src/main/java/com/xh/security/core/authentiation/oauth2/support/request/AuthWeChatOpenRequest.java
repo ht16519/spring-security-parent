@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -18,12 +18,9 @@ import com.xkcoding.http.HttpUtil;
  * 微信开放平台登录
  */
 public class AuthWeChatOpenRequest extends AuthDefaultRequest {
-    public AuthWeChatOpenRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.WECHAT_OPEN);
-    }
 
-    public AuthWeChatOpenRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.WECHAT_OPEN, authStateCache);
+    public AuthWeChatOpenRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.WECHAT_OPEN, authCache);
     }
 
     /**

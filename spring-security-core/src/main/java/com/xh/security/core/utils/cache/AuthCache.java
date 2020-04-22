@@ -1,10 +1,7 @@
-package com.xh.security.core.authentiation.oauth2.support.cache;
+package com.xh.security.core.utils.cache;
 
 /**
- * JustAuth缓存，用来缓存State
- *
- * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
- * @since 1.9.3
+ * 数据缓存接口
  */
 public interface AuthCache {
 

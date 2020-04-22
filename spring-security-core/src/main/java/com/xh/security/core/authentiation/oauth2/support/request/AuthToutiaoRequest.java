@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthToutiaoErrorCode;
@@ -17,12 +17,8 @@ import com.xh.security.core.authentiation.oauth2.support.utils.UrlBuilder;
  */
 public class AuthToutiaoRequest extends AuthDefaultRequest {
 
-    public AuthToutiaoRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.TOUTIAO);
-    }
-
-    public AuthToutiaoRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.TOUTIAO, authStateCache);
+    public AuthToutiaoRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.TOUTIAO, authCache);
     }
 
     @Override

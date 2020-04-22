@@ -1,6 +1,5 @@
 package com.xh.security.core.controller;
 
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.core.authentiation.validate.code.ImageCode;
@@ -10,8 +9,10 @@ import com.xh.security.core.authentiation.validate.mobile.MobileValidator;
 import com.xh.security.core.authentiation.validate.sms.SmsCodeSender;
 import com.xh.security.core.consts.BeanNameConst;
 import com.xh.security.core.consts.URLConst;
+import com.xh.security.core.properties.SecurityProperties;
 import com.xh.security.core.utils.JsonUtil;
 import com.xh.security.core.utils.ValidateCodeUtil;
+import com.xh.security.core.utils.cache.AuthCache;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
@@ -38,6 +38,8 @@ public class ValidateCodeController {
     @Autowired
     private ValidateCodeGenerator smsCodeGenerator;
     @Autowired
+    private SecurityProperties securityProperties;
+    @Autowired
     private SmsCodeSender smsCodeSender;
     @Autowired
     private AuthCache authCache;
@@ -51,7 +53,8 @@ public class ValidateCodeController {
         ImageCode imageCode = (ImageCode) imageCodeGenerator.generate(request);
         //2.存储验证码
         authCache.set(ValidateCodeUtil.setKey(BeanNameConst.CACHE_IMAGE_CODE_KEY, request, response),
-                JsonUtil.serialize(ValidateCode.build(imageCode.getCode(), imageCode.getExpireTime())));
+                JsonUtil.serialize(ValidateCode.build(imageCode.getCode(), imageCode.getExpireTime())),
+                securityProperties.getCode().getImage().getExpireIn() * 1000);
         //3.发送验证码
         ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
     }
@@ -71,7 +74,9 @@ public class ValidateCodeController {
         }
         //2.存储生成的验证码
         ValidateCode validateCode = smsCodeGenerator.generate(request);
-        authCache.set(ValidateCodeUtil.setKey(BeanNameConst.CACHE_MOBILE_CODE_KEY, request, response), JsonUtil.serialize(validateCode));
+        authCache.set(ValidateCodeUtil.setKey(BeanNameConst.CACHE_MOBILE_CODE_KEY, request, response),
+                JsonUtil.serialize(validateCode),
+                securityProperties.getCode().getSms().getExpireIn() * 1000);
         //3.发送验证码
         smsCodeSender.send(mobile, validateCode.getCode());
         return ResponseEntity.ok().body(new AuthResponse(AuthResponseStatus.SUCCESS.getCode(), "短信验证码发送成功"));

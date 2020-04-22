@@ -2,7 +2,7 @@ package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
@@ -19,12 +19,8 @@ import com.xkcoding.http.HttpUtil;
  */
 public class AuthDingTalkRequest extends AuthDefaultRequest {
 
-    public AuthDingTalkRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.DINGTALK);
-    }
-
-    public AuthDingTalkRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.DINGTALK, authStateCache);
+    public AuthDingTalkRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.DINGTALK, authCache);
     }
 
     @Override

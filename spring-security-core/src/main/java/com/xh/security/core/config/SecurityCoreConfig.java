@@ -1,9 +1,9 @@
 package com.xh.security.core.config;
 
 import com.xh.security.core.authentiation.oauth2.config.OAuth2AuthenticationSecurityConfig;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthCache;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthDefaultCache;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthRedisCache;
+import com.xh.security.core.utils.cache.AuthCache;
+import com.xh.security.core.utils.cache.AuthDefaultCache;
+import com.xh.security.core.utils.cache.AuthRedisCache;
 import com.xh.security.core.authentiation.validate.config.SmsCodeAuthenticationSecurityConfig;
 import com.xh.security.core.authentiation.validate.config.ValidateCodeSecurityConfig;
 import com.xh.security.core.authentiation.validate.generatator.DefaultImageCodeGenerator;
@@ -44,7 +44,6 @@ public class SecurityCoreConfig {
     @Autowired
 //    @Qualifier(BeanNameConst.APP_AUTHENTICATION_FAILURE_HANDLER_BEAN_NAME)
     private AuthenticationFailureHandler failureHandler;
-
 
     /**
      * 自定义密码加密器
@@ -101,19 +100,19 @@ public class SecurityCoreConfig {
     }
 
     /**
-     * 配置基于Redis的验证码缓存器
+     * 配置基于Redis的缓存器
      */
     @Bean
     @ConditionalOnExpression("'${spring.session.storeType}'.equalsIgnoreCase('redis')")
     public AuthCache authRedisCache(StringRedisTemplate stringRedisTemplate) {
-        return new AuthRedisCache(stringRedisTemplate, securityProperties);
+        return new AuthRedisCache(stringRedisTemplate);
     }
 
     /**
-     * 配置默认的验证码缓存器
+     * 配置默认的缓存器
      */
     @Bean
-    @ConditionalOnMissingBean(AuthCache.class)
+    @ConditionalOnMissingBean(name = "authRedisCache")
     public AuthCache authDefaultCache() {
         return new AuthDefaultCache();
     }

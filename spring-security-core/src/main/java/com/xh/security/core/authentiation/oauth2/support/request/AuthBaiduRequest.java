@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -20,12 +20,8 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AuthBaiduRequest extends AuthDefaultRequest {
 
-    public AuthBaiduRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.BAIDU);
-    }
-
-    public AuthBaiduRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.BAIDU, authStateCache);
+    public AuthBaiduRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.BAIDU, authCache);
     }
 
     @Override

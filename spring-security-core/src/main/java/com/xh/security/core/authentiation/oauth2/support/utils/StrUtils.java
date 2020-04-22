@@ -12,10 +12,6 @@ public class StrUtils {
         return null == str || str.isEmpty();
     }
 
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
-
     /**
      * 如果给定字符串{@code str}中不包含{@code appendStr}，则在{@code str}后追加{@code appendStr}；
      * 如果已包含{@code appendStr}，则在{@code str}后追加{@code otherwise}

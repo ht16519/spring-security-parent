@@ -1,13 +1,11 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthDefaultStateCache;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
 import com.xh.security.core.authentiation.oauth2.support.exception.AuthException;
-import com.xh.security.core.authentiation.oauth2.support.log.Log;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthToken;
@@ -16,27 +14,25 @@ import com.xh.security.core.authentiation.oauth2.support.utils.AuthChecker;
 import com.xh.security.core.authentiation.oauth2.support.utils.UrlBuilder;
 import com.xh.security.core.authentiation.oauth2.support.utils.UuidUtils;
 import com.xkcoding.http.HttpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * 默认的request处理类
  */
+@Slf4j
 public abstract class AuthDefaultRequest implements AuthRequest {
 
     private long stateInExpire = 1000 * 60 * 10;    //state失效时间（10 min）
 
     protected AuthConfig config;
     protected AuthSource source;
-    protected AuthStateCache authStateCache;
+    protected AuthCache authCache;
 
-    public AuthDefaultRequest(AuthConfig config, AuthSource source) {
-        this(config, source, AuthDefaultStateCache.INSTANCE);
-    }
-
-    public AuthDefaultRequest(AuthConfig config, AuthSource source, AuthStateCache authStateCache) {
+    public AuthDefaultRequest(AuthConfig config, AuthSource source, AuthCache authCache) {
         this.config = config;
         this.source = source;
-        this.authStateCache = authStateCache;
+        this.authCache = authCache;
         if (!AuthChecker.isSupportedAuth(config, source)) {
             throw new AuthException(AuthResponseStatus.PARAMETER_INCOMPLETE, source);
         }
@@ -74,12 +70,12 @@ public abstract class AuthDefaultRequest implements AuthRequest {
     public AuthResponse login(AuthCallback authCallback) {
         try {
             AuthChecker.checkCode(source, authCallback);
-            AuthChecker.checkState(authCallback.getState(), source, authStateCache);
+            AuthChecker.checkState(authCallback.getState(), source, authCache);
             AuthToken authToken = this.getAccessToken(authCallback);
             AuthUser user = this.getUserInfo(authToken);
             return AuthResponse.builder().code(AuthResponseStatus.SUCCESS.getCode()).data(user).build();
         } catch (Exception e) {
-            Log.error("Failed to login with oauth authorization.", e);
+            log.error("Failed to login with oauth authorization.", e);
             return this.responseError(e);
         }
     }
@@ -194,7 +190,7 @@ public abstract class AuthDefaultRequest implements AuthRequest {
             state = UuidUtils.getUUID();
         }
         // 缓存state
-        authStateCache.cache(state, "", stateInExpire);
+        authCache.set(state, "", stateInExpire);
         return state;
     }
 
@@ -264,8 +260,8 @@ public abstract class AuthDefaultRequest implements AuthRequest {
         return source;
     }
 
-    public AuthStateCache getAuthStateCache() {
-        return authStateCache;
+    public AuthCache getAuthStateCache() {
+        return authCache;
     }
 
 }

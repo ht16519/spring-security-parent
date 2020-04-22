@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -23,12 +23,8 @@ import java.util.Map;
  */
 public class AuthQqRequest extends AuthDefaultRequest {
 
-    public AuthQqRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.QQ);
-    }
-
-    public AuthQqRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.QQ, authStateCache);
+    public AuthQqRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.QQ, authCache);
     }
 
     @Override

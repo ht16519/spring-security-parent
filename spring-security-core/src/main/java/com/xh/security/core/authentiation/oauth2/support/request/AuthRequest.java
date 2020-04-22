@@ -1,6 +1,6 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthSource;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthCallback;
 import com.xh.security.core.authentiation.oauth2.support.model.AuthResponse;
@@ -70,7 +70,7 @@ public interface AuthRequest {
 
     AuthSource getSource();
 
-    AuthStateCache getAuthStateCache();
+    AuthCache getAuthStateCache();
 
     /**
      * 通过providerId获取第三方用户信息

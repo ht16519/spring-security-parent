@@ -1,7 +1,7 @@
 package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthUserGender;
@@ -24,12 +24,8 @@ public class AuthPinterestRequest extends AuthDefaultRequest {
 
     private static final String FAILURE = "failure";
 
-    public AuthPinterestRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.PINTEREST);
-    }
-
-    public AuthPinterestRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.PINTEREST, authStateCache);
+    public AuthPinterestRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.PINTEREST, authCache);
     }
 
     @Override

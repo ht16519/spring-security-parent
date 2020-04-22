@@ -2,7 +2,7 @@ package com.xh.security.core.authentiation.oauth2.support.request;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.xh.security.core.authentiation.oauth2.support.cache.AuthStateCache;
+import com.xh.security.core.utils.cache.AuthCache;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthConfig;
 import com.xh.security.core.authentiation.oauth2.support.config.AuthDefaultSource;
 import com.xh.security.core.authentiation.oauth2.support.enums.AuthResponseStatus;
@@ -22,12 +22,8 @@ import java.util.Objects;
  */
 public class AuthRenrenRequest extends AuthDefaultRequest {
 
-    public AuthRenrenRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.RENREN);
-    }
-
-    public AuthRenrenRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.RENREN, authStateCache);
+    public AuthRenrenRequest(AuthConfig config, AuthCache authCache) {
+        super(config, AuthDefaultSource.RENREN, authCache);
     }
 
     @Override
