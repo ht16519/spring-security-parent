@@ -1,17 +1,18 @@
 package com.xh.sso.server.config;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
+import org.springframework.security.oauth2.config.annotation.builders.JdbcClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import javax.sql.DataSource;
 
 /**
  * @Name SsoAuthrizationServerConfig
@@ -23,55 +24,67 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class SsoAuthrizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+//        JdbcClientDetailsServiceBuilder builder = clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
         InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
         //加载用户配置
         builder.withClient("ht16519")                          //配置clientId
-                .secret("ht16519")                                      //配置secretId
+                .secret(passwordEncoder.encode("ht16519"))                                      //配置secretId
+                .scopes("read", "wirte")                         //配置拥有的权限
+                .authorizedGrantTypes("refresh_token", "authorization_code", "password")   //配置授权方式
+                .redirectUris("http://localhost:9001/client01/login")         //配置定向地址
+                .resourceIds("client01")            //配置可以访问的资源服务器列表
+                .and()
+                .withClient("ht17520")                          //配置clientId
+                .secret(passwordEncoder.encode("ht17520"))                                      //配置secretId
                 .scopes("all", "read", "wirte")                         //配置拥有的权限
                 .authorizedGrantTypes("refresh_token", "authorization_code", "password")   //配置授权方式
-                .redirectUris("http://localhost:9001/client01/login");          //配置定向地址
-
-        builder.withClient("ht17520")                          //配置clientId
-                .secret("ht17520")                                      //配置secretId
-                .scopes("all", "read", "wirte")                         //配置拥有的权限
-                .authorizedGrantTypes("refresh_token", "authorization_code", "password")   //配置授权方式
-                .redirectUris("http://localhost:9002/client02/login");          //配置定向地址
+                .redirectUris("http://localhost:9002/client02/login")          //配置定向地址
+                .resourceIds("client02");            //配置可以访问的资源服务器列表
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        //配置token存储
-        endpoints.tokenStore(jwtTokenStore());
-        //自定义JWT的accessToken配置
-        endpoints.accessTokenConverter(jwtAccessTokenConverter());
+        endpoints.authenticationManager(authenticationManager);
+//                .tokenStore(jwtTokenStore())        //配置token存储
+//                .accessTokenConverter(jwtAccessTokenConverter());//自定义JWT的accessToken配置
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.tokenKeyAccess("isAuthenticated()")
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());//TODO 暂时不加密
+        security.checkTokenAccess("isAuthenticated()")        //配置校验Token需要带上clientId和secretId
+    //        .tokenKeyAccess("isAuthenticated()")         //配置访问signingKey密钥需要带上clientId和secretId
+                .passwordEncoder(passwordEncoder);//TODO 暂时不加密
 //        security.allowFormAuthenticationForClients()
-//                .checkTokenAccess("permitAll()")
+//                .checkTokenAccess("permitAll()");
+//
     }
 
     /**
      * 配置token以JWT方式返回
      */
-    @Bean
-    public TokenStore jwtTokenStore() {
-        return new JwtTokenStore(jwtAccessTokenConverter());
-    }
+//    @Bean
+//    public TokenStore jwtTokenStore() {
+//        return new JwtTokenStore(jwtAccessTokenConverter());
+//    }
 
     /**
      * 配置JWT的accessToken转化器
      */
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setSigningKey("ht18522");
-        return jwtAccessTokenConverter;
-    }
+//    @Bean
+//    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+//        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+//        jwtAccessTokenConverter.setSigningKey("ht18522");
+//        return jwtAccessTokenConverter;
+//    }
 
 }
