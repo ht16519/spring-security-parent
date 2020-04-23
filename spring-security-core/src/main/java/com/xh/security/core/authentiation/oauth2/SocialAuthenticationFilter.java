@@ -21,6 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -93,7 +94,11 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
      */
     protected void setDetails(HttpServletRequest request,
                               SocialAuthenticationToken authRequest) {
-        request.getSession();
+        HttpSession session = request.getSession(false);
+        if(null != session){
+            session.invalidate();
+        }
+        request.getSession(true);
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
 
