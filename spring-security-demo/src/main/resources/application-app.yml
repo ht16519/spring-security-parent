@@ -5,6 +5,7 @@ spring:
 xh:
   security:
     oauth2Support:
+      storeType: redis
       clients[0]:
         clientId: ht16519
         clientSecret: ht17620

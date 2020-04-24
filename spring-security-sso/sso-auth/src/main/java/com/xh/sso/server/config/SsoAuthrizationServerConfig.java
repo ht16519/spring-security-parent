@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.builders.JdbcClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.sql.DataSource;
 
@@ -31,32 +31,33 @@ public class SsoAuthrizationServerConfig extends AuthorizationServerConfigurerAd
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private TokenStore tokenStore;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        JdbcClientDetailsServiceBuilder builder = clients.jdbc(dataSource).passwordEncoder(passwordEncoder);
-        InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
+        JdbcClientDetailsServiceBuilder builder = clients.jdbc(dataSource);
+//        InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
         //加载用户配置
-        builder.withClient("ht16519")                          //配置clientId
-                .secret(passwordEncoder.encode("ht16519"))                                      //配置secretId
-                .scopes("read", "wirte")                         //配置拥有的权限
-                .authorizedGrantTypes("refresh_token", "authorization_code", "password")   //配置授权方式
-                .redirectUris("http://localhost:9001/client01/login")         //配置定向地址
-                .resourceIds("client01")            //配置可以访问的资源服务器列表
-                .and()
-                .withClient("ht17520")                          //配置clientId
-                .secret(passwordEncoder.encode("ht17520"))                                      //配置secretId
-                .scopes("all", "read", "wirte")                         //配置拥有的权限
-                .authorizedGrantTypes("refresh_token", "authorization_code", "password")   //配置授权方式
-                .redirectUris("http://localhost:9002/client02/login")          //配置定向地址
-                .resourceIds("client02");            //配置可以访问的资源服务器列表
+//        builder.withClient("ht16519")                          //配置clientId
+//                .secret(passwordEncoder.encode("ht16519"))                                      //配置secretId
+//                .scopes("read", "wirte")                         //配置拥有的权限
+//                .authorizedGrantTypes("refresh_token", "authorization_code", "password")   //配置授权方式
+//                .redirectUris("http://localhost:9001/client01/login")         //配置定向地址
+//                .resourceIds("client01")            //配置可以访问的资源服务器列表
+//                .and()
+//                .withClient("ht17520")                          //配置clientId
+//                .secret(passwordEncoder.encode("ht17520"))                                      //配置secretId
+//                .scopes("all", "read", "wirte")                         //配置拥有的权限
+//                .authorizedGrantTypes("refresh_token", "authorization_code", "password")   //配置授权方式
+//                .redirectUris("http://localhost:9002/client02/login")          //配置定向地址
+//                .resourceIds("client02");            //配置可以访问的资源服务器列表
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.tokenStore(tokenStore);
         endpoints.authenticationManager(authenticationManager);
-//                .tokenStore(jwtTokenStore())        //配置token存储
-//                .accessTokenConverter(jwtAccessTokenConverter());//自定义JWT的accessToken配置
     }
 
     @Override

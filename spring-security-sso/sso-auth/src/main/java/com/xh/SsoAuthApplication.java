@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date 2020-04-20
  */
 @SpringBootApplication
-public class SsoServerAaalication {
+public class SsoAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SsoServerAaalication.class, args);
+        SpringApplication.run(SsoAuthApplication.class, args);
     }
 }

@@ -12,9 +12,10 @@
     <artifactId>spring-security-sso</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>sso-server</module>
+        <module>sso-auth</module>
         <module>sso-client01</module>
         <module>sso-client02</module>
+        <module>sso-gateway</module>
     </modules>
 
     <properties>

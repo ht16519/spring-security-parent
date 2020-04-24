@@ -1,0 +1,9 @@
+server:
+  port: 10086
+zuul:
+  routes:
+    auth:
+      url: http://localhost:9999/auth
+    client01:
+      url: http://localhost:9001/client01
+  sensitive-headers:
