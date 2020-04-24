@@ -1,7 +1,6 @@
 package com.xh.sso.client01.service;
 
 
-import com.xh.sso.client01.domain.auth.UserDetailsVo;
 import com.xh.sso.client01.domain.po.User;
 
 public interface UserService {

@@ -1,14 +1,11 @@
 package com.xh.sso.client01.controller;
 
-import com.xh.sso.client01.domain.auth.UserVo;
 import com.xh.sso.client01.domain.po.User;
 import com.xh.sso.client01.domain.vo.ApiResult;
 import com.xh.sso.client01.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -18,12 +15,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private SecurityProperties securityProperties;
 
 
     @GetMapping("me")
-    public ApiResult<Authentication> me(@AuthenticationPrincipal String username, Authentication authentication) throws Exception {
+    public ApiResult<Authentication> me(@RequestHeader("username") String username, Authentication authentication) throws Exception {
         log.info("@AuthenticationPrincipal 注解获取的 username:{}", username);
 //        log.info("Authentication 中获取的 username:{}", UserDetailsUtil.getUsername());
         return ApiResult.success(authentication);
@@ -32,16 +27,6 @@ public class UserController {
     @PostMapping("me")
     public ApiResult<String> me() {
         return ApiResult.success("新增操作成功");
-    }
-
-    @GetMapping("info")
-    public ApiResult<UserVo> userInfo(@AuthenticationPrincipal UserVo userVo) {
-        return ApiResult.success(userVo);
-    }
-
-    @GetMapping("id")
-    public ApiResult<Object> userInfo(@AuthenticationPrincipal(expression = "#this.id") Object id) {
-        return ApiResult.success(id);
     }
 
     /**
