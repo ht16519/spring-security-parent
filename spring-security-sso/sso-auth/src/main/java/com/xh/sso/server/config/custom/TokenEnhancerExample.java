@@ -19,7 +19,6 @@ import java.util.Map;
  * @Date 2020-04-20
  */
 @Slf4j
-@Component
 public class TokenEnhancerExample implements TokenEnhancer {
 
     @Override

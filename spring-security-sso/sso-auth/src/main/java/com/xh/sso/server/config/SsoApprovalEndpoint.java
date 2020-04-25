@@ -20,8 +20,8 @@ import java.util.Map;
  * @Author wen
  * @Date 2020-04-21
  */
-@RestController
-@SessionAttributes("authorizationRequest")
+//@RestController
+//@SessionAttributes("authorizationRequest")
 public class SsoApprovalEndpoint {
 
     @RequestMapping("/oauth/confirm_access")

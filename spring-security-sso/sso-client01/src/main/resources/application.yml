@@ -4,7 +4,7 @@ server:
     context-path: /client01
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/db_security?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
     username: root
     password: 123456
@@ -20,16 +20,17 @@ mapper:
   identity: MYSQL
 logging:
   level:
-    com.xh.demo.dao.mapper: debug
+    com.xh.sso: debug
 
 #OAuth2.0配置
-#security:
-#  oauth2:
-#    client:
-#      clientId: ht16519
-#      clientSecret: ht16519
-#      user-authorization-uri: http://127.0.0.1:9999/server/oauth/authorize
-#      access-token-uri: http://127.0.0.1:9999/server/oauth/token
-#    resource:
-#      jwt:
-#        key-uri: http://127.0.0.1:9999/server/oauth/token_key
+auth-server: http://127.0.0.1:9999/auth
+security:
+  oauth2:
+    client:
+      clientId: ht16519
+      clientSecret: ht16519
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
+    resource:
+      jwt:
+        key-uri: ${auth-server}/oauth/token_key

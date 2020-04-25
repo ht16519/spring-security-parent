@@ -10,3 +10,10 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/db_sso?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
     username: root
     password: 123456
+logging:
+  level:
+    com.xh.sso: debug
+#xh:
+#  security:
+#    oauth2Support:
+#      storeType: redis

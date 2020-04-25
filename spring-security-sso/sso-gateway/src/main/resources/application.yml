@@ -1,9 +1,21 @@
 server:
   port: 10086
+auth-server: http://127.0.0.1:9999/auth
 zuul:
   routes:
     auth:
-      url: http://localhost:9999/auth
+      url: ${auth-server}
     client01:
       url: http://localhost:9001/client01
+    client02:
+      url: http://localhost:9002/client02
   sensitive-headers:
+#OAuth2.0配置
+security:
+  oauth2:
+    client:
+      clientId: gateway
+      clientSecret: ht16519
+    resource:
+      jwt:
+        key-uri: ${auth-server}/oauth/token_key

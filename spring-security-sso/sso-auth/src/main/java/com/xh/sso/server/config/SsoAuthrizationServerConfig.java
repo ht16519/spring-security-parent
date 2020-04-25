@@ -1,6 +1,7 @@
 package com.xh.sso.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -77,10 +80,10 @@ public class SsoAuthrizationServerConfig extends AuthorizationServerConfigurerAd
 //    public TokenStore jwtTokenStore() {
 //        return new JwtTokenStore(jwtAccessTokenConverter());
 //    }
-
-    /**
-     * 配置JWT的accessToken转化器
-     */
+//
+//    /**
+//     * 配置JWT的accessToken转化器
+//     */
 //    @Bean
 //    public JwtAccessTokenConverter jwtAccessTokenConverter() {
 //        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();

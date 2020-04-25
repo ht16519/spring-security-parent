@@ -2,16 +2,20 @@ server:
   port: 9002
   servlet:
     context-path: /client02
+    session:
+      cookie:
+        name: UISESSIONMEMBER
 #OAuth2.0配置
+auth-server: http://127.0.0.1:9999/auth
 security:
   oauth2:
     client:
       clientId: ht17520
       clientSecret: ht17520
-      user-authorization-uri: http://127.0.0.1:9999/auth/oauth/authorize
-      access-token-uri: http://127.0.0.1:9999/auth/oauth/token
-    resource:
-      token-info-uri: http://127.0.0.1:9999/auth/oauth/token_key
+      user-authorization-uri: ${auth-server}/oauth/authorize
+      access-token-uri: ${auth-server}/oauth/token
 #    resource:
-#      jwt:
-#        key-uri: http://127.0.0.1:9999/auth/oauth/token_key
+#      user-info-uri: ${auth-server}/user/me
+    resource:
+      jwt:
+        key-uri: ${auth-server}/oauth/token_key

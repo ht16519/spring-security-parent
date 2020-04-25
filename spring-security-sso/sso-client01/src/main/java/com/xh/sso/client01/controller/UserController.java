@@ -17,16 +17,17 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping("me")
+    @PostMapping("me")
     public ApiResult<Authentication> me(@RequestHeader("username") String username, Authentication authentication) throws Exception {
         log.info("@AuthenticationPrincipal 注解获取的 username:{}", username);
 //        log.info("Authentication 中获取的 username:{}", UserDetailsUtil.getUsername());
         return ApiResult.success(authentication);
     }
 
-    @PostMapping("me")
-    public ApiResult<String> me() {
-        return ApiResult.success("新增操作成功");
+    @GetMapping("me")
+    public ApiResult<Authentication> me(Authentication authentication) {
+        log.debug("authentication----------------------");
+        return ApiResult.success(authentication);
     }
 
     /**
