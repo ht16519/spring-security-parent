@@ -19,24 +19,24 @@ public class TokenInfo {
     /** 是否可用*/
     private boolean active;
 
-    /** clientId*/
+    /** 所属客户端应用id*/
     private String client_id;
 
-    /** 作用范围*/
+    /** 权限列表*/
     private String[] scope;
 
     /** 用户id*/
     private Long id;
 
-    /** 发放的用户名*/
+    /** 所属认登录的用户名*/
     private String user_name;
 
-    /** 允许访问的资源服务器*/
+    /** 允许访问的资源服务器列表*/
     private String[] aud;
 
     /** 失效时间*/
     private long exp;
 
-    /** 权限*/
+    /** 角色列表*/
     private String[] authorities;
 }

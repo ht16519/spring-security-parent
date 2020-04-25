@@ -1,11 +1,14 @@
 package com.xh.security.app.config;
 
+import com.xh.security.app.config.custom.AppAccessDeniedHandler;
+import com.xh.security.app.config.custom.AppAuthenticationEntryPoint;
 import com.xh.security.core.authorize.AuthorizeConfigManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
  * @Name CustomResourceServerConfig
@@ -21,6 +24,14 @@ public class AppResourceServerConfig extends ResourceServerConfigurerAdapter {
     private AuthorizeConfigManager authorizeConfigManager;
     @Autowired
     private AppSecurityConfig appSecurityConfig;
+
+
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        resources.authenticationEntryPoint(new AppAuthenticationEntryPoint())  //配置401处理器
+                .accessDeniedHandler(new AppAccessDeniedHandler());     //配置403处理器
+//                .expressionHandler();       //配置自定义antMatchers(xx,xx).access(#*.*(*, *))表达式
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

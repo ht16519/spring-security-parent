@@ -1,6 +1,6 @@
 package com.xh.demo.auth.service;
 
-import com.xh.security.core.service.PermissionService;
+import com.xh.security.core.authorize.service.PermissionService;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +15,7 @@ import java.util.Set;
 public class PermissionServiceImpl implements PermissionService {
 
     @Override
-    public Set<String> loadPermissionByUsername(String username) {
+    public Set<String> loadResourcesUrls(String username, Set<String> roles) {
         Set<String> urls = new HashSet<>();
         urls.add("");
         return urls;

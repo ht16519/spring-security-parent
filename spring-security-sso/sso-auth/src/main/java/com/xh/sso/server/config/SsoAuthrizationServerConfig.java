@@ -3,6 +3,7 @@ package com.xh.sso.server.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -38,6 +39,8 @@ public class SsoAuthrizationServerConfig extends AuthorizationServerConfigurerAd
     private TokenStore tokenStore;
     @Autowired
     private TokenEnhancer jwtTokenEnhancer;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -46,8 +49,10 @@ public class SsoAuthrizationServerConfig extends AuthorizationServerConfigurerAd
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore);
-        endpoints.authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore)   //token存储
+                .userDetailsService(userDetailsService) //refresh_token刷新令牌请求的userDetailsService处理器
+                .authenticationManager(authenticationManager); //code,password等四种授权模式的authenticationManager支持
+        //配置token增强
         TokenEnhancerChain chain = new TokenEnhancerChain();
         List<TokenEnhancer> enhancers = new ArrayList<>();
         enhancers.add(jwtTokenEnhancer);
@@ -57,9 +62,9 @@ public class SsoAuthrizationServerConfig extends AuthorizationServerConfigurerAd
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("isAuthenticated()")        //配置校验Token需要带上clientId和secretId
-                //        .tokenKeyAccess("isAuthenticated()")         //配置访问signingKey密钥需要带上clientId和secretId
-                .passwordEncoder(passwordEncoder);//TODO 暂时不加密
+        security.checkTokenAccess("isAuthenticated()")        //配置校验Token需要身份认证:带上clientId和secretId
+                .tokenKeyAccess("isAuthenticated()")         //配置访问signingKey密钥需要身份认证:带上clientId和secretId
+                .passwordEncoder(passwordEncoder);
 //        security.allowFormAuthenticationForClients()
 //                .checkTokenAccess("permitAll()");
 //
